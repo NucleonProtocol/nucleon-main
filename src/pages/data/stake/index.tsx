@@ -553,7 +553,7 @@ export default function Page() {
 
   function getBlockNumber() {
     axios
-      .get("https://evmtestnet.confluxscan.io/v1/homeDashboard")
+      .get("https://evm.confluxscan.io/v1/homeDashboard")
       .then(async (response) => {
         setBlockNumber(response.data.result.blockNumber);
       });
