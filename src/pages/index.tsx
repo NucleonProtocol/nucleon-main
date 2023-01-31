@@ -1587,8 +1587,10 @@ export default function HomePage() {
 
       const nutbalance = await nutContract.balanceOf(addressPool);
       const nutbalanceCFX: any = new Drip(nutbalance).toCFX();
-      setNutSupply((300000 - nutbalanceCFX).toString());
-      setCirculatingNUT(((300000 - nutbalanceCFX) / 3000).toString());      
+      setNutSupply('0');
+      // setNutSupply((300000 - nutbalanceCFX).toString());
+      setCirculatingNUT((0).toString());  
+      // setCirculatingNUT(((300000 - nutbalanceCFX) / 3000).toString());     
     })();
 
     setTimeout(() => {
@@ -2437,7 +2439,7 @@ export default function HomePage() {
                     </Col>
                     <Col span={12}>Total Amount Of NUT Staked:</Col>
                     <Col span={12} style={{ textAlign: "right" }}>
-                      300,000
+                      0
                     </Col>
                     <Col span={12}>NUT Circulating Supply:</Col>
                     <Col span={12} style={{ textAlign: "right" }}>

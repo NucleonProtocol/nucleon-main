@@ -84,7 +84,7 @@ export default function Page() {
 
   const [userOutQueue, setUserOutQueue] = useState([]);
   let xCFXToken = {
-    address: "0x092690013ef7aF87eaf45030906baa86b8fAA411", // The address of the token contract
+    address: "0x889138644274a7Dc602f25A7e7D53fF40E6d0091", // The address of the token contract
     symbol: "xCFX", // A ticker symbol or shorthand, up to 5 characters
     decimals: 18, // The number of token decimals
     image: "https://integration.swappi.io/static/media/0x092690013ef7aF87eaf45030906baa86b8fAA411.a0ecb3fe.png", // A string url of the token logo
@@ -136,12 +136,12 @@ function reloadPage() {
 }
 const onSwitchNetwork = async () => {
   try {
-    await switchChain("0x47"); // 切换网络
+    await switchChain("0x406"); // 切换网络
     reloadPage();
   } catch (error) {
     const AddChainParameter = {
-      chainId: "0x47", // A 0x-prefixed hexadecimal string   0x47   0x406
-      chainName: "conflux espace testnet",
+      chainId: "0x406", // A 0x-prefixed hexadecimal string   0x47   0x406
+      chainName: "conflux espace",
       nativeCurrency: {
         name: "CFX",
         symbol: "CFX", // 2-6 characters long
@@ -220,7 +220,7 @@ const onSwitchNetwork = async () => {
                 className="ant-modal-confirm-content"
                 style={{ color: "#fff" }}
               >
-                Hash: <a target="_blank" style={{ color: "#fff" }} href={'https://evmtestnet.confluxscan.io/tx/' + tranHash}>{tranHash}</a>
+                Hash: <a target="_blank" style={{ color: "#fff" }} href={'https://evm.confluxscan.io/tx/' + tranHash}>{tranHash}</a>
               </div>
             </div>
 
@@ -294,9 +294,9 @@ const onSwitchNetwork = async () => {
       const data = excinterface.encodeFunctionData("XCFX_burn", [
         Unit.fromStandardUnit(burnVal).toHexMinUnit(),
       ]);
-      if (chainId != "71") {
+      if (chainId != "1030") {
         onSwitchNetwork();
-        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace test network!');//switch
+        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace network!');//switch
         return;
       }
       (document.getElementById("spinner") as any).style.display = "block";
@@ -360,9 +360,9 @@ const onSwitchNetwork = async () => {
     const handleClickSendTransaction = useCallback(async () => {
       if (!account) return;
       if (unlocked <= 0) return;
-      if (chainId != "71") {
+      if (chainId != "1030") {
         onSwitchNetwork();
-        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace test network!');//switch
+        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace network!');//switch
         return;
       }
 
@@ -525,7 +525,7 @@ const onSwitchNetwork = async () => {
         const userOutQueueArray = await excContract.userOutQueue(account);
 
         const block = await axios.get(
-          "https://evmtestnet.confluxscan.io/v1/homeDashboard"
+          "https://evm.confluxscan.io/v1/homeDashboard"
         );
         const blockNumberT = block.data.result.blockNumber;
         setBlockNumber(blockNumberT);

@@ -69,12 +69,12 @@ function reloadPage() {
 }
 const onSwitchNetwork = async () => {
   try {
-    await switchChain("0x47"); // 切换网络
+    await switchChain("0x406"); // 切换网络
     reloadPage();
   } catch (error) {
     const AddChainParameter = {
-      chainId: "0x47", // A 0x-prefixed hexadecimal string   0x47   0x406
-      chainName: "conflux espace testnet",
+      chainId: "0x406", // A 0x-prefixed hexadecimal string   0x47   0x406
+      chainName: "conflux espace",
       nativeCurrency: {
         name: "CFX",
         symbol: "CFX", // 2-6 characters long
@@ -226,7 +226,7 @@ export default function Page() {
                 className="ant-modal-confirm-content"
                 style={{ color: "#fff" }}
               >
-                Hash: <a target="_blank" style={{ color: "#fff" }} href={'https://evmtestnet.confluxscan.io/tx/' + tranHash}>{tranHash}</a>
+                Hash: <a target="_blank" style={{ color: "#fff" }} href={'https://evm.confluxscan.io/tx/' + tranHash}>{tranHash}</a>
               </div>
             </div>
           </div>
@@ -297,9 +297,9 @@ export default function Page() {
     const handleClickSendTransaction = useCallback(async () => {
       if (!account) return;
       if (!burnVal) return;
-      if(chainId !='71'){
+      if(chainId !='1030'){
         onSwitchNetwork();
-        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace test network!');//switch
+        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace network!');//switch
         return;
       }
       
@@ -564,14 +564,14 @@ export default function Page() {
     //window.addEventListener("resize", resizeChange);
     (async () => {
       axios
-        .get("https://evmtestnet.confluxscan.io/v1/homeDashboard")
+        .get("https://evm.confluxscan.io/v1/homeDashboard")
         .then(async (response) => {
           setBlockNumber(response.data.result.blockNumber);
         });
 
       axios
         .get(
-          " https://evmtestnet.confluxscan.io/stat/tokens/by-address?address=0x092690013ef7aF87eaf45030906baa86b8fAA411&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+          " https://evm.confluxscan.io/stat/tokens/by-address?address=0x889138644274a7Dc602f25A7e7D53fF40E6d0091&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
         )
         .then(async (response) => {
           setHolderCount(response.data.result.holderCount);
