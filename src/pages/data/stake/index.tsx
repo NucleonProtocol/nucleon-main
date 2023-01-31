@@ -119,10 +119,10 @@ export default function Page() {
   let xLabel0 = [""];
   let xgoToSchool0: { date: any; value: any }[] = [];
   let xCFXToken = {
-                    address: "0x092690013ef7aF87eaf45030906baa86b8fAA411", // The address of the token contract
+                    address: "0x889138644274a7Dc602f25A7e7D53fF40E6d0091", // The address of the token contract
                     symbol: "xCFX", // A ticker symbol or shorthand, up to 5 characters
                     decimals: 18, // The number of token decimals
-                    image: "https://integration.swappi.io/static/media/0x092690013ef7aF87eaf45030906baa86b8fAA411.a0ecb3fe.png", // A string url of the token logo
+                    image: "https://app.swappi.io/static/media/0x889138644274a7Dc602f25A7e7D53fF40E6d0091.a0ecb3fe.png", // A string url of the token logo
                   };
 
   const provider = new ethers.providers.JsonRpcProvider(
@@ -1348,7 +1348,7 @@ export default function Page() {
                 <Col span={12} style={{ textAlign: "right" }}>
                   {formatNumber(parseFloat(totalStaked).toFixed(3))}
                 </Col>
-                <Col span={12}>Stakers</Col>
+                <Col span={12}>Holders</Col>
                 <Col span={12} style={{ textAlign: "right" }}>
                   {formatNumber(holderCount)}
                 </Col>

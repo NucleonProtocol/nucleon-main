@@ -87,7 +87,7 @@ export default function Page() {
     address: "0x889138644274a7Dc602f25A7e7D53fF40E6d0091", // The address of the token contract
     symbol: "xCFX", // A ticker symbol or shorthand, up to 5 characters
     decimals: 18, // The number of token decimals
-    image: "https://integration.swappi.io/static/media/0x092690013ef7aF87eaf45030906baa86b8fAA411.a0ecb3fe.png", // A string url of the token logo
+    image: "https://app.swappi.io/static/media/0x889138644274a7Dc602f25A7e7D53fF40E6d0091.a0ecb3fe.png", // A string url of the token logo
   };
   const provider = new ethers.providers.JsonRpcProvider(
     "https://evm.confluxrpc.com"
@@ -165,7 +165,7 @@ const onSwitchNetwork = async () => {
     async function  onToken() {
       const watchAssetParams = {
         type: "ERC20", // In the future, other standards will be supported
-        options: xCFXToken
+        options: tokenSetting
       };
       try{
         (document.getElementById("spinner") as any).style.display = "block";
