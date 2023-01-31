@@ -86,7 +86,7 @@ const {
 } = require("./../../../ABI/Lp.json");
 const { addressMulticall, abiMulticall } = require("./../../../ABI/Multicall.json");
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://evmtestnet.confluxrpc.com"
+  "https://evm.confluxrpc.com"
 );
 const poolsContract = new ethers.Contract(addressPool, abiPool, provider);
 const poolsInterface = new utils.Interface(abiPool);
@@ -118,12 +118,12 @@ function reloadPage() {
 }
 const onSwitchNetwork = async () => {
   try {
-    await switchChain("0x406"); // 切换网络
+    await switchChain("0x47"); // 切换网络
     reloadPage();
   } catch (error) {
     const AddChainParameter = {
-      chainId: "0x406", // A 0x-prefixed hexadecimal string   0x47   0x406
-      chainName: "conflux espace",
+      chainId: "0x47", // A 0x-prefixed hexadecimal string   0x47   0x406
+      chainName: "conflux espace testnet",
       nativeCurrency: {
         name: "CFX",
         symbol: "CFX", // 2-6 characters long
@@ -180,7 +180,7 @@ export default function Page() {
   const [tokenUsed, setTokenUsed] = useState("NUT");
   
   let NUTToken = {
-    address: "0xFE197E7968807B311D476915DB585831B43A7E3b", // The address of the token contract
+    address: "0x48EE76131e70762DB59a37e6008ccE082805aB00", // The address of the token contract
     symbol: "NUT", // A ticker symbol or shorthand, up to 5 characters
     decimals: 18, // The number of token decimals
     image: "https://integration.swappi.io/static/media/0x48EE76131e70762DB59a37e6008ccE082805aB00.f202553a.png", // A string url of the token logo
@@ -317,9 +317,9 @@ export default function Page() {
 
   const claimRewards = (i: any) => {
     return async (e: any) => {
-      if(chainId !='1030'){
+      if(chainId !='71'){
         onSwitchNetwork();
-        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace network!');//switch
+        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace test network!');//switch
         return;
       }
       setIsModalOpen("block");
@@ -536,9 +536,9 @@ export default function Page() {
   // 弹出
   const manage = (val: any, val2: any, val3: any) => {
     return async (e: any) => {
-      if(chainId !='1030'){
+      if(chainId !='71'){
         onSwitchNetwork();
-        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace network!');//switch
+        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace test network!');//switch
         return;
       }
       setMyLiquility(MyLiquilityarr[val]);
@@ -625,7 +625,7 @@ export default function Page() {
   const handleStake2 = (val: any, val2: any) => {
     
     return (e: any) => {
-      if (chainId != "1030") {
+      if (chainId != "71") {
         onSwitchNetwork();
         alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace test network!');//switch
         return;
@@ -802,7 +802,7 @@ export default function Page() {
       const promises = [
         [nutContract.address ,nutContract.interface.encodeFunctionData('balanceOf',[myacc])],
         [poolsContract.address ,poolsContract.interface.encodeFunctionData('totalAllocPoint')],
-        [poolsContract.address ,poolsContract.interface.encodeFunctionData('sushiPerBlock')]
+        [poolsContract.address ,poolsContract.interface.encodeFunctionData('rewardsPerSecond')]
       ]
       const multival = await multicallContract.callStatic.aggregate(promises);
       // console.log(multival);
@@ -816,7 +816,7 @@ export default function Page() {
       const totalpoint = multival.returnData[1]; //await poolsContract.totalAllocPoint();//  2
       // console.log(totalpoint);
       // console.log(Drip(totalpoint).toCFX());
-      const nutPerBlock = multival.returnData[2]; //await poolsContract.sushiPerBlock(); //  3
+      const nutPerBlock = multival.returnData[2]; //await poolsContract.rewardsPerSecond(); //  3
       // console.log(nutPerBlock);
       // console.log(Drip(nutPerBlock).toCFX());
       setMynut(Drip(mynut.toString()).toCFX().toString());
@@ -828,7 +828,7 @@ export default function Page() {
 
       // 每个lp的价值
       // nut的价值
-      // 常数：sushiPerBlock
+      // 常数：rewardsPerSecond
       // 此种lp的总量
       // totalAllocPoint获取一个值为Alloc总值
       // poolInfo获取三个值，取第三个值：allocPoint
