@@ -23,14 +23,14 @@ import { Button, Col, Row, Carousel, Modal } from "antd";
 let myacc: any;
 let tmpAccount = localStorage.getItem("acc");
 const AddChainParameter = {
-  chainId: "0x47", // A 0x-prefixed hexadecimal string   0x47   0x406
-  chainName: "conflux espace testnet",
+  chainId: "0x406", // A 0x-prefixed hexadecimal string   0x47   0x406
+  chainName: "conflux espace net",
   nativeCurrency: {
     name: "CFX",
     symbol: "CFX", // 2-6 characters long
     decimals: 18,
   },
-  rpcUrls: ["https://evmtestnet.confluxrpc.com"], // https://evmtestnet.confluxrpc.com  https://evm.confluxrpc.com
+  rpcUrls: ["https://evm.confluxrpc.com"], // https://evmtestnet.confluxrpc.com  https://evm.confluxrpc.com
   //blockExplorerUrls: ['aaaa'],
   //iconUrls: ['https://'], // Currently ignored.
 };
@@ -95,7 +95,7 @@ function reloadPage() {
 // Function 切换网络--------------------------------------------
 const onSwitchNetwork = async () => {
   try {
-    var switchChainsucess = await switchChain("0x47"); // 切换网络
+    var switchChainsucess = await switchChain("0x406"); // 切换网络
     reloadPage();
   } catch (error) {
     console.log(error);
@@ -145,19 +145,7 @@ function Header() {
 
 
   const chainId = useChainId()!; // 正式网 测试网
-  // console.log(chainId);
-  // setTimeout(() => {
-  //   if (chainId != "71") {
-  //       setShowSwitch(true);
-  //     }
-  //   console.log(chainId);
-  // }, 10);
-  // setInterval(() => {
-  //   if (chainId != "71") {
-  //       setShowSwitch(true);
-  //     }
-  //   console.log(chainId);
-  // }, 5000);
+
   // 定时更新数据
   const [count, setCount] = useState(10);
   useEffect(() => {
@@ -171,7 +159,7 @@ function Header() {
       setCount(count - 1);
       timerId = setTimeout(run, 2000);
       // 这下面为相关的业务代码
-      if (chainId != "71") {
+      if (chainId != "1030") {
         setShowSwitch(true);
       } else {
         setShowSwitch(false);
@@ -212,7 +200,7 @@ function Header() {
 
     // 网路判断
     setTimeout(() => {
-      if (chainId != "71") {
+      if (chainId != "1030") {
         setShowSwitch(true);
       }
     }, 20);

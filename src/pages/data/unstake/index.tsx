@@ -90,7 +90,7 @@ export default function Page() {
     image: "https://integration.swappi.io/static/media/0x092690013ef7aF87eaf45030906baa86b8fAA411.a0ecb3fe.png", // A string url of the token logo
   };
   const provider = new ethers.providers.JsonRpcProvider(
-    "https://evmtestnet.confluxrpc.com"
+    "https://evm.confluxrpc.com"
   );
   const excContract = new ethers.Contract(addressExc, abiExc, provider);
   const excinterface = new utils.Interface(abiExc);
@@ -147,7 +147,7 @@ const onSwitchNetwork = async () => {
         symbol: "CFX", // 2-6 characters long
         decimals: 18,
       },
-      rpcUrls: ["https://evmtestnet.confluxrpc.com"], // https://evmtestnet.confluxrpc.com  https://evm.confluxrpc.com
+      rpcUrls: ["https://evm.confluxrpc.com"], // https://evmtestnet.confluxrpc.com  https://evm.confluxrpc.com
       //blockExplorerUrls: ['aaaa'],
       //iconUrls: ['https://'], // Currently ignored.
     };

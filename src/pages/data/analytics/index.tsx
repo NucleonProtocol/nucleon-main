@@ -48,7 +48,7 @@ function getStatistics(cond: string, limit = 24): Promise<any> {
   });
 }
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://evmtestnet.confluxrpc.com"
+  "https://evm.confluxrpc.com"
 );
 //币种
 const nutoContract = new ethers.Contract(addressNut, abiNut, provider);
@@ -73,7 +73,7 @@ export default function Page() {
   const [chart6Tab, setChart6Tab] = useState(0);
 
   const provider = new ethers.providers.JsonRpcProvider(
-    "https://evmtestnet.confluxrpc.com"
+    "https://evm.confluxrpc.com"
   );
   const excContract = new ethers.Contract(addressExc, abiExc, provider);
   const nutContract = new ethers.Contract(addressNut, abiNut, provider);

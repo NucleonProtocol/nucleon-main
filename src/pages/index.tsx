@@ -25,7 +25,7 @@ const {
 } = require("./../ABI/Nut.json");
 const { addressPool } = require("./../ABI/Pools.json");
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://evmtestnet.confluxrpc.com"
+  "https://evm.confluxrpc.com"
 );
 import { ethers, utils } from "ethers";
 const nutContract = new ethers.Contract(addressNut, abiNut, provider);

@@ -86,7 +86,7 @@ const {
 } = require("./../../../ABI/Lp.json");
 const { addressMulticall, abiMulticall } = require("./../../../ABI/Multicall.json");
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://evmtestnet.confluxrpc.com"
+  "https://evm.confluxrpc.com"
 );
 const poolsContract = new ethers.Contract(addressPool, abiPool, provider);
 const poolsInterface = new utils.Interface(abiPool);
@@ -129,7 +129,7 @@ const onSwitchNetwork = async () => {
         symbol: "CFX", // 2-6 characters long
         decimals: 18,
       },
-      rpcUrls: ["https://evmtestnet.confluxrpc.com"], // https://evmtestnet.confluxrpc.com  https://evm.confluxrpc.com
+      rpcUrls: ["https://evm.confluxrpc.com"], // https://evmtestnet.confluxrpc.com  https://evm.confluxrpc.com
       //blockExplorerUrls: ['aaaa'],
       //iconUrls: ['https://'], // Currently ignored.
     };
