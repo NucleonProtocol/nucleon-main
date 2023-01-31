@@ -355,7 +355,7 @@ export default function Page() {
       init();
       (document.getElementById("spinner") as any).style.display = "none";
       setIsModalOpen("none");
-    }, 10000);
+    }, 5000);
   };
 
   // const handleOk = () => {
@@ -479,7 +479,7 @@ export default function Page() {
         init();
         (document.getElementById("spinner") as any).style.display = "none";
         setIsModalOpen2("none");
-      }, 10000);
+      }, 5000);
     }, time);
   };
   // manage handleOkWithdraw
@@ -527,7 +527,7 @@ export default function Page() {
       init();
       (document.getElementById("spinner") as any).style.display = "none";
       setIsModalOpen2("none");
-    }, 10000);
+    }, 5000);
   };
 
   const handleClose = () => {
@@ -788,7 +788,7 @@ export default function Page() {
         setIsModalOpen3("none");
         (document.getElementById("spinner") as any).style.display = "none";
         init();
-      }, 10000);
+      }, 5000);
     }, time);
   };
 

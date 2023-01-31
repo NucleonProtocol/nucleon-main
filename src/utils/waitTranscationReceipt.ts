@@ -1,5 +1,5 @@
 import { providers } from 'ethers';  
-const HttpProvider = new providers.JsonRpcProvider("https://evmtestnet.confluxrpc.com");
+const HttpProvider = new providers.JsonRpcProvider("https://evm.confluxrpc.com");
 
 type TranscationReceipt = Awaited<ReturnType<typeof HttpProvider.getTransactionReceipt>>;
 

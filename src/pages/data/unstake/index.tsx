@@ -330,7 +330,7 @@ const onSwitchNetwork = async () => {
         init();
         // 加载隐藏
         (document.getElementById("spinner") as any).style.display = "none";
-      }, 10000);
+      }, 5000);
     }, [account]);
     return (
       <Button
@@ -384,7 +384,7 @@ const onSwitchNetwork = async () => {
         init();
         // 加载隐藏
         (document.getElementById("spinner") as any).style.display = "none";
-      }, 10000);
+      }, 5000);
       }
       catch (error) {
         (document.getElementById("spinner") as any).style.display = "none";

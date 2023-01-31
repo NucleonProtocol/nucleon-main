@@ -299,7 +299,7 @@ export default function Page() {
       if (!burnVal) return;
       if(chainId !='1030'){
         onSwitchNetwork();
-        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace network!');//switch
+        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux eSpace network!');//switch
         return;
       }
       
@@ -331,7 +331,7 @@ export default function Page() {
         init();
         // 加载隐藏
         (document.getElementById("spinner") as any).style.display = "none";
-      }, 10000);
+      }, 5000);
     }, [account]);
     return (
       <Button
