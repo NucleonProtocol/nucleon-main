@@ -625,9 +625,9 @@ export default function Page() {
   const handleStake2 = (val: any, val2: any) => {
     
     return (e: any) => {
-      if (chainId != "71") {
+      if (chainId != "1030") {
         onSwitchNetwork();
-        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace test network!');//switch
+        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace network!');//switch
         return;
       }
       setMyLiquility(MyLiquilityarr[val]);
@@ -1220,7 +1220,7 @@ export default function Page() {
                         width: "130px",
                       }}
                       target="_blank"
-                      href="https://integration.swappi.io/#/pool/v2"
+                      href="https://app.swappi.io/#/pool/v2"
                     >
                       {t("pools.AddLiquidity")}
                     </Button>
@@ -1300,7 +1300,7 @@ export default function Page() {
                         width: "130px",
                       }}
                       target="_blank"
-                      href="https://integration.swappi.io/#/pool/v2"
+                      href="https://app.swappi.io/#/pool/v2"
                     >
                       {t("pools.AddLiquidity")}
                     </Button>

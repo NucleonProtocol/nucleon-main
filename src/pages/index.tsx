@@ -1581,7 +1581,7 @@ export default function HomePage() {
           );
           myChart5.setOption(optionL);
 
-          (document.getElementById("homebox") as any).style.display = "none";
+          // (document.getElementById("homebox") as any).style.display = "none";
         } catch (error) { }
       }, 500);
 
