@@ -24,7 +24,7 @@ let myacc: any;
 let tmpAccount = localStorage.getItem("acc");
 const AddChainParameter = {
   chainId: "0x406", // A 0x-prefixed hexadecimal string   0x47   0x406
-  chainName: "conflux espace net",
+  chainName: "conflux espace",
   nativeCurrency: {
     name: "CFX",
     symbol: "CFX", // 2-6 characters long
