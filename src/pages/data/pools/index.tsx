@@ -903,7 +903,10 @@ export default function Page() {
           console.log(NUTPrice,secondperyear,Drip(nutPerBlock).toCFX(),Drip('0x'+pointInfo.substring(130, 194)).toCFX(),Drip(val).toCFX(),Drip(totalpoint).toCFX(),Drip(lpinfo.substring(0, 66)).toCFX());
           arp = (100*NUTPrice*secondperyear*Drip(nutPerBlock).toCFX()*Drip('0x'+pointInfo.substring(130, 194)).toCFX()*Drip(val).toCFX()/((Drip(totalpoint).toCFX()*totalLPs)*Drip(lpinfo.substring(0, 66)).toCFX()*2)).toString();
           console.log(arp);
-          arp = (arp.split('.')[0]+'.'+arp.split('.')[1].slice(0, 8));
+          if(arp!='NaN'){
+            arp = (arp.split('.')[0]+'.'+arp.split('.')[1].slice(0, 8));
+          }
+          
         }else{
           arp = "--"
         }
