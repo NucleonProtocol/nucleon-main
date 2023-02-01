@@ -1613,11 +1613,18 @@ export default function HomePage() {
       setCirculatingNUT((0).toString());  
       // setCirculatingNUT(((300000 - nutbalanceCFX) / 3000).toString());     
     })();
-
     setTimeout(() => {
-      (document.getElementById("homebox") as any).style.display = "block";
-      (document.getElementById("welhome") as any).style.display = "none";
-    }, 4000);
+              try {
+              (document.getElementById("homebox") as any).style.display = "block";
+              (document.getElementById("welhome") as any).style.display = "none";
+            } catch (error) {
+        }
+           }, 4000);
+         
+    // setTimeout(() => {
+    //   (document.getElementById("homebox") as any).style.display = "block";
+    //   (document.getElementById("welhome") as any).style.display = "none";
+    // }, 4000);
   }, []);
   // /public/js/index.js <script src="/js/index.js?r=3"></script>
   return (
