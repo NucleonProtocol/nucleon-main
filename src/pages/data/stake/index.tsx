@@ -163,7 +163,7 @@ export default function Page() {
       </div>
     );
   });
-
+  const [tokenSetting, setTokenSetting] = useState(xCFXToken);
   const MyModal: React.FC = memo(() => {
     function closeCurr() {
       setTranHash("");
@@ -171,7 +171,7 @@ export default function Page() {
     async function  onToken() {
       const watchAssetParams = {
         type: "ERC20", // In the future, other standards will be supported
-        options: xCFXToken
+        options: tokenSetting
       };
       try{
         (document.getElementById("spinner") as any).style.display = "block";
