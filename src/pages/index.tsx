@@ -2402,7 +2402,7 @@ export default function HomePage() {
                   <Row className={styles.box4}>
                     <Col span={12}>Exchange Rate </Col>
                     <Col span={12} style={{ textAlign: "right" }}>
-                      1 xCFX = ~{parseFloat(xcfxvalues).toFixed(3)}CFX
+                      1 xCFX = ~{parseFloat(xcfxvalues).toFixed(10)}CFX
                     </Col>
                     <Col span={12}>Estimated Transaction Fee</Col>
                     <Col span={12} style={{ textAlign: "right" }}>
