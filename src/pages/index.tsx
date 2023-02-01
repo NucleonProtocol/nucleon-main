@@ -133,6 +133,7 @@ export default function HomePage() {
     setShowMenu("none");
   }
   const [total1, setTotal1] = useState("");
+  const [total1b, setTotal1b] = useState("");
   const [total2, setTotal2] = useState("");
   const [total3, setTotal3] = useState("");
   const [total4, setTotal4] = useState("");
@@ -601,7 +602,8 @@ export default function HomePage() {
           const valX = new Drip(element.xcfx1 * 2 * p).toCFX();
           const valT2 = BigNumber(val).plus(valN).plus(valX);
 
-          setTotal1(BigNumber(valT2).toFixed(2));
+          setTotal1(BigNumber(val).toFixed(2));
+          setTotal1b(BigNumber(valT2).toFixed(2));
 
           setXcfxvalues(xcfxvalues);
 
@@ -2599,7 +2601,7 @@ export default function HomePage() {
               <Col xs={12} sm={12} md={14} lg={14} xl={14}>
                 <div className={styles.item} style={{ padding: "35px 0 0" }}>
                   <div className={styles.t}>
-                    ${total1.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    ${total1b.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </div>
                   <div className={styles.v}>Total Value Locked</div>
                   <div className={styles.line}></div>
