@@ -744,9 +744,9 @@ export default function Page() {
     //精确执行
     let tempaccuratevalues = '0';
     if(isModalOpen3Val3==isModalOpen3Val2){
-      if (+isModalOpen1Val === 0) {
+      if (+isModalOpen3Val === 0) {
         tempaccuratevalues = await nutCfxContract.balanceOf(myacc);
-      } else if (+isModalOpen1Val === 1) {
+      } else if (+isModalOpen3Val === 1) {
         tempaccuratevalues = await xcfxCfxContract.balanceOf(myacc);
       }
     }else{
@@ -1827,7 +1827,7 @@ export default function Page() {
                         borderRadius: "28px",
                         color: "#161621",
                       }}
-                    >
+                    disabled>
                       <b style={{ fontFamily: "Univa Nova Bold" }}>
                         {t("pools.WithdrawLiquidity")}
                       </b>

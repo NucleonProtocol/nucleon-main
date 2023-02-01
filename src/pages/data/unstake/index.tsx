@@ -155,7 +155,7 @@ const onSwitchNetwork = async () => {
     reloadPage();
   }
 };
-
+const [tokenSetting, setTokenSetting] = useState(xCFXToken);
 // if (chainId != "71") {onSwitchNetwork()}
 
   const MyModal: React.FC = memo(() => {
