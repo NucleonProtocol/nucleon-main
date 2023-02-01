@@ -410,7 +410,7 @@ export default function Page() {
       time = 2000;
     }
     var step;
-    for (step = 0; step < 36; step++) {
+    for (step = 0; step < 18; step++) {
       if (+isModalOpen1Val === 0) {
         allowance = await nutCfxContract.allowance(myacc, addressPool);
       } else if (+isModalOpen1Val === 1) {
@@ -721,7 +721,7 @@ export default function Page() {
       time = 2000;
     }
     var step;
-    for (step = 0; step < 36; step++) {
+    for (step = 0; step < 18; step++) {
       if (+isModalOpen1Val === 0) {
         allowance = await nutCfxContract.allowance(myacc, addressPool);
       } else if (+isModalOpen1Val === 1) {
