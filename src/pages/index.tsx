@@ -651,7 +651,7 @@ export default function HomePage() {
             goToSchoolP3.push(obj3);
             xLabelP3.push("");
 
-            setTotal4(y.toFixed(3));
+            setTotal4(y.toFixed(4));
             const val4 = y.toString();
             const day4 = element.created_at.toString();
             let obj4 = { date: day4, value: val4 };
@@ -2132,7 +2132,7 @@ export default function HomePage() {
                       )}
                       {Math.abs(
                         parseFloat(total4) - parseFloat(closingPrice4)
-                      ).toFixed(2)}
+                      ).toFixed(4)}
                     </div>
                     <div
                       className={styles.main}
