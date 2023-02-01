@@ -1242,7 +1242,7 @@ export default function Page() {
       const p = price;
       const totalvalues = x * y;
       const val = BigNumber(totalvalues * p).toFixed(2);
-      setTotal1(val);
+      setTotal1(BigNumber(val).plus(parseFloat(goToSchool2[goToSchool2.length -1].value).toFixed(2)).plus(parseFloat(goToSchool3[goToSchool3.length -1].value).toFixed(2)));
       setTotal2(x);
       const poolval = y * x;
       setTotal3(poolval.toString());

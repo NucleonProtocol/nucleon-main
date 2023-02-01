@@ -1042,7 +1042,7 @@ export default function Page() {
                   >
                     <Button
                       target="_blank"
-                      href="https://integration.swappi.io/#/swap"
+                      href="https://app.swappi.io/#/swap"
                       shape="round"
                       style={{
                         background: "#161621",
@@ -1344,7 +1344,7 @@ export default function Page() {
                 <Col span={12} style={{ textAlign: "right" }}>
                   {rate}%
                 </Col>
-                <Col span={12}>Total Staked with CFX</Col>
+                <Col span={12}>Total Staked CFX</Col>
                 <Col span={12} style={{ textAlign: "right" }}>
                   {formatNumber(parseFloat(totalStaked).toFixed(3))}
                 </Col>

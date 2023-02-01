@@ -482,6 +482,8 @@ export default function HomePage() {
       T.reverse().forEach(
         (
           element: {
+            xcfx1: number;
+            nut1: number;
             created_at: any;
             apy: any;
             price: any;
@@ -499,8 +501,14 @@ export default function HomePage() {
           const dayT = element.created_at.toString();
           if (i % 2 === 0) {
           }
+          const price = element.price;
+          const p = new BigNumber(price);
+          const valN = new Drip(element.nut1 * 2 * p).toCFX();
+          const valX = new Drip(element.xcfx1 * 2 * p).toCFX();
+          const valT2 = BigNumber(valT).plus(valN).plus(valX);
+
           let objT = { date: dayT, value: valT };
-          objT.value = valT;
+          objT.value = valT2.toString();
           objT.date = dayT;
           goToSchool2.push(objT);
           xLabel2.push(i);
@@ -587,10 +595,14 @@ export default function HomePage() {
           const p = new BigNumber(price);
           const totalvalues = x.multipliedBy(y);
           const val = BigNumber(totalvalues.multipliedBy(p)).toFixed(10);
-          console.log(price);
-          setTotal1(BigNumber(totalvalues.multipliedBy(p)).toFixed(2));
-          // const val = BigNumber(totalvalues * p).toFixed(10);
-          // setTotal1(BigNumber(totalvalues * p).toFixed(2));
+          //const valT = BigNumber(totalvalues.multipliedBy(p));
+
+          const valN = new Drip(element.nut1 * 2 * p).toCFX();
+          const valX = new Drip(element.xcfx1 * 2 * p).toCFX();
+          const valT2 = BigNumber(val).plus(valN).plus(valX);
+
+          setTotal1(BigNumber(valT2).toFixed(2));
+
           setXcfxvalues(xcfxvalues);
 
           if (i === 0) {
@@ -1265,7 +1277,7 @@ export default function HomePage() {
               padding: 10,
             },
             min: function (value: { min: any }) {
-              return value.min - 0.01;
+              return value.min - 0.0001;
             },
             splitLine: {
               show: false,
@@ -1367,8 +1379,15 @@ export default function HomePage() {
           const val = BigNumber(totalvalues * element.price).toFixed(2);
           const day = element.created_at.toString();
           if (i % 2 === 0) {
+            
+            const price = element.price;
+            const p = new BigNumber(price);
+            const valN = new Drip(element.nut1 * 2 * p).toCFX();
+            const valX = new Drip(element.xcfx1 * 2 * p).toCFX();
+            const valT2 = BigNumber(val).plus(valN).plus(valX);
+            
             let obj = { date: day, value: val };
-            obj.value = val;
+            obj.value = valT2.toString();
             obj.date = day;
             goToSchool2.push(obj);
             xLabel2.push("");
@@ -1782,7 +1801,7 @@ export default function HomePage() {
                     <div style={{ padding: "20px 10px 0", color: "#fff" }}>
                       <Row>
                         <Col span={12} style={{ fontSize: "20px" }}>
-                          TVL
+                          xCFX TVL
                         </Col>
                         <Col span={12} className={styles.tit1}>
                           ${total1.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
