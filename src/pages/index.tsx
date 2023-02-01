@@ -1979,7 +1979,7 @@ export default function HomePage() {
                       )}
                       {Math.abs(
                         parseFloat(total2) - parseFloat(closingPrice2)
-                      ).toFixed(2)}
+                      ).toFixed(3)}
                       %
                     </div>
                     <div
