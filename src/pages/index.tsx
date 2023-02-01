@@ -1810,7 +1810,16 @@ export default function HomePage() {
                     <div style={{ padding: "20px 10px 0", color: "#fff" }}>
                       <Row>
                         <Col span={12} style={{ fontSize: "20px" }}>
-                          xCFX TVL
+                          xCFX
+                          <span
+                            style={{
+                              fontSize: "12px",
+                              fontFamily: "Univa Nova Regular",
+                              color: "#ffffff8a",
+                            }}
+                          >
+                            <span className={styles.auxiliary}>Circ.Mkt.Cap</span>
+                          </span>
                         </Col>
                         <Col span={12} className={styles.tit1}>
                           ${total1.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
