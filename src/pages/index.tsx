@@ -1810,7 +1810,7 @@ export default function HomePage() {
                       margin: "0 0 80px",
                     }}
                   >
-                    <div style={{ padding: "20px 10px 0", color: "#fff" }}>
+                    <div style={{ padding: "20px 1px 0", color: "#fff" }}>
                       <Row>
                         <Col span={12} style={{ fontSize: "20px" }}>
                           xCFX
@@ -1963,7 +1963,7 @@ export default function HomePage() {
                       margin: "0 0 80px",
                     }}
                   >
-                    <div style={{ padding: "20px 10px 0", color: "#fff" }}>
+                    <div style={{ padding: "20px 1px 0", color: "#fff" }}>
                       <Row>
                         <Col span={12} style={{ fontSize: "20px" }}>
                           APY
@@ -2108,7 +2108,7 @@ export default function HomePage() {
                       margin: "0 0 80px",
                     }}
                   >
-                    <div style={{ padding: "20px 10px 0", color: "#fff" }}>
+                    <div style={{ padding: "20px 1px 0", color: "#fff" }}>
                       <Row>
                         <Col span={12} style={{ fontSize: "20px" }}>
                           xCFX
@@ -2261,7 +2261,7 @@ export default function HomePage() {
                       margin: "0 0 80px",
                     }}
                   >
-                    <div style={{ padding: "20px 10px 0", color: "#fff" }}>
+                    <div style={{ padding: "20px 1px 0", color: "#fff" }}>
                       <Row>
                         <Col span={12} style={{ fontSize: "20px" }}>
                           xCFX
