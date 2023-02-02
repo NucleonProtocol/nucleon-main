@@ -82,7 +82,7 @@ const warning = () => {
   Modal.warning({
     wrapClassName: styles.zzzz,
     bodyStyle: { backgroundColor: "#393942", color: "#ffffff" },
-    content: "Fluent Or MetaMask Not Install",
+    content: "Wallet Not Install",
   });
 };
 

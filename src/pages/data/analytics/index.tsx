@@ -25,6 +25,7 @@ import axios from "axios";
 import { Button, Col, Row, Carousel, Checkbox } from "antd";
 const { Drip } = require("js-conflux-sdk");
 const { addressPool } = require("./../../../ABI/Pools.json");
+const { addressVaults } = require("./../../../ABI/vaults.json");
 const { addressExc, abiExc } = require("./../../../ABI/ExchangeRoom.json");
 const { addressNut, abiNut } = require("./../../../ABI/Nut.json");
 const { formatNumber} = require("../../../utils/tools.js");
@@ -1226,7 +1227,8 @@ export default function Page() {
       }, 100);
 
       const nutbalance = await nutContract.balanceOf(addressPool);
-      const nutbalanceCFX:any = new Drip(nutbalance).toCFX();
+      const nutbalance2 = await nutContract.balanceOf(addressVaults);
+      const nutbalanceCFX:any = new Drip(nutbalance + nutbalance2).toCFX();
       setTotalEmissionNUT('0');
       // setTotalEmissionNUT((300000-nutbalanceCFX).toString());
       const confluxscanData = await axios.get(

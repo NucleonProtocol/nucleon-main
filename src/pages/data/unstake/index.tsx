@@ -241,7 +241,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
             }}
             onClick={onToken}
           >
-            <span>Add {tokenUsed} to Metamask</span>
+            <span>Add {tokenUsed} to Your Wallet</span>
           </button>
           <div
             style={{

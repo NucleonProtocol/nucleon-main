@@ -24,6 +24,7 @@ const {
   abiNut,
 } = require("./../ABI/Nut.json");
 const { addressPool } = require("./../ABI/Pools.json");
+const { addressVaults } = require("./../ABI/vaults.json");
 const provider = new ethers.providers.JsonRpcProvider(
   "https://evm.confluxrpc.com"
 );
@@ -542,7 +543,7 @@ export default function HomePage() {
     Modal.warning({
       wrapClassName: styles.zzzz,
       bodyStyle: { backgroundColor: "#393942", color: "#ffffff" },
-      content: 'Fluent Or MetaMask Not Install',
+      content: 'Wallet Not Install',
     });
   };
 
@@ -1607,11 +1608,13 @@ export default function HomePage() {
       }, 500);
 
       const nutbalance = await nutContract.balanceOf(addressPool);
-      const nutbalanceCFX: any = new Drip(nutbalance).toCFX();
+      const nutbalance2 = await nutContract.balanceOf(addressVaults);
+      
+      const nutbalanceCFX: any = new Drip(nutbalance+nutbalance2).toCFX();
       setNutSupply('0');
       // setNutSupply((300000 - nutbalanceCFX).toString());
       setCirculatingNUT((0).toString());  
-      // setCirculatingNUT(((300000 - nutbalanceCFX) / 3000).toString());     
+      // setCirculatingNUT(((300000 - nutbalanceCFX) / 3000).toString()); 
     })();
     setTimeout(() => {
               try {

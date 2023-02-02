@@ -33,7 +33,7 @@ const warning = () => {
   Modal.warning({
     wrapClassName: styles.zzzz,
     bodyStyle: { backgroundColor: "#393942", color: "#ffffff" },
-    content: "Fluent Or MetaMask Not Install",
+    content: "Wallet Not Install",
   });
 };
 
@@ -156,7 +156,7 @@ export default function Layout() {
                     {status !== "in-detecting" && status !== "active" && (
                       <span onClick={connect}>
                         {status === "in-activating" && "connecting..."}
-                        {status === "not-installed" && "MetaMask Not Install"}
+                        {status === "not-installed" && "Wallet Not Install"}
                         {status === "not-active" && "Connect Wallet"}
                       </span>
                     )}
