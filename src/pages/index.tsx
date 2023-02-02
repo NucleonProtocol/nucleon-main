@@ -1821,7 +1821,7 @@ export default function HomePage() {
                               color: "#ffffff8a",
                             }}
                           >
-                            <span className={styles.auxiliary}>Circ.Mkt.Cap</span>
+                            <span>Circ.Mkt.Cap</span>
                           </span>
                         </Col>
                         <Col span={12} className={styles.tit1}>
@@ -2119,7 +2119,7 @@ export default function HomePage() {
                               color: "#ffffff8a",
                             }}
                           >
-                            <span className={styles.auxiliary}>value</span>
+                            <span>value</span>
                           </span>
                         </Col>
                         <Col span={12} className={styles.tit1}>
@@ -2272,7 +2272,7 @@ export default function HomePage() {
                               color: "#ffffff8a",
                             }}
                           >
-                            <span className={styles.auxiliary}>minted</span>
+                            <span>minted</span>
                           </span>
                         </Col>
                         <Col span={12} className={styles.tit1}>

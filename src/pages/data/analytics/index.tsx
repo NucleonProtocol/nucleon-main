@@ -181,7 +181,7 @@ export default function Page() {
           goToSchool6.push(obj6);
           xLabel6.push("");
 
-          const val5 = y.multipliedBy(p).toString();
+          const val5 = y.toString(); //.multipliedBy(p)
           const day5 = element.created_at.toString();
           let obj5 = { date: day5, value: val5 };
           xLabel5.push("");
@@ -632,7 +632,7 @@ export default function Page() {
               color: "#ffffff",
               padding: 0,
               formatter: function (value: number) {
-                return "$" + value.toFixed(4);
+                return "$" + value.toFixed(0);
               },
             },
             axisTick: {
@@ -798,7 +798,7 @@ export default function Page() {
               color: "#ffffff",
               padding: 0,
               formatter: function (value: number) {
-                return "$" + value.toFixed(4);
+                return "$" + value.toFixed(0);
               },
             },
             axisTick: {
@@ -964,7 +964,7 @@ export default function Page() {
               color: "#ffffff",
               padding: 0,
               formatter: function (value: number) {
-                return "$" + value.toFixed(4);
+                return value.toFixed(4);
               },
             },
             axisTick: {
@@ -1444,7 +1444,7 @@ export default function Page() {
             const y = new BigNumber(xcfxvalues);
             const price = element.price;
             const p = new BigNumber(price);
-            const val5 = y.multipliedBy(p).toString();
+            const val5 = y.toString();//.multipliedBy(p)
             const day5 = element.created_at.toString();
             let obj5 = { date: day5, value: val5 };
             goToSchool5.push(obj5);
@@ -1736,7 +1736,7 @@ export default function Page() {
             <Col sm={12} xs={24}>
               <div className={style.box2}>
                 <div className={style.board2}></div>
-                xCFX Values
+                xCFX Values(CFX)
                 <div
                   className={styles.main5}
                   style={{ height: "340px", width: "100%", marginTop: "70px" }}
