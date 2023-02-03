@@ -1366,7 +1366,7 @@ export default function Page() {
             <h4>CFX Statistics</h4>
             <div className={style.box5}>
               <Row gutter={32}>
-                <Col span={12}>Annual Percentage Rate</Col>
+                <Col span={12}>Nucleon APY</Col>
                 <Col span={12} style={{ textAlign: "right" }}>
                   {rate}%
                 </Col>
