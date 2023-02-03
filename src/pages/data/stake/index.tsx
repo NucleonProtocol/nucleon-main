@@ -299,7 +299,7 @@ export default function Page() {
       if (!burnVal) return;
       if(chainId !='1030'){
         onSwitchNetwork();
-        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux eSpace network!');//switch
+        alert('  Wrong network detected!\r\n  Now switching to Conflux eSpace network.');//switch
         return;
       }
       
@@ -1095,9 +1095,9 @@ export default function Page() {
                     </span>
                   </Col>
                   <Col xs={24} sm={24} md={5} lg={5} xl={5}>
-                    CFX APY{" "}
+                     Nucleon APY{" "}
                     <b style={{ fontWeight: "normal" }}>
-                      {parseFloat((+cfxapy * 100).toString()).toFixed(2)}%
+                      {parseFloat((+rate).toString()).toFixed(2)}%
                     </b>
                   </Col>
                   <Col

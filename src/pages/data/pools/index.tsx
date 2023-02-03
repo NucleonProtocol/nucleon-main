@@ -319,7 +319,7 @@ export default function Page() {
     return async (e: any) => {
       if(chainId !='1030'){
         onSwitchNetwork();
-        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace test network!');//switch
+        alert('  Wrong network detected!\r\n  Now switching to Conflux eSpace network.');//switch
         return;
       }
       setIsModalOpen("block");
@@ -538,7 +538,7 @@ export default function Page() {
     return async (e: any) => {
       if(chainId !='1030'){
         onSwitchNetwork();
-        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace test network!');//switch
+        alert('  Wrong network detected!\r\n  Now switching to Conflux eSpace network.');//switch
         return;
       }
       setMyLiquility(MyLiquilityarr[val]);
@@ -627,7 +627,7 @@ export default function Page() {
     return (e: any) => {
       if (chainId != "1030") {
         onSwitchNetwork();
-        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace network!');//switch
+        alert('  Wrong network detected!\r\n  Now switching to Conflux eSpace network.');//switch
         return;
       }
       setMyLiquility(MyLiquilityarr[val]);

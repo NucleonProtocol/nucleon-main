@@ -296,7 +296,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
       ]);
       if (chainId != "1030") {
         onSwitchNetwork();
-        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace network!');//switch
+        alert('  Wrong network detected!\r\n  Now switching to Conflux eSpace network.');//switch
         return;
       }
       (document.getElementById("spinner") as any).style.display = "block";
@@ -362,7 +362,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
       if (unlocked <= 0) return;
       if (chainId != "1030") {
         onSwitchNetwork();
-        alert('  You have used the wrong network.\r\n  Now we will switch to the Conflux Espace network!');//switch
+        alert('  Wrong network detected!\r\n  Now switching to Conflux eSpace network.');//switch
         return;
       }
 
@@ -561,8 +561,12 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
       const res3: {
         data: { count: any; rows: [{ apy: 0.0 }] };
       } = await getStatistics("", 1);
-      const apyT = parseFloat(res3.data.rows[0].apy.toString()).toFixed(4);
-      setCfxapy(apyT);
+      const apyA = res3.data.rows[0].apy;//.toString()).toFixed(4);
+      const n = 365 - 1;
+      const apyT = 1 + apyA / 365;
+      const t = Math.pow(apyT, n);
+      const apyx = (apyA * t * 100).toFixed(3);
+      setCfxapy(apyx);
     })();
   }
   return (
@@ -610,9 +614,9 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
                   <b>{formatNumber(parseFloat(staketotal).toFixed(2))} CFX</b>
                 </Col>
                 <Col xs={24} sm={24} md={5} lg={5} xl={5}>
-                  CFX APY{" "}
+                   Nucleon APY{" "}
                   <b style={{ fontWeight: "normal" }}>
-                    {parseFloat((+cfxapy * 100).toString()).toFixed(2)}%
+                    {parseFloat((+cfxapy).toString()).toFixed(2)}%
                   </b>
                 </Col>
                 <Col

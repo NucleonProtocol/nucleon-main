@@ -227,7 +227,7 @@ export default function Page() {
               result +=
                 '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">Total Value Locked</div>' +
                 '<span style="font-size:12px;color:#ccc">' +
-                moment(item.data.date).format("YYYY-MM-DD HH:00:00") +
+                moment(item.data.date).format("YYYY-MM-DD HH:mm:ss") +
                 "</span><br>" +
                 item.value +
                 "</span>";
@@ -393,7 +393,7 @@ export default function Page() {
               result +=
                 '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">TVL-LP NUT/CFX</div>' +
                 '<span style="font-size:12px;color:#ccc">' +
-                moment(item.data.date).format("YYYY-MM-DD HH:00:00") +
+                moment(item.data.date).format("YYYY-MM-DD HH:mm:ss") +
                 "</span><br>" +
                 item.value +
                 "</span>";
@@ -559,7 +559,7 @@ export default function Page() {
               result +=
                 '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">TVL-LP xCFX/CFX</div>' +
                 '<span style="font-size:12px;color:#ccc">' +
-                moment(item.data.date).format("YYYY-MM-DD HH:00:00") +
+                moment(item.data.date).format("YYYY-MM-DD HH:mm:ss") +
                 "</span><br>" +
                 item.value +
                 "</span>";
@@ -725,7 +725,7 @@ export default function Page() {
               result +=
                 '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">Total Value Locked</div>' +
                 '<span style="font-size:12px;color:#ccc">' +
-                moment(item.data.date).format("YYYY-MM-DD HH:00:00") +
+                moment(item.data.date).format("YYYY-MM-DD HH:mm:ss") +
                 "</span><br>" +
                 item.value +
                 "</span>";
@@ -891,7 +891,7 @@ export default function Page() {
               result +=
                 '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">xCFX value</div>' +
                 '<span style="font-size:12px;color:#ccc">' +
-                moment(item.data.date).format("YYYY-MM-DD HH:00:00") +
+                moment(item.data.date).format("YYYY-MM-DD HH:mm:ss") +
                 "</span><br>" +
                 item.value +
                 "</span>";
@@ -1057,7 +1057,7 @@ export default function Page() {
               result +=
                 '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">NUT values</div>' +
                 '<span style="font-size:12px;color:#ccc">' +
-                moment(item.data.date).format("YYYY-MM-DD HH:00:00") +
+                moment(item.data.date).format("YYYY-MM-DD HH:mm:ss") +
                 "</span><br>" +
                 item.value +
                 "</span>";

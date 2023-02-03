@@ -704,7 +704,7 @@ export default function HomePage() {
               result +=
                 '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">Total Value Locked</div>' +
                 '<span style="font-size:12px;color:#ccc">' +
-                moment(item.data.date).format("YYYY-MM-DD HH:00:00") +
+                moment(item.data.date).format("YYYY-MM-DD HH:mm:ss") +
                 "</span><br>" +
                 item.value +
                 "</span>";
@@ -877,7 +877,7 @@ export default function HomePage() {
               result +=
                 '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">APY</div>' +
                 '<span style="font-size:12px;color:#ccc">' +
-                moment(item.data.date).format("YYYY-MM-DD HH:00:00") +
+                moment(item.data.date).format("YYYY-MM-DD HH:mm:ss") +
                 "</span><br>" +
                 item.value +
                 "</span>";
@@ -1050,7 +1050,7 @@ export default function HomePage() {
               result +=
                 '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">xCFX minted</div>' +
                 '<span style="font-size:12px;color:#ccc">' +
-                moment(item.data.date).format("YYYY-MM-DD HH:00:00") +
+                moment(item.data.date).format("YYYY-MM-DD HH:mm:ss") +
                 "</span><br>" +
                 item.value +
                 "</span>";
@@ -1223,7 +1223,7 @@ export default function HomePage() {
               result +=
                 '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">xCFX value</div>' +
                 '<span style="font-size:12px;color:#ccc">' +
-                moment(item.data.date).format("YYYY-MM-DD HH:00:00") +
+                moment(item.data.date).format("YYYY-MM-DD HH:mm:ss") +
                 "</span><br>" +
                 item.value +
                 "</span>";
@@ -1437,7 +1437,7 @@ export default function HomePage() {
               result +=
                 '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">Total Value Locked</div>' +
                 '<span style="font-size:12px;color:#ccc">' +
-                moment(item.data.date).format("YYYY-MM-DD HH:00:00") +
+                moment(item.data.date).format("YYYY-MM-DD HH:mm:ss") +
                 "</span><br>" +
                 item.value +
                 "</span>";
@@ -1966,7 +1966,7 @@ export default function HomePage() {
                     <div style={{ padding: "20px 1px 0", color: "#fff" }}>
                       <Row>
                         <Col span={12} style={{ fontSize: "20px" }}>
-                          APY
+                          Nucleon APY
                         </Col>
                         <Col span={12} className={styles.tit1}>
                           {total2.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}%
