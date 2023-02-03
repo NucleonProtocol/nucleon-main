@@ -391,7 +391,7 @@ export default function Page() {
             var result = "";
             res.forEach(function (item) {
               result +=
-                '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">TVL-LP CFX/NUT</div>' +
+                '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">TVL-LP NUT/CFX</div>' +
                 '<span style="font-size:12px;color:#ccc">' +
                 moment(item.data.date).format("YYYY-MM-DD HH:00:00") +
                 "</span><br>" +
@@ -557,7 +557,7 @@ export default function Page() {
             var result = "";
             res.forEach(function (item) {
               result +=
-                '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">TVL-LP CFX/xCFX</div>' +
+                '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">TVL-LP xCFX/CFX</div>' +
                 '<span style="font-size:12px;color:#ccc">' +
                 moment(item.data.date).format("YYYY-MM-DD HH:00:00") +
                 "</span><br>" +
@@ -1614,7 +1614,7 @@ export default function Page() {
             <Col sm={12} xs={24}>
               <div className={style.box2}>
                 <div className={style.board2}></div>
-                TVL-LP xCFX/NUT
+                TVL-LP NUT/CFX
                 <div
                   className={styles.main5}
                   style={{ height: "340px", width: "100%", marginTop: "70px" }}
@@ -1667,7 +1667,7 @@ export default function Page() {
             <Col sm={12} xs={24}>
               <div className={style.box2}>
                 <div className={style.board2}></div>
-                TVL-LP CFX/xCFX
+                TVL-LP xCFX/CFX
                 <div
                   className={styles.main5}
                   style={{ height: "340px", width: "100%", marginTop: "70px" }}
