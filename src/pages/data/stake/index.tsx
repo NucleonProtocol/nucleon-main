@@ -473,6 +473,9 @@ export default function Page() {
     });
 
     // 收盘价
+    const confluxscanData = await axios.get(
+      "https://www.confluxscan.io/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+    );
     setClosingPrice(
       parseFloat((T[0].xcfxvalues * +balancevalue).toString()).toFixed(4)
     );
@@ -505,9 +508,17 @@ export default function Page() {
 
           const xcfxvalues = element.xcfxvalues;
           const y = new BigNumber(xcfxvalues);
-          const val4 = +y.toString() * +element.price;
-          const day4 = element.created_at.toString();
-          let obj4 = { date: day4, value: val4 };
+          let val4: any;
+          let day4: any;
+          if (res.data.rows.length - 1 === i) {
+            val4 = +y.toString() * +confluxscanData.data.data.price;
+            day4 = moment().format("YYYY-MM-DD HH:mm:ss")
+          } else {
+            val4 = +y.toString() * +element.price;
+            day4 = element.created_at.toString();
+          }
+          
+                    let obj4 = { date: day4, value: val4 };
           obj4.value = val4;
           obj4.date = day4;
           xgoToSchool0.push(obj4);
@@ -639,7 +650,7 @@ export default function Page() {
               result +=
                 '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">xCFX</div>' +
                 '<span style="font-size:12px;color:#ccc">' +
-                moment(item.data.date).format("YYYY-MM-DD HH:00:00") +
+                moment(item.data.date).format("YYYY-MM-DD HH:mm:ss") +
                 "</span><br>" +
                 item.value +
                 "</span>";
@@ -767,7 +778,9 @@ export default function Page() {
           },
         ],
       };
-
+      const confluxscanData = await axios.get(
+        "https://www.confluxscan.io/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+      );
       const res = await getStatistics("", 24);
 
       res.data.rows.reverse().forEach(
@@ -795,9 +808,22 @@ export default function Page() {
           // const balancevalueT2 = parseFloat(
           //   (+element.xcfxvalues * +element.price).toString()
           // ).toFixed(4);
-
-          const val4 = +y.toString() * +element.price;
-          const day4 = element.created_at.toString();
+          let day4: any;
+                      if(res.data.rows.length -1 === i) {
+                        val4 = +y.toString() * +confluxscanData.data.data.price;
+                        day4 = moment().format("YYYY-MM-DD HH:mm:ss")
+                      } else {
+                        val4 = +y.toString() * +element.price;
+                        day4 = element.created_at.toString();
+                      }
+          let val4: any;
+                    if(res.data.rows.length -1 === i) {
+                      val4 = +y.toString() * +confluxscanData.data.data.price;
+                    } else {
+                      val4 = +y.toString() * +element.price;
+                    }
+          // const val4 = +y.toString() * +element.price;
+          // const day4 = element.created_at.toString();
           let obj4 = { date: day4, value: val4 };
           obj4.value = val4;
           obj4.date = day4;
@@ -831,9 +857,9 @@ export default function Page() {
         parseFloat((xcfxvalues * totalxcfxs).toString()).toFixed(4)
       );
 
-      const confluxscanData = await axios.get(
-        "https://www.confluxscan.io/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
-      );
+      // const confluxscanData = await axios.get(
+      //   "https://www.confluxscan.io/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+      // );
 
       const data = confluxscanData.data.data;
       const totalxcfxs0 = new BigNumber(totalxcfxs);
