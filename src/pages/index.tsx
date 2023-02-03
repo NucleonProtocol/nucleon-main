@@ -327,7 +327,10 @@ export default function HomePage() {
           i: any
         ) => {
           if (_cond === "") {
-            const val = (element.apy * 100).toFixed(3);
+            const n = 365 - 1;
+            const apyT = 1 + element.apy / 365;
+            const t = Math.pow(apyT, n);
+            const val = (element.apy * t * 100).toFixed(3);
             const val2 = val;
             const day2 = element.created_at.toString();
             let obj2 = { date: day2, value: val2 };
@@ -341,7 +344,7 @@ export default function HomePage() {
           //((1+APY/365）n-1)/n)*365
           // APY * (1+APY/365）的（n-1）次方
           if (_cond === "weeks") {
-            const n = 7 - 1;
+            const n = 365 - 1;
             const apyT = 1 + element.apy / 365;
             const t = Math.pow(apyT, n);
             const val = (element.apy * t * 100).toFixed(3);
@@ -356,7 +359,7 @@ export default function HomePage() {
             return;
           }
           if (_cond === "months") {
-            const n = 30 - 1;
+            const n = 365 - 1;
             const apyT = 1 + element.apy / 365;
             const t = Math.pow(apyT, n);
             const val = (element.apy * t * 100).toFixed(3);
@@ -386,7 +389,7 @@ export default function HomePage() {
             return;
           }
           if (_cond === "5years") {
-            const n = 365 * 5 - 1;
+            const n = 365 - 1;
             const apyT = 1 + element.apy / 365;
             const t = Math.pow(apyT, n);
             const val = (element.apy * t * 100).toFixed(3);
@@ -633,8 +636,8 @@ export default function HomePage() {
             xLabel.push("");
 
             const apy2 = 1 + element.apy / 365;
-            const t = Math.pow(apy2, 1); // n的值
-            setTotal2(parseFloat((element.apy * 100).toString()).toFixed(3));
+            const t = Math.pow(apy2, 365); // n的值
+            setTotal2(parseFloat((element.apy * t * 100).toString()).toFixed(3));
             const val2 = parseFloat((element.apy * 100).toString()).toFixed(3);
             const day2 = element.created_at.toString();
             let obj2 = { date: day2, value: val2 };
