@@ -290,10 +290,18 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
     const handleClickSendTransaction = useCallback(async () => {
       if (!account) return;
       if (!burnVal) return;
+       //精确执行
+      let tempaccuratevalues : any;
+      // console.log(xcfxAmount,burnVal);
+      if(burnVal == parseFloat(xcfxAmount.toString()).toFixed(3)){
+        // console.log('----------');
+        tempaccuratevalues = await xcfxContract.balanceOf(myacc);
+      }else{
+        // console.log('**********');
+        tempaccuratevalues = Unit.fromStandardUnit(burnVal).toHexMinUnit();
+      }
+      const data = excinterface.encodeFunctionData("XCFX_burn", [tempaccuratevalues]);
 
-      const data = excinterface.encodeFunctionData("XCFX_burn", [
-        Unit.fromStandardUnit(burnVal).toHexMinUnit(),
-      ]);
       if (chainId != "1030") {
         onSwitchNetwork();
         alert('  Wrong network detected!\r\n  Now switching to Conflux eSpace network.');//switch
@@ -451,8 +459,8 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
     } else {
       // const val = await xcfxContract.balanceOf(account);// val ~= xcfxAmount; val is more accurate;
       const val = Unit.fromStandardUnit(+xcfxAmount.toString()).toHexMinUnit();
-      console.log(xcfxAmount,val);
-      setBurnVal(parseFloat((+xcfxAmount).toString()).toFixed(3));
+      // console.log(xcfxAmount,val);
+      setBurnVal(parseFloat(xcfxAmount.toString()).toFixed(3));
       const rest = await excContract.XCFX_burn_estim(val);
       console.log(rest,Drip(rest).toCFX());
       setXcfxVal(parseFloat(Drip(rest).toCFX()).toFixed(3));
@@ -603,7 +611,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
                 <Col span={24}>
                   Available to unstake <div className={style.board}></div>
                   <br />
-                  <b>{formatNumber(parseFloat(xcfxAmount).toFixed(2))} xCFX</b>
+                  <b>{formatNumber(parseFloat(xcfxAmount).toFixed(3))} xCFX</b>
                 </Col>
               </Row>
               <div className={style.line}></div>
