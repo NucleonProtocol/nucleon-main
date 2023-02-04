@@ -8,8 +8,9 @@ import { Link } from "umi";
 import styles from "./../../../layouts/index.less";
 import style from "./index.less";
 
-import logo from "../../../assets/logo.svg";
-import logotxt from "../../../assets/logotxt.svg";
+import copy from "../../../assets/copy.png";
+import mb from "../../../assets/mbg.png";
+import addto from "../../../assets/addto.png";
 import logo8 from "../../../assets/logo8.png";
 import arrow from "../../../assets/arrow.png";
 import yuan from "../../../assets/yuan.png";
@@ -99,8 +100,10 @@ export default function Page() {
   const nutoContract = new ethers.Contract(addressNut, abiNut, provider);
   const nutoInterface = new utils.Interface(abiNut);
   const [tranHash, setTranHash] = useState("");
-  const [operation, setOperation] = useState("Details:");
+  const [operation, setOperation] = useState("Comfirm");
   const [tokenUsed, setTokenUsed] = useState("xCFX");
+  const [popup1, setPopup1] = useState("1.65");
+  const [popup2, setPopup2] = useState("1.55");
   // web3 钱包登录
   const WalletInfo: React.FC = memo(() => {
     const account = useAccount();
@@ -159,6 +162,90 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
 // if (chainId != "71") {onSwitchNetwork()}
 
   const MyModal: React.FC = memo(() => {
+    function closeCurr() {
+      setTranHash("");
+    }
+    async function onToken() {
+      const watchAssetParams = {
+        type: "ERC20", // In the future, other standards will be supported
+        options: tokenSetting
+      };
+      try {
+        (document.getElementById("spinner") as any).style.display = "block";
+        await watchAsset(watchAssetParams); // 添加网络
+      } catch (error) {
+        setIsModalOpen2("none");
+        (document.getElementById("spinner") as any).style.display = "none";
+      }
+      (document.getElementById("spinner") as any).style.display = "none";
+    }
+    return (
+      <div
+        className="ant-modal-content"
+        style={{
+          display: tranHash === "" ? "none" : "block",
+          width: "400px",
+          position: "fixed",
+          left: "50%",
+          marginLeft: "-200px",
+                    top: "200px",
+          zIndex: "10000000",
+          borderRadius: "10px",
+          backgroundColor: "#393942"
+        }}
+      >
+        <div className="ant-modal-body">
+          <div className="ant-modal-confirm-body-wrapper">
+            <div className="ant-modal-confirm-body">
+              <div style={{ color: "#000", textAlign: "left" }}>
+                <h5 style={{ fontSize: "16px", fontWeight: "blod", color: "#fff" }}>{operation}</h5>
+                <div style={{ color: "#fff", position: "absolute", right: "20px", top: "10px", cursor: "pointer", fontSize: "20px" }} onClick={closeCurr}>X</div>
+              </div>
+              <img src={mb} width="60%" style={{ margin: "20px 0 20px 20%" }} />
+              <Row style={{ color: "#fff", lineHeight: "36px" }}>
+                <Col span={6}>Burned</Col>
+                <Col span={18} style={{ textAlign: "right",fontFamily: 'Univa Nova Bold' }}>{popup1} xCFX</Col>
+              </Row>
+              <Row style={{ color: "#fff", lineHeight: "36px" }}>
+                <Col span={6}>Will Receive</Col>
+                <Col span={18} style={{ textAlign: "right",fontFamily: 'Univa Nova Bold' }}>{popup2} CFX</Col>
+              </Row>
+              <div style={{ borderTop: "1px solid rgba(255,255,255,.3)", margin: "20px 0 20px" }}></div>
+              <div
+                className="ant-modal-confirm-content"
+                style={{ color: "#fff" }}
+              >
+                <div style={{ fontFamily: 'Univa Nova Bold' }}>Hash: </div>
+                <a target="_blank" style={{ color: "#fff" }} href={'https://evm.confluxscan.io/tx/' + tranHash}>{tranHash} <img src={copy} height="12px" style={{}} /></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style={{ background: "#EAB966",fontFamily: 'Univa Nova Bold', textAlign: "center", fontSize:"18px", borderRadius: "20px", lineHeight: "40px", height: "40px", margin: "20px", cursor: "pointer", }} onClick={closeCurr}>OK</div>
+        <div
+          className="ant-modal-confirm-btns"
+          style={{ textAlign: "right", margin: "30px 0 0", background: "#54545b" }}
+        >
+          <button
+            type="button"
+            className="ant-btn ant-btn-primary"
+            style={{
+              background: "#54545b",
+              borderColor: "#54545b",
+              float: "left",
+              width: "100%",
+              height: "50px",
+              borderRadius: "0 0 5px 5px"
+            }}
+            onClick={onToken}
+          >
+            <span><img src={addto} height="14px" style={{}} /> Add {tokenUsed} to Your Wallet</span>
+          </button>
+        </div>
+      </div>
+    );
+  });
+  const MyModal0: React.FC = memo(() => {
     function closeCurr() {
       setTranHash("");
     }
@@ -317,21 +404,29 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
       const txReceipt = await waitTransactionReceipt(TxnHash);//cfx_back, speedMode
       console.log("BBB",TxnHash);
       console.log(txReceipt);
+      // if(period ===0){
+      //   setOperation("Details: "+burnVal+ "xCFX Unstaked; "
+      //               + Drip(Unit.fromStandardUnit(txReceipt.logs[1].data).toDecimalStandardUnit()).toCFX()
+      //               +" CFX will unfreeze after about "
+      //               +"16 days.")
+      // }else{
+      //   setOperation("Details: "+burnVal+ "xCFX Unstaked; "
+      //               + Drip(Unit.fromStandardUnit(txReceipt.logs[1].data).toDecimalStandardUnit()).toCFX()
+      //               +" CFX will unfreeze after about "
+      //               +period +"48 hours.")
+      // }
       if(period ===0){
-        setOperation("Details: "+burnVal+ "xCFX Unstaked; "
-                    + Drip(Unit.fromStandardUnit(txReceipt.logs[1].data).toDecimalStandardUnit()).toCFX()
-                    +" CFX will unfreeze after about "
-                    +"16 days.")
+        setOperation("Confirm: CFX will unfreeze after about 16 days.")
       }else{
-        setOperation("Details: "+burnVal+ "xCFX Unstaked; "
-                    + Drip(Unit.fromStandardUnit(txReceipt.logs[1].data).toDecimalStandardUnit()).toCFX()
-                    +" CFX will unfreeze after about "
-                    +period +"48 hours.")
+        setOperation("Confirm: CFX will unfreeze after about 48 hours.")
       }
-      
+      // setOperation("xCFX burn");
+      setPopup1(Drip(Unit.fromStandardUnit(txReceipt.logs[0].data).toDecimalStandardUnit()).toCFX());
+      setPopup2(Drip(Unit.fromStandardUnit(txReceipt.logs[1].data).toDecimalStandardUnit()).toCFX());
       setTimeout(setTranHash(TxnHash),3690);
       } 
       catch (error) {
+        console.log(error);
         (document.getElementById("spinner") as any).style.display = "none";
       }
       setTimeout(() => {
