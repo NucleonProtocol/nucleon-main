@@ -3,7 +3,7 @@ import { Link } from "umi";
 // import React from "react";
 import { Helmet } from "react-helmet";
 import * as echarts from "echarts";
-import waitTransactionReceipt from './../../../utils/waitTranscationReceipt'; 
+import waitTransactionReceipt from './../../../utils/waitTranscationReceipt';
 var moment = require("moment");
 
 import axios from "axios";
@@ -51,10 +51,10 @@ function getStatistics(cond: string, limit = 24): Promise<any> {
       resolve(
         axios.get(
           domain +
-            "/api/v1/statistics?condition=" +
-            cond +
-            "&offset=0&limit=" +
-            limit
+          "/api/v1/statistics?condition=" +
+          cond +
+          "&offset=0&limit=" +
+          limit
         )
       );
     }, 1000);
@@ -64,7 +64,7 @@ function getStatistics(cond: string, limit = 24): Promise<any> {
 // Function 切换网络--------------------------------------------
 function reloadPage() {
   setTimeout(function () {
-      location.reload();
+    location.reload();
   }, 100)
 }
 const onSwitchNetwork = async () => {
@@ -107,9 +107,9 @@ export default function Page() {
   const [totalStaked, setTotalStaked] = useState("--");
   const [holder, setHolder] = useState("--");
   const [holderCount, setHolderCount] = useState("--");
-  let holderCount1:any;
-  let holderCount2:any;
-  let holderCount3:any;
+  let holderCount1: any;
+  let holderCount2: any;
+  let holderCount3: any;
   // const [holderCount2, setHolderCount2] = useState("--");
   const [price, setPrice] = useState(0);
   const [closingPrice, setClosingPrice] = useState("0.0000");
@@ -119,15 +119,15 @@ export default function Page() {
   const [tranHash, setTranHash] = useState("");
   const [operation, setOperation] = useState("Operation");
   const [tokenUsed, setTokenUsed] = useState("xCFX");
-  
+
   let xLabel0 = [""];
   let xgoToSchool0: { date: any; value: any }[] = [];
   let xCFXToken = {
-                    address: "0x889138644274a7Dc602f25A7e7D53fF40E6d0091", // The address of the token contract
-                    symbol: "xCFX", // A ticker symbol or shorthand, up to 5 characters
-                    decimals: 18, // The number of token decimals
-                    image: "https://app.swappi.io/static/media/0x889138644274a7Dc602f25A7e7D53fF40E6d0091.a0ecb3fe.png", // A string url of the token logo
-                  };
+    address: "0x889138644274a7Dc602f25A7e7D53fF40E6d0091", // The address of the token contract
+    symbol: "xCFX", // A ticker symbol or shorthand, up to 5 characters
+    decimals: 18, // The number of token decimals
+    image: "https://app.swappi.io/static/media/0x889138644274a7Dc602f25A7e7D53fF40E6d0091.a0ecb3fe.png", // A string url of the token logo
+  };
   // const { addressMulticall, abiMulticall } = require("./../../../ABI/Multicall.json");
   const provider = new ethers.providers.JsonRpcProvider(
     "https://evm.confluxrpc.com"
@@ -174,12 +174,12 @@ export default function Page() {
     function closeCurr() {
       setTranHash("");
     }
-    async function  onToken() {
+    async function onToken() {
       const watchAssetParams = {
         type: "ERC20", // In the future, other standards will be supported
         options: tokenSetting
       };
-      try{
+      try {
         (document.getElementById("spinner") as any).style.display = "block";
         await watchAsset(watchAssetParams); // 添加网络
       } catch (error) {
@@ -200,14 +200,14 @@ export default function Page() {
           top: "300px",
           zIndex: "10000000",
           borderRadius: "10px",
-          backgroundColor:"#393942"
+          backgroundColor: "#393942"
         }}
       >
         <div className="ant-modal-body">
           <div className="ant-modal-confirm-body-wrapper">
             <div className="ant-modal-confirm-body">
               <div style={{ color: "#000", textAlign: "left" }}>
-                <h5 style={{fontSize:"16px", fontWeight: "blod",color:"#fff"}}>{operation}</h5>
+                <h5 style={{ fontSize: "16px", fontWeight: "blod", color: "#fff" }}>{operation}</h5>
                 <span
                   role="img"
                   aria-label="check-circle"
@@ -221,7 +221,7 @@ export default function Page() {
                     height="30px"
                     fill="currentColor"
                     aria-hidden="true"
-                    style={{color:"rgb(234, 185, 102)"}}
+                    style={{ color: "rgb(234, 185, 102)" }}
                   >
                     <path d="M699 353h-46.9c-10.2 0-19.9 4.9-25.9 13.3L469 584.3l-71.2-98.8c-6-8.3-15.6-13.3-25.9-13.3H325c-6.5 0-10.3 7.4-6.5 12.7l124.6 172.8a31.8 31.8 0 0051.7 0l210.6-292c3.9-5.3.1-12.7-6.4-12.7z"></path>
                     <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"></path>
@@ -288,7 +288,7 @@ export default function Page() {
             }}
             onClick={closeCurr}
           >
-            <span style={{padding:"0 0 0 30px"}}>OK</span>
+            <span style={{ padding: "0 0 0 30px" }}>OK</span>
           </button>
         </div>
       </div>
@@ -303,12 +303,12 @@ export default function Page() {
     const handleClickSendTransaction = useCallback(async () => {
       if (!account) return;
       if (!burnVal) return;
-      if(chainId !='1030'){
+      if (chainId != '1030') {
         onSwitchNetwork();
         alert('  Wrong network detected!\r\n  Now switching to Conflux eSpace network.');//switch
         return;
       }
-      
+
       const data = excinterface.encodeFunctionData("CFX_exchange_XCFX", []);
 
       (document.getElementById("spinner") as any).style.display = "block";
@@ -319,17 +319,17 @@ export default function Page() {
           value: Unit.fromStandardUnit(burnVal).toHexMinUnit(),
         });
         // const txReceipt = await waitTransactionReceipt(txnHash);
-        console.log("AAA",TxnHash);
+        console.log("AAA", TxnHash);
         const txReceipt = await waitTransactionReceipt(TxnHash);
-        console.log(txReceipt.logs[0].data,Drip(Unit.fromStandardUnit(txReceipt.logs[0].data).toDecimalStandardUnit()).toCFX());
+        console.log(txReceipt.logs[0].data, Drip(Unit.fromStandardUnit(txReceipt.logs[0].data).toDecimalStandardUnit()).toCFX());
         console.log(Drip(Unit.fromStandardUnit(txReceipt.logs[1].data).toDecimalStandardUnit()).toCFX());
         console.log(txReceipt);
         setOperation("Details: "
-                      +(Drip(Unit.fromStandardUnit(txReceipt.logs[1].data).toDecimalStandardUnit()).toCFX())
-                      +" CFX staked; "
-                      +(Drip(Unit.fromStandardUnit(txReceipt.logs[0].data).toDecimalStandardUnit()).toCFX())
-                      +" xCFX received.")
-        setTimeout(setTranHash(TxnHash),3690);
+          + (Drip(Unit.fromStandardUnit(txReceipt.logs[1].data).toDecimalStandardUnit()).toCFX())
+          + " CFX staked; "
+          + (Drip(Unit.fromStandardUnit(txReceipt.logs[0].data).toDecimalStandardUnit()).toCFX())
+          + " xCFX received.")
+        setTimeout(setTranHash(TxnHash), 3690);
       } catch (error) {
         (document.getElementById("spinner") as any).style.display = "none";
       }
@@ -408,7 +408,7 @@ export default function Page() {
     if (!re.test(val)) {
       return;
     }
-    
+
     const rest = await excContract.CFX_exchange_estim(
       Unit.fromStandardUnit(val).toHexMinUnit()
     );
@@ -426,7 +426,7 @@ export default function Page() {
       const val = Unit.fromStandardUnit((+staketotal - 1).toString()).toHexMinUnit();
       setBurnVal(parseFloat((+staketotal - 1).toString()).toFixed(3));
       const rest = await excContract.CFX_exchange_estim(val);
-      console.log(rest,Drip(rest).toCFX());
+      console.log(rest, Drip(rest).toCFX());
       setXcfxVal(parseFloat(Drip(rest).toCFX()).toFixed(2));
     }
   }
@@ -523,8 +523,8 @@ export default function Page() {
             val4 = +y.toString() * +element.price;
             day4 = element.created_at.toString();
           }
-          
-                    let obj4 = { date: day4, value: val4 };
+
+          let obj4 = { date: day4, value: val4 };
           obj4.value = val4;
           obj4.date = day4;
           xgoToSchool0.push(obj4);
@@ -591,7 +591,7 @@ export default function Page() {
         .then(async (response) => {
           setBlockNumber(response.data.result.blockNumber);
         });
-      
+
       axios
         .get(
           " https://evm.confluxscan.io/stat/tokens/by-address?address=0x889138644274a7Dc602f25A7e7D53fF40E6d0091&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
@@ -607,7 +607,7 @@ export default function Page() {
         .then(async (response) => {
           holderCount2 = response.data.result.holderCount;
         });
-        // console.log(holderCount, holderCount2);
+      // console.log(holderCount, holderCount2);
       axios
         .get(
           " https://evm.confluxscan.io/stat/tokens/by-address?address=0x949b78ef2c8d6979098e195b08f27ff99cb20448&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
@@ -836,19 +836,20 @@ export default function Page() {
           //   (+element.xcfxvalues * +element.price).toString()
           // ).toFixed(4);
           let day4: any;
-                      if(res.data.rows.length -1 === i) {
-                        val4 = +y.toString() * +confluxscanData.data.data.price;
-                        day4 = moment().format("YYYY-MM-DD HH:mm:ss")
-                      } else {
-                        val4 = +y.toString() * +element.price;
-                        day4 = element.created_at.toString();
-                      }
           let val4: any;
-                    if(res.data.rows.length -1 === i) {
-                      val4 = +y.toString() * +confluxscanData.data.data.price;
-                    } else {
-                      val4 = +y.toString() * +element.price;
-                    }
+          if (res.data.rows.length - 1 === i) {
+            val4 = +y.toString() * +confluxscanData.data.data.price;
+            day4 = moment().format("YYYY-MM-DD HH:mm:ss")
+          } else {
+            val4 = +y.toString() * +element.price;
+            day4 = element.created_at.toString();
+          }
+
+          if (res.data.rows.length - 1 === i) {
+            val4 = +y.toString() * +confluxscanData.data.data.price;
+          } else {
+            val4 = +y.toString() * +element.price;
+          }
           // const val4 = +y.toString() * +element.price;
           // const day4 = element.created_at.toString();
           let obj4 = { date: day4, value: val4 };
@@ -864,7 +865,7 @@ export default function Page() {
         myChart = echarts.init(document.getElementById("main0") as HTMLElement);
         // 绘制图表1
         myChart.setOption(option);
-      } catch (error) {}
+      } catch (error) { }
 
       var len = xgoToSchool0.length - 1;
       setClosingPrice(
@@ -898,7 +899,7 @@ export default function Page() {
 
       const holderCount = data.holderCount;
       setHolder(holderCount);
-      setHolderCount(holderCount1+holderCount2+holderCount3);
+      setHolderCount(holderCount1 + holderCount2 + holderCount3);
       // console.log(holderCount,holderCount2);
       setPrice(data.price);
       const balancevalueT = parseFloat(
@@ -1077,7 +1078,7 @@ export default function Page() {
               Your NUTs：{parseFloat(mynut).toFixed(2)}
             </span>
           </div>
-          <div style={{clear:"both"}}></div>
+          <div style={{ clear: "both" }}></div>
           <Row gutter={32} className={style.brief}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
               <div className={style.box1}>
@@ -1122,8 +1123,8 @@ export default function Page() {
                       +
                     </span>
                   </Col>
-                  <Col xs={24} sm={24} md={5} lg={5} xl={5}>
-                     Nucleon APY{" "}
+                  <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                    Nucleon APY{" "}
                     <b style={{ fontWeight: "normal" }}>
                       {parseFloat((+rate).toString()).toFixed(2)}%
                     </b>
@@ -1213,12 +1214,12 @@ export default function Page() {
                     </Button>
                   </Col>
                 </Row>
-                <div style={{padding: "25px 0 0"}}>
-                   <StakeButton />
+                <div style={{ padding: "25px 0 0" }}>
+                  <StakeButton />
                 </div>
               </div>
             </Col>
-            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} className={style.mb}>
               <div className={style.box2}>
                 <img className={styles.coin1} src={logo8} height="40px" />
                 <div className={style.board2}></div>
@@ -1233,9 +1234,9 @@ export default function Page() {
                   style={
                     chart3Tab === 0
                       ? {
-                          background: " #EAB966",
-                          borderRadius: "7px",
-                        }
+                        background: " #EAB966",
+                        borderRadius: "7px",
+                      }
                       : {}
                   }
                   onClick={() => {
@@ -1249,9 +1250,9 @@ export default function Page() {
                   style={
                     chart3Tab === 1
                       ? {
-                          background: " #EAB966",
-                          borderRadius: "7px",
-                        }
+                        background: " #EAB966",
+                        borderRadius: "7px",
+                      }
                       : {}
                   }
                   onClick={() => {
@@ -1265,9 +1266,9 @@ export default function Page() {
                   style={
                     chart3Tab === 2
                       ? {
-                          background: " #EAB966",
-                          borderRadius: "7px",
-                        }
+                        background: " #EAB966",
+                        borderRadius: "7px",
+                      }
                       : {}
                   }
                   onClick={() => {
@@ -1281,9 +1282,9 @@ export default function Page() {
                   style={
                     chart3Tab === 3
                       ? {
-                          background: " #EAB966",
-                          borderRadius: "7px",
-                        }
+                        background: " #EAB966",
+                        borderRadius: "7px",
+                      }
                       : {}
                   }
                   onClick={() => {
@@ -1297,9 +1298,9 @@ export default function Page() {
                   style={
                     chart3Tab === 4
                       ? {
-                          background: " #EAB966",
-                          borderRadius: "7px",
-                        }
+                        background: " #EAB966",
+                        borderRadius: "7px",
+                      }
                       : {}
                   }
                   onClick={() => {
@@ -1313,7 +1314,7 @@ export default function Page() {
           </Row>
           <Row gutter={32}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-              <div className={style.box3}>
+              <div className={style.box3 + " " + style.mdp}>
                 <Row gutter={32}>
                   <Col span={12}>You will Receive</Col>
                   <Col span={12} style={{ textAlign: "right" }}>
@@ -1375,15 +1376,15 @@ export default function Page() {
                     <div>
                       {+parseFloat(xcfxAmountTotal).toFixed(0) /
                         +parseFloat(shareofthePool).toFixed(0) <
-                      0.0001
+                        0.0001
                         ? "< .1%"
                         : "~ " +
-                          (
-                            (+parseFloat(xcfxAmountTotal).toFixed(0) /
-                              +parseFloat(shareofthePool).toFixed(0)) *
-                            100
-                          ).toFixed(2) +
-                          "%"}
+                        (
+                          (+parseFloat(xcfxAmountTotal).toFixed(0) /
+                            +parseFloat(shareofthePool).toFixed(0)) *
+                          100
+                        ).toFixed(2) +
+                        "%"}
                     </div>
                   </Col>
                 </Row>

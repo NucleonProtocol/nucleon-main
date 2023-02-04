@@ -266,7 +266,7 @@ export default function HomePage() {
           const totalvalues = x.multipliedBy(y);
           const val = BigNumber(totalvalues * element.price).toFixed(2);
           if (chart === 1) setClosingPrice1(val);
-          if (chart === 2) setClosingPrice2((element.apy * 100).toFixed(2));
+          if (chart === 2) setClosingPrice2((Math.pow(1 + element.apy / 365, 365)* 100*element.apy).toFixed(2));
           if (chart === 4) setClosingPrice3(x);
           if (chart === 3) setClosingPrice4(y);
         }
@@ -614,7 +614,8 @@ export default function HomePage() {
           if (i === 0) {
             // 收盘价
             setClosingPrice1(val);
-            setClosingPrice2((element.apy * 100).toFixed(2));
+            setClosingPrice2((Math.pow(1 + element.apy / 365, 365)* 100*element.apy).toFixed(2));
+            console.log(element.apy,Math.pow(1 + element.apy / 365, 365));
             setClosingPrice3(x);
             setClosingPrice4(y);
           }
@@ -638,7 +639,7 @@ export default function HomePage() {
             const apy2 = 1 + element.apy / 365;
             const t = Math.pow(apy2, 365); // n的值
             setTotal2(parseFloat((element.apy * t * 100).toString()).toFixed(3));
-            const val2 = parseFloat((element.apy * 100).toString()).toFixed(3);
+            const val2 = parseFloat((element.apy * t* 100).toString()).toFixed(3);
             const day2 = element.created_at.toString();
             let obj2 = { date: day2, value: val2 };
             obj2.value = val2;
