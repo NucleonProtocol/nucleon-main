@@ -466,7 +466,7 @@ export default function Page() {
               color: "#ffffff",
               padding: 0,
               formatter: function (value: number) {
-                return "$" + value.toFixed(4);
+                return "$" + formatNumber(value.toFixed(2));
               },
             },
             axisTick: {
@@ -632,7 +632,7 @@ export default function Page() {
               color: "#ffffff",
               padding: 0,
               formatter: function (value: number) {
-                return "$" + value.toFixed(0);
+                return "$" + formatNumber(value.toFixed(0));
               },
             },
             axisTick: {
@@ -798,7 +798,7 @@ export default function Page() {
               color: "#ffffff",
               padding: 0,
               formatter: function (value: number) {
-                return "$" + value.toFixed(0);
+                return "$" + formatNumber(value.toFixed(0));
               },
             },
             axisTick: {
@@ -964,7 +964,7 @@ export default function Page() {
               color: "#ffffff",
               padding: 0,
               formatter: function (value: number) {
-                return value.toFixed(4);
+                return formatNumber(value.toFixed(6)); 
               },
             },
             axisTick: {
@@ -1130,7 +1130,7 @@ export default function Page() {
               color: "#ffffff",
               padding: 0,
               formatter: function (value: number) {
-                return "$" + value.toFixed(4);
+                return "$" + formatNumber(value.toFixed(4));
               },
             },
             axisTick: {
