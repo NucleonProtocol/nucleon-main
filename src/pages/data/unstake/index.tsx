@@ -613,7 +613,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
                   <br />
                   <b>{formatNumber(parseFloat(staketotal).toFixed(2))} CFX</b>
                 </Col>
-                <Col xs={24} sm={24} md={5} lg={5} xl={5}>
+                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                    Nucleon APY{" "}
                   <b style={{ fontWeight: "normal" }}>
                     {parseFloat((+cfxapy).toString()).toFixed(2)}%
