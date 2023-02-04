@@ -79,7 +79,7 @@ import {
 } from "@cfxjs/use-wallet-react/ethereum";
 const BigNumber = require("bignumber.js");
 import { ethers, utils } from "ethers";
-import Account from "js-conflux-sdk/dist/types/wallet/Account";
+// import Account from "js-conflux-sdk/dist/types/wallet/Account";
 const { Drip } = require("js-conflux-sdk");
 const { addressNut, abiNut } = require("./../../../ABI/Nut.json");
 const { addressPool, abiPool } = require("./../../../ABI/Pools.json");

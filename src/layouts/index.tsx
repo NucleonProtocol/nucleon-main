@@ -53,8 +53,8 @@ export default function Layout() {
 
   const WalletInfo: React.FC = memo(() => {
     const account = useAccount();
-    const chainId = useChainId()!;
-    const balance = useBalance()!;
+    // const chainId = useChainId()!;
+    // const balance = useBalance()!;
 
     // Send 1 native token to self (connected account)
     const handleClickSendTransaction = useCallback(async () => {
@@ -182,7 +182,7 @@ export default function Layout() {
                     <a
                       style={{ color: "#fff" }}
                       target="_blank"
-                      href="https://docs.nucleon.network/" 
+                      href="https://doc.nucleon.network/" 
                     >
                       Documentation
                     </a>
@@ -225,7 +225,7 @@ export default function Layout() {
                         <a
                           style={{ color: "#fff" }}
                           target="_blank"
-                          href="https://docs.nucleon.network/"
+                          href="https://doc.nucleon.network/"
                     >
                       Documentation
                     </a>

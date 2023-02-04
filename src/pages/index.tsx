@@ -1687,7 +1687,7 @@ export default function HomePage() {
           X
         </span>
         <div>
-          <a style={{ color: "##C4C4C4" }} target={"_blank"} href="https://docs.nucleon.network/">
+          <a style={{ color: "##C4C4C4" }} target={"_blank"} href="https://doc.nucleon.network/">
             Documentation
           </a>
         </div>
@@ -1742,7 +1742,7 @@ export default function HomePage() {
             />
             <ul className={styles.hide}>
               <li>
-                <a target={"_blank"} href="https://docs.nucleon.network/">
+                <a target={"_blank"} href="https://doc.nucleon.network/">
                   Documentation
                 </a>
               </li>
@@ -2559,7 +2559,7 @@ export default function HomePage() {
               </div>
               <div className={styles.learn}>
                 <a
-                  href="https://docs.nucleon.network/about-nucleon/overview"
+                  href="https://doc.nucleon.network/about-nucleon/overview"
                   target={"_blank"}
                 >
                   Learn More <img src={learn} />
