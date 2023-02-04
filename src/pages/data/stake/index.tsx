@@ -107,6 +107,10 @@ export default function Page() {
   const [totalStaked, setTotalStaked] = useState("--");
   const [holder, setHolder] = useState("--");
   const [holderCount, setHolderCount] = useState("--");
+  let holderCount1:any;
+  let holderCount2:any;
+  let holderCount3:any;
+  // const [holderCount2, setHolderCount2] = useState("--");
   const [price, setPrice] = useState(0);
   const [closingPrice, setClosingPrice] = useState("0.0000");
   const [chart3Tab, setChart3Tab] = useState(0);
@@ -115,7 +119,7 @@ export default function Page() {
   const [tranHash, setTranHash] = useState("");
   const [operation, setOperation] = useState("Operation");
   const [tokenUsed, setTokenUsed] = useState("xCFX");
-
+  
   let xLabel0 = [""];
   let xgoToSchool0: { date: any; value: any }[] = [];
   let xCFXToken = {
@@ -124,7 +128,7 @@ export default function Page() {
                     decimals: 18, // The number of token decimals
                     image: "https://app.swappi.io/static/media/0x889138644274a7Dc602f25A7e7D53fF40E6d0091.a0ecb3fe.png", // A string url of the token logo
                   };
-
+  // const { addressMulticall, abiMulticall } = require("./../../../ABI/Multicall.json");
   const provider = new ethers.providers.JsonRpcProvider(
     "https://evm.confluxrpc.com"
   );
@@ -134,7 +138,9 @@ export default function Page() {
   //币种
   const nutoContract = new ethers.Contract(addressNut, abiNut, provider);
   const nutoInterface = new utils.Interface(abiNut);
-
+  //Multicall
+  // const multicallContract = new ethers.Contract(addressMulticall, abiMulticall, provider);
+  // const multicallInterface = new utils.Interface(abiMulticall);
   // web3 钱包登录状态
   const status = useStatus();
   // web3 钱包登录
@@ -574,20 +580,41 @@ export default function Page() {
     // 监听
     //window.addEventListener("resize", resizeChange);
     (async () => {
+      // const promises = [
+      //   [nutContract.address ,nutContract.interface.encodeFunctionData('balanceOf',[myacc])],
+      //   [poolsContract.address ,poolsContract.interface.encodeFunctionData('totalAllocPoint')],
+      //   [poolsContract.address ,poolsContract.interface.encodeFunctionData('rewardsPerSecond')]
+      // ]
+      // const multival = await multicallContract.callStatic.aggregate(promises);
       axios
         .get("https://evm.confluxscan.io/v1/homeDashboard")
         .then(async (response) => {
           setBlockNumber(response.data.result.blockNumber);
         });
-
+      
       axios
         .get(
           " https://evm.confluxscan.io/stat/tokens/by-address?address=0x889138644274a7Dc602f25A7e7D53fF40E6d0091&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
         )
         .then(async (response) => {
-          setHolderCount(response.data.result.holderCount);
+          holderCount1 = response.data.result.holderCount;
         });
-
+      // console.log(holderCount);
+      axios
+        .get(
+          " https://evm.confluxscan.io/stat/tokens/by-address?address=0x949b78ef2c8d6979098e195b08f27ff99cb20448&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+        )
+        .then(async (response) => {
+          holderCount2 = response.data.result.holderCount;
+        });
+        // console.log(holderCount, holderCount2);
+      axios
+        .get(
+          " https://evm.confluxscan.io/stat/tokens/by-address?address=0x949b78ef2c8d6979098e195b08f27ff99cb20448&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+        )
+        .then(async (response) => {
+          holderCount3 = response.data.result.holderCount;
+        });
       const resY: { data: { count: any; rows: [] } } = await getStatistics("");
       resY.data.rows.reverse().forEach(
         (
@@ -871,7 +898,8 @@ export default function Page() {
 
       const holderCount = data.holderCount;
       setHolder(holderCount);
-
+      setHolderCount(holderCount1+holderCount2+holderCount3);
+      // console.log(holderCount,holderCount2);
       setPrice(data.price);
       const balancevalueT = parseFloat(
         (+xcfxvalues * +data.price).toString()
@@ -1374,7 +1402,7 @@ export default function Page() {
                 <Col span={12} style={{ textAlign: "right" }}>
                   {formatNumber(parseFloat(totalStaked).toFixed(3))}
                 </Col>
-                <Col span={12}>Holders</Col>
+                <Col span={12}>Stakers</Col>
                 <Col span={12} style={{ textAlign: "right" }}>
                   {formatNumber(holderCount)}
                 </Col>
