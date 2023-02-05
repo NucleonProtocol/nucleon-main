@@ -606,8 +606,8 @@ export default function HomePage() {
           const valX = new Drip(element.xcfx1 * 2 * p).toCFX();
           const valT2 = BigNumber(val).plus(valN).plus(valX);
 
-          setTotal1(BigNumber(val).toFixed(2));
-          setTotal1b(BigNumber(valT2).toFixed(2));
+          setTotal1(BigNumber(val).toFixed(0));
+          setTotal1b(BigNumber(valT2).toFixed(0));
 
           setXcfxvalues(xcfxvalues);
 

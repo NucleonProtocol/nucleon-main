@@ -33,7 +33,7 @@ const { addressNut, abiNut } = require("./../../../ABI/Nut.json");
 const { formatNumber} = require("../../../utils/tools.js");
 
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://evmtestnet.confluxrpc.com"
+  "https://evm.confluxrpc.com/"
 );
 //币种
 const nutoContract = new ethers.Contract(addressNut, abiNut, provider);
