@@ -570,9 +570,14 @@ export default function Page() {
     });
 
     // 收盘价
+    try{
     const confluxscanData = await axios.get(
       "https://www.confluxscan.io/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
-    );
+    );}catch{
+      const confluxscanData = await axios.get(
+        "https://www.confluxscan.net/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+      );
+    }
     setClosingPrice(
       parseFloat((T[0].xcfxvalues * +balancevalue).toString()).toFixed(4)
     );
@@ -896,9 +901,14 @@ export default function Page() {
           },
         ],
       };
+      try{
       const confluxscanData = await axios.get(
         "https://www.confluxscan.io/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
-      );
+      );}catch{
+        const confluxscanData = await axios.get(
+          "https://www.confluxscan.net/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+        );
+      }
       const res = await getStatistics("", 24);
 
       res.data.rows.reverse().forEach(

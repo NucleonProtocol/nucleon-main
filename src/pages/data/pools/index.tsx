@@ -935,9 +935,14 @@ export default function Page() {
       // console.log(nutPerBlock);
       // console.log(Drip(nutPerBlock).toCFX());
       setMynut(Drip(mynut.toString()).toCFX().toString());
+      try{
       const confluxscanData = await axios.get(
         "https://www.confluxscan.io/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
-      );
+      );}catch{
+        const confluxscanData = await axios.get(
+          "https://www.confluxscan.net/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+        );
+      }
       const data = confluxscanData.data.data;
       const cfxprice = data.price;
 
