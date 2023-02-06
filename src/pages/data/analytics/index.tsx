@@ -1231,11 +1231,12 @@ export default function Page() {
       const nutbalanceCFX:any = new Drip(nutbalance + nutbalance2).toCFX();
       setTotalEmissionNUT('0');
       // setTotalEmissionNUT((300000-nutbalanceCFX).toString());
+      let confluxscanData:any;
       try{
-      const confluxscanData = await axios.get(
+        confluxscanData = await axios.get(
         "https://www.confluxscan.io/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
       );}catch{
-        const confluxscanData = await axios.get(
+          confluxscanData = await axios.get(
           "https://www.confluxscan.net/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
         );
       }
@@ -1253,10 +1254,15 @@ export default function Page() {
       setTotal2(x);
       const poolval = y * x;
       setTotal3(poolval.toString());
-
-      const accountsData = await axios.get(
-        "https://confluxscan.io/stat/pos-account-detail?identifier=0x92ba044ffdf81232b5ac4ae8f2bfefe45c1607d896d81ac4a354d66c32c773a4"
+      let accountsData:any;
+      try{
+        accountsData = await axios.get(
+        "https://www.confluxscan.io/stat/pos-account-detail?identifier=0x92ba044ffdf81232b5ac4ae8f2bfefe45c1607d896d81ac4a354d66c32c773a4"
+      );}catch{
+        confluxscanData = await axios.get(
+        "https://www.confluxscan.net/stat/pos-account-detail?identifier=0x92ba044ffdf81232b5ac4ae8f2bfefe45c1607d896d81ac4a354d66c32c773a4"
       );
+      }
       const totalReward = Drip(accountsData.data.data.totalReward).toCFX();
       setTotal4(totalReward);
 

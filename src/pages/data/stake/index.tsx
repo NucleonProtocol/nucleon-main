@@ -570,11 +570,12 @@ export default function Page() {
     });
 
     // 收盘价
+    let confluxscanData:any;
     try{
-    const confluxscanData = await axios.get(
+       confluxscanData = await axios.get(
       "https://www.confluxscan.io/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
     );}catch{
-      const confluxscanData = await axios.get(
+         confluxscanData = await axios.get(
         "https://www.confluxscan.net/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
       );
     }
@@ -665,11 +666,18 @@ export default function Page() {
   }, []);
 
   function getBlockNumber() {
+    try{
     axios
       .get("https://evm.confluxscan.io/v1/homeDashboard")
       .then(async (response) => {
         setBlockNumber(response.data.result.blockNumber);
+      });}catch{
+        axios
+      .get("https://evm.confluxscan.net/v1/homeDashboard")
+      .then(async (response) => {
+        setBlockNumber(response.data.result.blockNumber);
       });
+      }
   }
 
   async function init() {
@@ -682,6 +690,7 @@ export default function Page() {
       //   [poolsContract.address ,poolsContract.interface.encodeFunctionData('rewardsPerSecond')]
       // ]
       // const multival = await multicallContract.callStatic.aggregate(promises);
+      try{
       axios
         .get("https://evm.confluxscan.io/v1/homeDashboard")
         .then(async (response) => {
@@ -711,6 +720,38 @@ export default function Page() {
         .then(async (response) => {
           holderCount3 = response.data.result.holderCount;
         });
+      }catch{
+        axios
+        .get("https://evm.confluxscan.net/v1/homeDashboard")
+        .then(async (response) => {
+          setBlockNumber(response.data.result.blockNumber);
+        });
+
+      axios
+        .get(
+          " https://evm.confluxscan.net/stat/tokens/by-address?address=0x889138644274a7Dc602f25A7e7D53fF40E6d0091&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+        )
+        .then(async (response) => {
+          holderCount1 = response.data.result.holderCount;
+        });
+      // console.log(holderCount);
+      axios
+        .get(
+          " https://evm.confluxscan.net/stat/tokens/by-address?address=0x949b78ef2c8d6979098e195b08f27ff99cb20448&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+        )
+        .then(async (response) => {
+          holderCount2 = response.data.result.holderCount;
+        });
+      // console.log(holderCount, holderCount2);
+      axios
+        .get(
+          " https://evm.confluxscan.net/stat/tokens/by-address?address=0x949b78ef2c8d6979098e195b08f27ff99cb20448&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+        )
+        .then(async (response) => {
+          holderCount3 = response.data.result.holderCount;
+        });
+
+      }
       const resY: { data: { count: any; rows: [] } } = await getStatistics("");
       resY.data.rows.reverse().forEach(
         (
@@ -901,11 +942,12 @@ export default function Page() {
           },
         ],
       };
+      let confluxscanData:any;
       try{
-      const confluxscanData = await axios.get(
+         confluxscanData = await axios.get(
         "https://www.confluxscan.io/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
       );}catch{
-        const confluxscanData = await axios.get(
+           confluxscanData = await axios.get(
           "https://www.confluxscan.net/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
         );
       }
