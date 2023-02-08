@@ -1614,11 +1614,18 @@ export default function HomePage() {
       const nutbalance = await nutContract.balanceOf(addressPool);
       const nutbalance2 = await nutContract.balanceOf(addressVaults);
       
-      const nutbalanceCFX: any = new Drip(nutbalance+nutbalance2).toCFX();
-      setNutSupply('0');
+      let nutbalanceCFX: any;
+      let nutbalanceCFX2: any;
+      nutbalanceCFX = new Drip(nutbalance).toCFX();
+      nutbalanceCFX2 = new Drip(nutbalance2).toCFX();
+      // console.log(new Drip(nutbalance).toCFX());
+      // console.log(new Drip(nutbalance2).toCFX());
+      // console.log(nutbalanceCFX);
+      // console.log(300000 - nutbalanceCFX- nutbalanceCFX2);
+      setNutSupply((300000 - nutbalanceCFX- nutbalanceCFX2).toString());
       // setNutSupply((300000 - nutbalanceCFX).toString());
-      setCirculatingNUT((0).toString());  
-      // setCirculatingNUT(((300000 - nutbalanceCFX) / 3000).toString()); 
+      // setCirculatingNUT((0).toString());  
+      setCirculatingNUT(((300000 - nutbalanceCFX- nutbalanceCFX2) / 3000).toString()); 
     })();
     setTimeout(() => {
               try {
