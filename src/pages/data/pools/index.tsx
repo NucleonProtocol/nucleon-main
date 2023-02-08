@@ -1169,7 +1169,7 @@ export default function Page() {
                         marginRight: "10px",
                         width: "130px",
                       }}
-                      disabled>
+                      >
                       {t("pools.Claimrewards")}
                     </Button>
                   </Col>
@@ -1255,7 +1255,7 @@ export default function Page() {
                         marginRight: "10px",
                         width: "130px",
                       }}
-                      disabled>
+                      >
                       {t("pools.Claimrewards")}
                     </Button>
                   </Col>
@@ -1948,7 +1948,7 @@ export default function Page() {
                         borderRadius: "28px",
                         color: "#161621",
                       }}
-                    disabled>
+                    >
                       <b style={{ fontFamily: "Univa Nova Bold" }}>
                         {t("pools.WithdrawLiquidity")}
                       </b>
