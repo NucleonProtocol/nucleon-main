@@ -64,19 +64,71 @@ const antIcon = (
   />
 );
 
+let useAccount: any;
+let useChainId: any;
+let Unit: any;
+let sendTransaction: any;
+let watchAsset: any;
+let switchChain: any;
+let addChain: any;
 // 区块链部分
 import {
-  useStatus,
-  useAccount,
-  useChainId,
-  useBalance,
-  connect,
-  Unit,
-  sendTransaction,
-  watchAsset,
-  switchChain,
-  addChain
+  useAccount as default_useAccount,
+  useChainId as default_useChainId,
+  Unit as default_Unit,
+  sendTransaction as default_sendTransaction,
+  watchAsset as default_watchAsset,
+  switchChain as default_switchChain,
+  addChain as default_addChain
 } from "@cfxjs/use-wallet-react/ethereum";
+import {
+  useAccount as metamask_useAccount,
+  useChainId as metamask_useChainId,
+  Unit as metamask_Unit,
+  sendTransaction as metamask_sendTransaction,
+  watchAsset as metamask_watchAsset,
+  switchChain as metamask_switchChain,
+  addChain as metamask_addChain
+} from "@cfxjs/use-wallet-react/ethereum/MetaMask";
+import {
+  useAccount as fluent_useAccount,
+  useChainId as fluent_useChainId,
+  Unit as fluent_Unit,
+  sendTransaction as fluent_sendTransaction,
+  watchAsset as fluent_watchAsset,
+  switchChain as fluent_switchChain,
+  addChain as fluent_addChain
+} from "@cfxjs/use-wallet-react/ethereum/fluent";
+
+const currWallet = localStorage.getItem("currWallet") ? localStorage.getItem("currWallet") : "1";
+
+if(currWallet === '0') {
+  useAccount = default_useAccount;
+  useChainId = default_useChainId;
+  Unit = default_Unit;
+  sendTransaction = default_sendTransaction;
+  watchAsset = default_watchAsset;
+  switchChain = default_switchChain;
+  addChain = default_addChain;
+}
+ else if (currWallet === '1') {
+  useAccount = metamask_useAccount;
+  useChainId = metamask_useChainId;
+  Unit = metamask_Unit;
+  sendTransaction = metamask_sendTransaction;
+  watchAsset = metamask_watchAsset;
+  switchChain = metamask_switchChain;
+  addChain = metamask_addChain;
+}else if (currWallet === '2') {
+  useAccount = fluent_useAccount;
+  useChainId = fluent_useChainId;
+  Unit = fluent_Unit;
+  sendTransaction = fluent_sendTransaction;
+  watchAsset = fluent_watchAsset;
+  switchChain = fluent_switchChain;
+  addChain = fluent_addChain;
+}
+
 const BigNumber = require("bignumber.js");
 import { ethers, utils } from "ethers";
 // import Account from "js-conflux-sdk/dist/types/wallet/Account";
@@ -286,7 +338,7 @@ export default function Page() {
     function closeCurr() {
       setTranHash("");
     }
-    async function  onToken() {
+    async function onToken() {
       const watchAssetParams = {
         type: "ERC20", // In the future, other standards will be supported
         options: tokenSetting
@@ -998,13 +1050,13 @@ export default function Page() {
           // lpinfo = await xcfxCfxContract.getReserves();
         }
         const multival2 = await multicallContract.callStatic.aggregate(promises2);
-        console.log(multival2);
+        // console.log(multival2);
         val = multival2.returnData[0]; //await xcfxCfxContract.totalSupply();
         myLiquidity = multival2.returnData[1]; //await xcfxCfxContract.balanceOf(myacc);
         lpinfo = multival2.returnData[2]; //await xcfxCfxContract.getReserves();
-        console.log(lpinfo);
+        // console.log(lpinfo);
         const pools = multival2.returnData[3]; //await poolsContract.userInfo(index, myacc);
-        console.log(pools);
+        // console.log(pools);
         const pendingrewards = multival2.returnData[4]; //await poolsContract.pendingSushi(index, myacc);
         const pointInfo = multival2.returnData[5]; //await poolsContract.poolInfo(index);
         

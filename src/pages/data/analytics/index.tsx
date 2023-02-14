@@ -466,7 +466,7 @@ export default function Page() {
               color: "#ffffff",
               padding: 0,
               formatter: function (value: number) {
-                return "$" + formatNumber(value.toFixed(2));
+                return "$" + formatNumber(value.toFixed(0));
               },
             },
             axisTick: {
@@ -1130,7 +1130,7 @@ export default function Page() {
               color: "#ffffff",
               padding: 0,
               formatter: function (value: number) {
-                return "$" + formatNumber(value.toFixed(4));
+                return "$" + formatNumber(value.toFixed(3));
               },
             },
             axisTick: {
@@ -1228,9 +1228,12 @@ export default function Page() {
 
       const nutbalance = await nutContract.balanceOf(addressPool);
       const nutbalance2 = await nutContract.balanceOf(addressVaults);
-      const nutbalanceCFX:any = new Drip(nutbalance + nutbalance2).toCFX();
-      setTotalEmissionNUT('0');
-      // setTotalEmissionNUT((300000-nutbalanceCFX).toString());
+      let nutbalanceCFX: any;
+      let nutbalanceCFX2: any;
+      nutbalanceCFX = new Drip(nutbalance).toCFX();
+      nutbalanceCFX2 = new Drip(nutbalance2).toCFX();
+      setTotalEmissionNUT((300000 - nutbalanceCFX- nutbalanceCFX2).toString());
+
       let confluxscanData:any;
       try{
         confluxscanData = await axios.get(
@@ -1250,7 +1253,7 @@ export default function Page() {
       const p = price;
       const totalvalues = x * y;
       const val = BigNumber(totalvalues * p).toFixed(2);
-      setTotal1(BigNumber(val).plus(parseFloat(goToSchool2[goToSchool2.length -1].value).toFixed(2)).plus(parseFloat(goToSchool3[goToSchool3.length -1].value).toFixed(2)));
+      setTotal1((BigNumber(val).plus(parseFloat(goToSchool2[goToSchool2.length -1].value)).plus(parseFloat(goToSchool3[goToSchool3.length -1].value))).toFixed(0));
       setTotal2(x);
       const poolval = y * x;
       setTotal3(poolval.toString());
@@ -1548,17 +1551,17 @@ export default function Page() {
               <div className={style.tit}>
                 {t("analytics.Total_Emission_xCFX")}
               </div>
-              <b>{formatNumber(parseFloat(total2).toFixed(2))}</b>
+              <b>{formatNumber(parseFloat(total2).toFixed(0))}</b>
             </Col>
             <Col className="gutter-row" sm={4} xs={24}>
               <div className={style.tit}>
                 {t("analytics.Total_CFX_In_Pool")}
               </div>
-              <b>{formatNumber(parseFloat(total3).toFixed(2))}</b>
+              <b>{formatNumber(parseFloat(total3).toFixed(0))}</b>
             </Col>
             <Col className="gutter-row" sm={4} xs={24}>
               <div className={style.tit}>{t("analytics.Interest_Earned")}</div>
-              <b>{formatNumber(parseFloat(total4).toFixed(2))}</b>
+              <b>{formatNumber(parseFloat(total4).toFixed(0))}</b>
             </Col>
             <Col className="gutter-row" sm={4} xs={24}>
               <div className={style.tit}>
