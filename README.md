@@ -1,3 +1,3 @@
-# nucleon-1
+# nucleon-mainnet
 fishercreat
 react creat
