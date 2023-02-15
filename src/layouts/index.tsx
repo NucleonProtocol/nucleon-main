@@ -19,26 +19,26 @@ import "antd/dist/antd.css";
 import { Col, Row, Modal } from "antd";
 
 import React, { memo, useCallback, useState } from "react";
-// import {
-//   useStatus,
-//   useAccount,
-//   useChainId,
-//   useBalance,
-//   connect,
-//   Unit,
-//   sendTransaction,
-// } from "@cfxjs/use-wallet-react/ethereum";
+import {
+  useStatus,
+  useAccount,
+  useChainId,
+  useBalance,
+  connect,
+  Unit,
+  sendTransaction,
+} from "@cfxjs/use-wallet-react/ethereum";
 
-// const warning = () => {
-//   Modal.warning({
-//     wrapClassName: styles.zzzz,
-//     bodyStyle: { backgroundColor: "#393942", color: "#ffffff" },
-//     content: "Wallet Not Install",
-//   });
-// };
+const warning = () => {
+  Modal.warning({
+    wrapClassName: styles.zzzz,
+    bodyStyle: { backgroundColor: "#393942", color: "#ffffff" },
+    content: "Wallet Not Install",
+  });
+};
 
 export default function Layout() {
-  // const status = useStatus();
+  const status = useStatus();
 
   const [showMenu, setShowMenu] = useState("none");
 
@@ -52,7 +52,7 @@ export default function Layout() {
   }
 
   const WalletInfo: React.FC = memo(() => {
-    // const account = useAccount();
+    const account = useAccount();
     // const chainId = useChainId()!;
     // const balance = useBalance()!;
 
@@ -150,7 +150,25 @@ export default function Layout() {
                     © 2022-2023 Nucleon. All Rights Reserved.
                   </div>
                 </Col>
-                
+                <Col span={4} style={{ display: "none" }}>
+                  <div className={styles.t}>Information</div>
+                  <p style={{ cursor: "pointer" }}>
+                    {status !== "in-detecting" && status !== "active" && (
+                      <span onClick={connect}>
+                        {status === "in-activating" && "connecting..."}
+                        {status === "not-installed" && "Wallet Not Install"}
+                        {status === "not-active" && "Connect Wallet"}
+                      </span>
+                    )}
+                    {status === "active" && <WalletInfo />}
+                  </p>
+                  <p>
+                    <Link to="/data/analytics" style={{ color: "#FFF" }}>
+                      Analytics
+                    </Link>
+                  </p>
+                  <p>Lorem ipsum</p>
+                </Col>
                 <Col span={4}>
                   <div className={styles.t}>Information</div>
                   <p>
