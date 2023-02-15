@@ -1,39 +1,14 @@
 import { useEffect, useState, memo, useCallback, SetStateAction } from "react";
 import { Link } from "umi";
-let connect: any;
-let useStatus: any;
-let useAccount: any;
-let useChainId: any;
-let useBalance: any;
-let addChain: any;
-let switchChain: any;
 import {
-  useStatus as useStatusDefault,
-  useAccount as useAccountDefault,
-  useChainId as useChainIdDefault,
-  useBalance as useBalanceDefault,
-  connect as connectDefault,
-  addChain as addChainDefault,
-  switchChain as switchChainDefault,
+  useStatus,
+  useAccount,
+  useChainId,
+  useBalance,
+  connect,
+  addChain,
+  switchChain,
 } from "@cfxjs/use-wallet-react/ethereum";
-import {
-  useStatus as useStatusMetaMask,
-  useAccount as useAccountMetaMask,
-  useChainId as useChainIdMetaMask,
-  useBalance as useBalanceMetaMask,
-  connect as connectMetaMask,
-  addChain as addChainMetaMask,
-  switchChain as switchChainMetaMask,
-} from "@cfxjs/use-wallet-react/ethereum/MetaMask";
-import {
-  useStatus as useStatusFluent,
-  useAccount as useAccountFluent,
-  useChainId as useChainIdFluent,
-  useBalance as useBalanceFluent,
-  connect as connectFluent,
-  addChain as addChainFluent,
-  switchChain as switchChainFluent,
-} from "@cfxjs/use-wallet-react/ethereum/Fluent";
 
 import styles from "./../../../../layouts/index.less";
 import style from "./index.less";
@@ -41,10 +16,6 @@ import style from "./index.less";
 import logo from "./../../../../assets/logo.svg";
 import logotxt from "./../../../../assets/logotxt.png";
 
-import logometamask from "./../../../../assets/metamask.png";
-import logofluent from "./../../../../assets/fluent.png";
-import logodefault from "./../../../../assets/default.png";
-import logotp from "./../../../../assets/tp.png";
 import "./../../../../locales/config"; // 引用配置文件
 import { useTranslation } from "react-i18next";
 import { Button, Col, Row, Carousel, Modal } from "antd";
@@ -134,41 +105,12 @@ const onSwitchNetwork = async () => {
 };
 
 function Header() {
-    const currWallet = localStorage.getItem("currWallet") ? localStorage.getItem("currWallet") : "1";
-    if (currWallet === '0') {
-      useStatus = useStatusDefault;
-      useAccount = useAccountDefault;
-      useChainId = useChainIdDefault;
-      useBalance = useBalanceDefault;
-      connect = connectDefault;
-      addChain = addChainDefault;
-      switchChain = switchChainDefault
-    } else if (currWallet === '1') {
-      useStatus = useStatusMetaMask;
-      useAccount = useAccountMetaMask;
-      useChainId = useChainIdMetaMask;
-      useBalance = useBalanceMetaMask;
-      connect = connectMetaMask;
-      addChain = addChainMetaMask;
-      switchChain = switchChainMetaMask
-    } else if (currWallet === '2') {
-      useStatus = useStatusFluent;
-      useAccount = useAccountFluent;
-      useChainId = useChainIdFluent;
-      useBalance = useBalanceFluent;
-      connect = connectFluent;
-      addChain = addChainFluent;
-      switchChain = switchChainFluent
-    }
-
   // web3 钱包登录状态
   const status = useStatus();
   myacc = useAccount();
 
   const [active, setActive] = useState(0);
   const [showSwitch, setShowSwitch] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
 
   window.onhashchange = function () {
     switch (location.hash) {
@@ -201,65 +143,9 @@ function Header() {
   };
   const { t, i18n } = useTranslation();
 
-  // Function 切换钱包
-  const onSwitchWallet = async (val: number) => {
-    if (val === 0) {
-      useStatus = useStatusDefault;
-      useAccount = useAccountDefault;
-      useChainId = useChainIdDefault;
-      useBalance = useBalanceDefault;
-      connect = connectDefault;
-      addChain = addChainDefault;
-      switchChain = switchChainDefault
-    } else if (val === 1) {
-      connect = connectMetaMask;
-      useStatus = useStatusMetaMask;
-      useAccount = useAccountMetaMask;
-      useChainId = useChainIdMetaMask;
-      useBalance = useBalanceMetaMask;
-      connect = connectMetaMask;
-      addChain = addChainMetaMask;
-      switchChain = switchChainMetaMask
-    } else if (val === 2) {
-      connect = connectFluent;
-      useStatus = useStatusFluent;
-      useAccount = useAccountFluent;
-      useChainId = useChainIdFluent;
-      useBalance = useBalanceFluent;
-      connect = connectFluent;
-      addChain = addChainFluent;
-      switchChain = switchChainFluent
-    }
-    localStorage.setItem("currWallet", val.toString())
-    connect();
-  };
-
-  const connectShow = async () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
 
   const chainId = useChainId()!; // 正式网 测试网
-  // console.log(chainId);
-  // setTimeout(() => {
-  //   if (chainId != "71") {
-  //       setShowSwitch(true);
-  //     }
-  //   console.log(chainId);
-  // }, 10);
-  // setInterval(() => {
-  //   if (chainId != "71") {
-  //       setShowSwitch(true);
-  //     }
-  //   console.log(chainId);
-  // }, 5000);
+
   // 定时更新数据
   const [count, setCount] = useState(10);
   useEffect(() => {
@@ -404,7 +290,7 @@ function Header() {
                   fontFamily: "Univa Nova",
                   cursor: "pointer",
                 }}
-                onClick={connectShow}
+                onClick={connect}
               >
                 {status === "in-activating" && "connecting..."}
               </div>
@@ -430,7 +316,7 @@ function Header() {
                   fontFamily: "Univa Nova",
                   cursor: "pointer",
                 }}
-                onClick={connectShow}
+                onClick={connect}
               >
                 {status === "not-active" && "Connect Wallet"}
               </div>
@@ -510,40 +396,19 @@ function Header() {
           {t("stake.nav_rewards")}
         </Link>
         <Link
-          to="/data/analytics"
-          onClick={() => {
-            handleClickActvie(5);
-          }}
-          style={{
-            color: active === 5 ? "#EAB764" : "#FFF",
-            fontSize: "18px",
-            marginRight: "25px",
-          }}
-        >
-          {t("stake.nav_analytics")}
-        </Link>
+            to="/data/analytics"
+            onClick={() => {
+              handleClickActvie(5);
+            }}
+            style={{
+              color: active === 5 ? "#EAB764" : "#FFF",
+              fontSize: "18px",
+              marginRight: "25px",
+            }}
+          >
+            {t("stake.nav_analytics")}
+          </Link>
       </div>
-      <Modal className={style.sw} title="Select a Wallet" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-         {/* <div style={{margin:"5px"}}>
-          <Button icon={<img src={logodefault} height="20px" style={{float:"right"}} />} block onClick={() => {
-            onSwitchWallet(0);
-          }}> Default </Button></div> */}
-        <div style={{margin:"5px"}}>
-          <Button icon={<img src={logometamask} height="19px" style={{float:"right"}} />} block onClick={() => {
-            onSwitchWallet(1);
-          }}> MetaMask </Button>
-        </div>
-        <div style={{margin:"5px"}}>
-          <Button icon={<img src={logofluent} height="24px" style={{float:"right"}} />} block onClick={() => {
-            onSwitchWallet(2);
-        }}> Fluent </Button>
-        </div>
-        <div style={{margin:"5px"}}>
-          <Button icon={<img src={logotp} height="24px" style={{float:"right"}} />} block onClick={() => {
-            onSwitchWallet(0);
-        }}> TokenPocket </Button>
-        </div>
-      </Modal>
     </div>
   );
 }
