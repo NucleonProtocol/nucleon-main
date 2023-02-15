@@ -151,7 +151,7 @@ export default function Page() {
   const [price, setPrice] = useState(0);
   const [unlocked, setUnlocked] = useState(0);
   const [unlocking, setUnlocking] = useState(0);
-  const [period, setPeriod] = useState(0);
+  const [period, setPeriod] = useState(1);
   const [blockNumber, setBlockNumber] = useState(0);
   const [finialUnlockTime, setFinialUnlockTime] = useState(0);
 
