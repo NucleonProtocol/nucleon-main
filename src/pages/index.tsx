@@ -3,7 +3,10 @@ import {
   useStatus,
   useAccount,
   useChainId,
-  useBalance
+  useBalance,
+  connect,
+  Unit,
+  sendTransaction,
 } from "@cfxjs/use-wallet-react/ethereum";
 import { Link } from "umi";
 const BigNumber = require("bignumber.js");
@@ -539,13 +542,13 @@ export default function HomePage() {
     myChart5?.resize();
   };
 
-  // const warning = () => {
-  //   Modal.warning({
-  //     wrapClassName: styles.zzzz,
-  //     bodyStyle: { backgroundColor: "#393942", color: "#ffffff" },
-  //     content: 'Wallet Not Install',
-  //   });
-  // };
+  const warning = () => {
+    Modal.warning({
+      wrapClassName: styles.zzzz,
+      bodyStyle: { backgroundColor: "#393942", color: "#ffffff" },
+      content: 'Wallet Not Install',
+    });
+  };
 
   useEffect(() => {
     // 监听
@@ -1757,7 +1760,26 @@ export default function HomePage() {
               <li>
                 <a href="/#/" onClick={onToP2}>Analytics</a>
               </li>
-              
+              <li>
+                <Link to="/" style={{ color: "#EAB966" }}>
+                  <div>
+                    {status !== "in-detecting" && status !== "active" && (
+                      <div>
+                        <div onClick={connect}>
+                          {status === "in-activating" && "connecting..."}
+                        </div>
+                        <div onClick={connect}>
+                          {status === "not-active" && "Connect Wallet"}
+                        </div>
+                        <div onClick={warning}>
+                          {status === "not-installed" && "Connect Wallet"}
+                        </div>
+                      </div>
+                    )}
+                    {status === "active" && <WalletInfo />}
+                  </div>
+                </Link>
+              </li>
             </ul>
           </Col>
         </Row>

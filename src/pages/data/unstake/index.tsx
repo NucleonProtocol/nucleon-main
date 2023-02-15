@@ -14,98 +14,26 @@ import addto from "../../../assets/addto.png";
 import logo8 from "../../../assets/logo8.png";
 import arrow from "../../../assets/arrow.png";
 import yuan from "../../../assets/yuan.png";
-
 import { Button, Col, Row, Divider, Input} from "antd";
 
 import "./../../../locales/config"; // 引用配置文件
 import { useTranslation, Trans } from "react-i18next";
 
 import axios from "axios";
-// 区块链部分
-let useAccount: any;
-let useChainId: any;
-let useBalance: any;
-let Unit: any;
-let sendTransaction: any;
-let watchAsset: any;
-let switchChain: any;
-let connect: any;
-let addChain: any;
-let useStatus: any;
-// 区块链部分
-import {
-  useAccount as default_useAccount,
-  useChainId as default_useChainId,
-  Unit as default_Unit,
-  sendTransaction as default_sendTransaction,
-  watchAsset as default_watchAsset,
-  switchChain as default_switchChain,
-  addChain as default_addChain,
-  connect as default_connect,
-  useBalance as default_useBalance,
-  useStatus as default_useStatus,
-} from "@cfxjs/use-wallet-react/ethereum";
-import {
-  useAccount as metamask_useAccount,
-  useChainId as metamask_useChainId,
-  Unit as metamask_Unit,
-  sendTransaction as metamask_sendTransaction,
-  watchAsset as metamask_watchAsset,
-  switchChain as metamask_switchChain,
-  addChain as metamask_addChain,
-  connect as metamask_connect,
-  useBalance as metamask_useBalance,
-  useStatus as metamask_useStatus,
-} from "@cfxjs/use-wallet-react/ethereum/MetaMask";
-import {
-  useAccount as fluent_useAccount,
-  useChainId as fluent_useChainId,
-  Unit as fluent_Unit,
-  sendTransaction as fluent_sendTransaction,
-  watchAsset as fluent_watchAsset,
-  switchChain as fluent_switchChain,
-  addChain as fluent_addChain,
-  connect as fluent_connect,
-  useBalance as fluent_useBalance,
-  useStatus as fluent_useStatus,
-} from "@cfxjs/use-wallet-react/ethereum/fluent";
 
-const currWallet = localStorage.getItem("currWallet") ? localStorage.getItem("currWallet") : "1";
-if(currWallet === '0') {
-  useAccount = default_useAccount;
-  useChainId = default_useChainId;
-  Unit = default_Unit;
-  sendTransaction = default_sendTransaction;
-  watchAsset = default_watchAsset;
-  switchChain = default_switchChain;
-  addChain = default_addChain;
-  connect = default_connect;
-  useBalance = default_useBalance;
-  useStatus = default_useStatus;
-}
- else if (currWallet === '1') {
-  useAccount = metamask_useAccount;
-  useChainId = metamask_useChainId;
-  Unit = metamask_Unit;
-  sendTransaction = metamask_sendTransaction;
-  watchAsset = metamask_watchAsset;
-  switchChain = metamask_switchChain;
-  addChain = metamask_addChain;
-  connect = metamask_connect;
-  useBalance = metamask_useBalance;
-  useStatus = metamask_useStatus;
-}else if (currWallet === '2') {
-  useAccount = fluent_useAccount;
-  useChainId = fluent_useChainId;
-  Unit = fluent_Unit;
-  sendTransaction = fluent_sendTransaction;
-  watchAsset = fluent_watchAsset;
-  switchChain = fluent_switchChain;
-  addChain = fluent_addChain;
-  connect = fluent_connect;
-  useBalance = fluent_useBalance;
-  useStatus = fluent_useStatus;
-}
+// 区块链引用部分
+import {
+  useStatus,
+  useAccount,
+  useChainId,
+  useBalance,
+  connect,
+  Unit,
+  sendTransaction,
+  watchAsset,
+  switchChain,
+  addChain
+} from "@cfxjs/use-wallet-react/ethereum";
 const BigNumber = require("bignumber.js");
 import { ethers, utils } from "ethers";
 const { Drip } = require("js-conflux-sdk");
@@ -897,7 +825,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
               <UnStakeButton />
             </div>
           </Col>
-          <Col xs={24} sm={24} md={12} lg={12} xl={12} className={style.mb}>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <div className={style.box2} style={{ textAlign: "center" }}>
               <div className={style.box6} style={{ height: "80px" }}>
                 <Row>
@@ -945,7 +873,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
         </Row>
         <Row gutter={32}>
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-            <div className={style.box3 + " " + style.mdp}>
+            <div className={style.box3}>
               <Row gutter={32}>
                 <Col span={12}>You will Receive</Col>
                 <Col span={12} style={{ textAlign: "right" }}>
