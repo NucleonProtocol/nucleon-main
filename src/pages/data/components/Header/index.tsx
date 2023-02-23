@@ -316,6 +316,8 @@ function Header() {
     setTimeout(() => {
       if (chainId != "1030") {
         setShowSwitch(true);
+      }else {
+        setShowSwitch(false);
       }
     }, 20);
 
@@ -417,7 +419,7 @@ function Header() {
                   fontFamily: "Univa Nova",
                   cursor: "pointer",
                 }}
-                onClick={warning}
+                onClick={connectShow}
               >
                 {status === "not-installed" && "Connect Wallet"}
               </div>

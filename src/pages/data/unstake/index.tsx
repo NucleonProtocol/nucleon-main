@@ -726,7 +726,9 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
         let maxtime = 0;
         var timestamp = new Date().valueOf();
         userOutQueueArray.forEach((element: any[], index: number) => {
-          let ss = element[2].toString() - blockNumberT; // 到期秒数
+          
+          let unlockBlockNumber = element[2].toString();
+          let ss =  unlockBlockNumber - blockNumberT; // 到期秒数
           var t = timestamp + ss * 1000;
           if (t > maxtime) {
             const tt = moment(t).format("MM/DD/YYYY HH:mm:ss");
@@ -738,6 +740,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
             xCFXAmounts: element[0].toString() / 1000000000000000000,
             votePower: element[1].toString() / 1000000000000000000,
             endBlock: moment(t).format("MM/DD/YYYY HH:mm:ss"),
+            unlockBlockNumber: unlockBlockNumber,
             status: t - timestamp > 0 ? "In process" : "Claimable",
           });
         });
@@ -1023,13 +1026,14 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
           <h4 style={{ color: "#EAB966", textAlign: "left" }}>
             Unstaking Details
           </h4>
-          <div className={style.box4}>
+          <div className={style.box4 + ' ' + styles.bigshow}>
             <Row style={{ padding: "10px 20px 5px" }}>
-              <Col span={4}>{t("stake.QueueHistory")}</Col>
-              <Col span={5}>{t("stake.UnstakedxCFX")}</Col>
-              <Col span={5}>{t("stake.LockingCFX")}</Col>
-              <Col span={6}>{t("stake.EstimatedUnlockDate")}</Col>
-              <Col span={4}>{t("stake.Status")}</Col>
+              <Col span={3}>{t("stake.QueueHistory")}</Col>
+              <Col span={4}>{t("stake.UnstakedxCFX")}</Col>
+              <Col span={4}>{t("stake.LockingCFX")}</Col>
+              <Col span={5}>Unlock Block Number</Col>
+              <Col span={5}>{t("stake.EstimatedUnlockDate")}</Col>
+              <Col span={3}>{t("stake.Status")}</Col>
             </Row>
             <Divider
               style={{ borderTop: "1px solid #EAB966", margin: "12px 0" }}
@@ -1044,19 +1048,20 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
                       fontSize: "20px",
                     }}
                   >
-                    <Col span={4}>{item.key}</Col>
-                    <Col span={5}>
+                    <Col span={3}>{item.key}</Col>
+                    <Col span={4}>
                       {formatNumber(
                         parseFloat(item.xCFXAmounts.toString()).toFixed(3)
                       )}
                     </Col>
-                    <Col span={5}>
+                    <Col span={4}>
                       {formatNumber(
                         parseFloat(item.votePower.toString()).toFixed(3)
                       )}
                     </Col>
-                    <Col span={6}>{item.endBlock}</Col>
-                    <Col span={4}>
+                    <Col span={5}>{item.unlockBlockNumber}</Col>
+                    <Col span={5}>{item.endBlock}</Col>
+                    <Col span={3}>
                       <span style={{ color: "#EAB966" }}>{item.status}</span>
                     </Col>
                   </Row>
@@ -1067,6 +1072,51 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
               );
             })}
             <div style={{ height: "7px" }}></div>
+          </div>
+          <div className={style.box4 + ' ' + styles.smallshow}>
+          <div style={{ padding: "10px 20px 25px"}}>
+          </div>
+          {userOutQueue.map((item: any) => {
+            return (
+              <div key={item.key}>
+                <Divider
+                  style={{ borderTop: "1px solid #EAB966", margin: "12px 0" }}
+                />
+                <Row
+                  style={{
+                    padding: "5px 20px 5px",
+                    fontFamily: "Univa Nova Bold",
+                    fontSize: "16px",
+                  }}
+                >
+                  <Col span={24}>
+                  <span style={{fontWeight:"normal",color:"#ddd",display: "inline-block", width: "200px"}}>{t("stake.QueueHistory")}:</span> {item.key}
+                  </Col>
+                  <Col span={24}>
+                  <span style={{fontWeight:"normal",color:"#ddd",display: "inline-block", width: "200px"}}>{t("stake.UnstakedxCFX")}:</span> {
+                      formatNumber(
+                        parseFloat(item.xCFXAmounts.toString()).toFixed(3)
+                      )}
+                  </Col>
+                  <Col span={24}>
+                  <span style={{fontWeight:"normal",color:"#ddd",display: "inline-block", width: "200px"}}>{t("stake.LockingCFX")}:</span> {formatNumber(
+                        parseFloat(item.votePower.toString()).toFixed(3)
+                      )}
+                  </Col>
+                  <Col span={24}>
+                  <span style={{fontWeight:"normal",color:"#ddd",display: "inline-block", width: "200px"}}>Unlock Block Number:</span> {item.unlockBlockNumber}
+                  </Col>
+                  <Col span={24}>
+                  <span style={{fontWeight:"normal",color:"#ddd",display: "inline-block", width: "200px"}}>{t("stake.EstimatedUnlockDate")}:</span> {item.endBlock}
+                  </Col>
+                  <Col span={24}>
+                  <span style={{fontWeight:"normal",color:"#ddd",display: "inline-block", width: "200px"}}>{t("stake.Status")}:</span> <span style={{ color: "#EAB966" }}>{item.status}</span>
+                  </Col>
+                </Row>
+              </div>
+            );
+          })}
+          <div style={{ height: "7px" }}></div>
           </div>
           <h4 style={{ marginTop: "80px" }}>About Nucleon Stake</h4>
           <div className={style.box5}>

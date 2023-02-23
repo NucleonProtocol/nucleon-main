@@ -8,3 +8,5 @@
 /dist
 /backup
 *.zip
+*.bat
+.hostingConfig.json

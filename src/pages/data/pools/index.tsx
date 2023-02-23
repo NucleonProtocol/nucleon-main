@@ -1118,6 +1118,160 @@ export default function Page() {
       setUserOutQueue2(tmp2);
       setSpinShow2(false);
     }
+    else{
+      const defaultaddress = '0x0000000000000000000000000000000000000009';
+      const promises = [
+        [nutContract.address ,nutContract.interface.encodeFunctionData('balanceOf',[defaultaddress])],
+        [poolsContract.address ,poolsContract.interface.encodeFunctionData('totalAllocPoint')],
+        [poolsContract.address ,poolsContract.interface.encodeFunctionData('rewardsPerSecond')]
+      ]
+      const multival = await multicallContract.callStatic.aggregate(promises);
+      // console.log(multival);
+      // const multimy = multival.returnData[0];
+      // console.log(multimy);
+      // console.log(Drip(multimy).toCFX());
+      const mynut = multival.returnData[0]; //await nutContract.balanceOf(myacc);        //  1
+      // console.log(mynut);
+      // console.log(Drip(mynut).toCFX());
+      //const nutinfo = await nutContract.getReserves();
+      const totalpoint = multival.returnData[1]; //await poolsContract.totalAllocPoint();//  2
+      // console.log(totalpoint);
+      // console.log(Drip(totalpoint).toCFX());
+      const nutPerBlock = multival.returnData[2]; //await poolsContract.sushiPerBlock(); //  3
+      // console.log(nutPerBlock);
+      // console.log(Drip(nutPerBlock).toCFX());
+      setMynut(Drip(mynut.toString()).toCFX().toString());
+      let confluxscanData:any;
+      try{
+        confluxscanData = await axios.get(
+        "https://www.confluxscan.io/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+      );}catch{
+          confluxscanData = await axios.get(
+          "https://www.confluxscan.net/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+        );
+      }
+      const data = confluxscanData.data.data;
+      const cfxprice = data.price;
+
+      // 每个lp的价值
+      // nut的价值
+      // 常数：sushiPerBlock
+      // 此种lp的总量
+      // totalAllocPoint获取一个值为Alloc总值
+      // poolInfo获取三个值，取第三个值：allocPoint
+      // 常数：一年的总秒数：31,536,000
+      const secondperyear = 31536000;
+      
+      let tmp1: any = [];
+      let tmp2: any = [];
+      let promises2: any = [];
+      for (let index = 0; index < 2; index++) {
+        
+        //console.log(pointInfo);
+        let myLiquidity = 0;
+        let val = 0;
+        let totalLPs = 0;
+        let lpinfoNUT:any;
+        let lpinfo:any;
+        let arp:any;
+        if (index === 0) {
+          promises2 = [
+            [nutCfxContract.address, nutCfxContract.interface.encodeFunctionData('totalSupply')],
+            [nutCfxContract.address, nutCfxContract.interface.encodeFunctionData('balanceOf',[defaultaddress])],
+            [nutCfxContract.address, nutCfxContract.interface.encodeFunctionData('getReserves')],
+            [poolsContract.address, poolsContract.interface.encodeFunctionData('userInfo',[index, defaultaddress])],
+            [poolsContract.address, poolsContract.interface.encodeFunctionData('pendingSushi',[index, defaultaddress])],
+            [poolsContract.address, poolsContract.interface.encodeFunctionData('poolInfo',[index])],
+            [nutCfxContract.address, nutCfxContract.interface.encodeFunctionData('getReserves')],
+            [poolsContract.address, poolsContract.interface.encodeFunctionData('PoolLPSum',[index])]
+          ]
+          // val = await nutCfxContract.totalSupply();
+          // myLiquidity = await nutCfxContract.balanceOf(myacc);
+          // lpinfo = await nutCfxContract.getReserves();
+        } else if (index === 1) {
+          promises2 = [
+            [xcfxCfxContract.address, xcfxCfxContract.interface.encodeFunctionData('totalSupply')],
+            [xcfxCfxContract.address, xcfxCfxContract.interface.encodeFunctionData('balanceOf',[defaultaddress])],
+            [xcfxCfxContract.address, xcfxCfxContract.interface.encodeFunctionData('getReserves')],
+            [poolsContract.address, poolsContract.interface.encodeFunctionData('userInfo',[index, defaultaddress])],
+            [poolsContract.address, poolsContract.interface.encodeFunctionData('pendingSushi',[index, defaultaddress])],
+            [poolsContract.address, poolsContract.interface.encodeFunctionData('poolInfo',[index])],
+            [nutCfxContract.address, nutCfxContract.interface.encodeFunctionData('getReserves')],
+            [poolsContract.address, poolsContract.interface.encodeFunctionData('PoolLPSum',[index])]
+          ]
+          // val = await xcfxCfxContract.totalSupply();
+          // myLiquidity = await xcfxCfxContract.balanceOf(myacc);
+          // lpinfo = await xcfxCfxContract.getReserves();
+        }
+        const multival2 = await multicallContract.callStatic.aggregate(promises2);
+        // console.log(multival2);
+        val = multival2.returnData[0]; //await xcfxCfxContract.totalSupply();
+        myLiquidity = multival2.returnData[1]; //await xcfxCfxContract.balanceOf(myacc);
+        lpinfo = multival2.returnData[2]; //await xcfxCfxContract.getReserves();
+        // console.log(lpinfo);
+        const pools = multival2.returnData[3]; //await poolsContract.userInfo(index, myacc);
+        // console.log(pools);
+        const pendingrewards = multival2.returnData[4]; //await poolsContract.pendingSushi(index, myacc);
+        const pointInfo = multival2.returnData[5]; //await poolsContract.poolInfo(index);
+        
+        lpinfoNUT = multival2.returnData[6]; //await nutCfxContract.getReserves();
+        // console.log(lpinfoNUT);
+        // console.log(lpinfoNUT.substring(0, 66));
+        // console.log('0x'+lpinfoNUT.substring(66, 130));
+        const NUTPrice = Drip(lpinfoNUT.substring(0, 66)).toCFX()/Drip('0x'+lpinfoNUT.substring(66, 130)).toCFX();
+        LpPricearr[index] =cfxprice*2*lpinfo.substring(0, 66)/val;
+        // console.log(NUTPrice);
+        totalLPs = Drip(multival2.returnData[7]).toCFX(); //await poolsContract.PoolLPSum(index);
+        console.log(totalLPs);
+        
+
+
+        if(totalLPs>0){
+          console.log(NUTPrice,secondperyear,Drip(nutPerBlock).toCFX(),Drip('0x'+pointInfo.substring(130, 194)).toCFX(),Drip(val).toCFX(),Drip(totalpoint).toCFX(),Drip(lpinfo.substring(0, 66)).toCFX());
+          arp = (100*NUTPrice*secondperyear*Drip(nutPerBlock).toCFX()*Drip('0x'+pointInfo.substring(130, 194)).toCFX()*Drip(val).toCFX()/((Drip(totalpoint).toCFX()*totalLPs)*Drip(lpinfo.substring(0, 66)).toCFX()*2)).toString();
+          console.log(arp);
+          if(arp!='NaN'){
+            arp = (arp.split('.')[0]+'.'+arp.split('.')[1].slice(0, 8));
+          }
+          
+        }else{
+          arp = "--"
+        }
+        
+        // console.log(arp);
+        totalLPs = (totalLPs);
+        console.log(pools.substring(0, 66));
+        if (Drip(pools.substring(0, 66)).toCFX() === "0") {
+          tmp2.push({
+            i: index,
+            val: Drip(pools.substring(0, 66)).toCFX(),
+            arp: arp,
+            totalLiquidity: Drip(val).toCFX(),
+            myLiquidity: Drip(myLiquidity).toCFX(),
+            totalLPs: totalLPs,
+          });
+        } else {
+          tmp1.push({
+            i: index,
+            val: Drip(pools.substring(0, 66)).toCFX(),
+            arp: arp,
+            totalLiquidity: Drip(val).toCFX(),
+            myLiquidity: Drip(myLiquidity).toCFX(),
+            totalLPs: totalLPs,
+            pendingrewards: Drip(pendingrewards).toCFX(),
+          });
+        }
+      MyLiquilityarr[index]=parseFloat(Drip(pools.substring(0, 66)).toCFX().toString()).toFixed(3);
+      ShareOfPoolarr[index]=parseFloat((100*Drip(pools.substring(0, 66)).toCFX()/totalLPs).toString()).toFixed(3)+'%';
+      Aprarr[index]=parseFloat((arp).toString()).toFixed(1);
+
+      }
+
+      setUserOutQueue1(tmp1);
+      setSpinShow1(false);
+      setUserOutQueue2(tmp2);
+      setSpinShow2(false);
+    }
   }
 
   return (
