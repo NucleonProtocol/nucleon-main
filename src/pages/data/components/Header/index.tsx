@@ -134,32 +134,32 @@ const onSwitchNetwork = async () => {
 };
 
 function Header() {
-    const currWallet = localStorage.getItem("currWallet") ? localStorage.getItem("currWallet") : "1";
-    if (currWallet === '0') {
-      useStatus = useStatusDefault;
-      useAccount = useAccountDefault;
-      useChainId = useChainIdDefault;
-      useBalance = useBalanceDefault;
-      connect = connectDefault;
-      addChain = addChainDefault;
-      switchChain = switchChainDefault
-    } else if (currWallet === '1') {
-      useStatus = useStatusMetaMask;
-      useAccount = useAccountMetaMask;
-      useChainId = useChainIdMetaMask;
-      useBalance = useBalanceMetaMask;
-      connect = connectMetaMask;
-      addChain = addChainMetaMask;
-      switchChain = switchChainMetaMask
-    } else if (currWallet === '2') {
-      useStatus = useStatusFluent;
-      useAccount = useAccountFluent;
-      useChainId = useChainIdFluent;
-      useBalance = useBalanceFluent;
-      connect = connectFluent;
-      addChain = addChainFluent;
-      switchChain = switchChainFluent
-    }
+  const currWallet = localStorage.getItem("currWallet") ? localStorage.getItem("currWallet") : "1";
+  if (currWallet === '0') {
+    useStatus = useStatusDefault;
+    useAccount = useAccountDefault;
+    useChainId = useChainIdDefault;
+    useBalance = useBalanceDefault;
+    connect = connectDefault;
+    addChain = addChainDefault;
+    switchChain = switchChainDefault
+  } else if (currWallet === '1') {
+    useStatus = useStatusMetaMask;
+    useAccount = useAccountMetaMask;
+    useChainId = useChainIdMetaMask;
+    useBalance = useBalanceMetaMask;
+    connect = connectMetaMask;
+    addChain = addChainMetaMask;
+    switchChain = switchChainMetaMask
+  } else if (currWallet === '2') {
+    useStatus = useStatusFluent;
+    useAccount = useAccountFluent;
+    useChainId = useChainIdFluent;
+    useBalance = useBalanceFluent;
+    connect = connectFluent;
+    addChain = addChainFluent;
+    switchChain = switchChainFluent
+  }
 
   // web3 钱包登录状态
   const status = useStatus();
@@ -168,7 +168,9 @@ function Header() {
   const [active, setActive] = useState(0);
   const [showSwitch, setShowSwitch] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [isModalLanguageOpen, setIsModalLanguageOpen] = useState(false);
+  const [language, setLanguage] = useState("en");
+  const [languageList, setLanguageList] = useState([{ key: "en", name: 'English' }, { key: "zh", name: ' 中 文 ' }]);
 
   window.onhashchange = function () {
     switch (location.hash) {
@@ -245,6 +247,20 @@ function Header() {
     setIsModalOpen(false);
   };
 
+  const handleLanguageOk = () => {
+    setIsModalLanguageOpen(true);
+  };
+  const handleLanguageCancel = () => {
+    setIsModalLanguageOpen(false);
+  };
+
+  const onSwitchLanguage = async (key: any) => {
+    i18n.changeLanguage(key);
+    setLanguage(key);
+    localStorage.setItem("ln", key);
+    handleLanguageCancel();
+  };
+
 
   const chainId = useChainId()!; // 正式网 测试网
   // console.log(chainId);
@@ -263,6 +279,11 @@ function Header() {
   // 定时更新数据
   const [count, setCount] = useState(10);
   useEffect(() => {
+    // 初始化上次语言
+    let ln = localStorage.getItem("ln") ? localStorage.getItem("ln")?.toString() : 'en';
+    i18n.changeLanguage(ln);
+    setLanguage(ln+'');
+
     let timerId: string | number | NodeJS.Timeout | null | undefined = null;
     const run = () => {
       if (count <= 0) {
@@ -316,7 +337,7 @@ function Header() {
     setTimeout(() => {
       if (chainId != "1030") {
         setShowSwitch(true);
-      }else {
+      } else {
         setShowSwitch(false);
       }
     }, 20);
@@ -329,7 +350,7 @@ function Header() {
   }, []);
 
   return (
-    <div className={style.nav0}>
+    <div className={style.nav0} style={{ position: "relative" }}>
       <div className={style.sub_nav}>
         <Link to="/"
           onClick={() => {
@@ -466,6 +487,7 @@ function Header() {
               Switch Network
             </div>
           </div>
+          <div onClick={handleLanguageOk} style={{ display: "inline-block", verticalAlign: "baseline", margin: "0 0 0 10px", color: "#fff", borderRadius: "3px", cursor: "pointer", fontSize: "16px", padding: "2px 5px", backgroundColor: "#e5a455", textTransform: "Capitalize" }}>{language}</div>
         </div>
       </div>
       <div className={style.sub_nav_sub + ' ' + styles.smallshow} style={{
@@ -526,24 +548,35 @@ function Header() {
         </Link>
       </div>
       <Modal className={style.sw} title="Select a Wallet" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-         {/* <div style={{margin:"5px"}}>
+        {/* <div style={{margin:"5px"}}>
           <Button icon={<img src={logodefault} height="20px" style={{float:"right"}} />} block onClick={() => {
             onSwitchWallet(0);
           }}> Default </Button></div> */}
-        <div style={{margin:"5px"}}>
-          <Button icon={<img src={logometamask} height="19px" style={{float:"right"}} />} block onClick={() => {
+        <div style={{ margin: "5px" }}>
+          <Button icon={<img src={logometamask} height="19px" style={{ float: "right" }} />} block onClick={() => {
             onSwitchWallet(1);
           }}> MetaMask </Button>
         </div>
-        <div style={{margin:"5px"}}>
-          <Button icon={<img src={logofluent} height="24px" style={{float:"right"}} />} block onClick={() => {
+        <div style={{ margin: "5px" }}>
+          <Button icon={<img src={logofluent} height="24px" style={{ float: "right" }} />} block onClick={() => {
             onSwitchWallet(2);
-        }}> Fluent </Button>
+          }}> Fluent </Button>
         </div>
-        <div style={{margin:"5px"}}>
-          <Button icon={<img src={logotp} height="24px" style={{float:"right"}} />} block onClick={() => {
+        <div style={{ margin: "5px" }}>
+          <Button icon={<img src={logotp} height="24px" style={{ float: "right" }} />} block onClick={() => {
             onSwitchWallet(0);
-        }}> TokenPocket </Button>
+          }}> TokenPocket </Button>
+        </div>
+      </Modal>
+      <Modal className={style.sw} style={{ maxWidth: "90%" }} title="Select Language" open={isModalLanguageOpen} onCancel={handleLanguageCancel}>
+        <div style={{ margin: "5px" }}>
+          {languageList.map((item: any) => {
+            return (
+              <Button style={{textAlign:"center"}} block onClick={() => {
+                onSwitchLanguage(item.key);
+              }}> {item.name} </Button>
+            );
+          })}
         </div>
       </Modal>
     </div>

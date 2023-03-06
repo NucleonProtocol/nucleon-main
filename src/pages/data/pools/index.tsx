@@ -138,6 +138,7 @@ const { addressPool, abiPool } = require("./../../../ABI/Pools.json");
 const {
   addressNUT_CFX,
   addressXCFX_CFX,
+  addressXCFX_NUT,
   abiLP,
 } = require("./../../../ABI/Lp.json");
 const { addressMulticall, abiMulticall } = require("./../../../ABI/Multicall.json");
@@ -146,12 +147,16 @@ const provider = new ethers.providers.JsonRpcProvider(
 );
 const poolsContract = new ethers.Contract(addressPool, abiPool, provider);
 const poolsInterface = new utils.Interface(abiPool);
-//LP
+//LP  nutCfx
 const nutCfxContract = new ethers.Contract(addressNUT_CFX, abiLP, provider);
 const nutCfxInterface = new utils.Interface(abiLP);
-//LP
+//LP  xcfxCfx
 const xcfxCfxContract = new ethers.Contract(addressXCFX_CFX, abiLP, provider);
 const xcfxCfxInterface = new utils.Interface(abiLP);
+//LP  xcfxNUT
+const xcfxNutContract = new ethers.Contract(addressXCFX_NUT, abiLP, provider);
+const xcfxNutInterface = new utils.Interface(abiLP);
+
 //币种
 const nutContract = new ethers.Contract(addressNut, abiNut, provider);
 const nutInterface = new utils.Interface(abiNut);
@@ -517,6 +522,8 @@ export default function Page() {
       allowance = await nutCfxContract.allowance(myacc, addressPool);
     } else if (+isModalOpen1Val === 1) {
       allowance = await xcfxCfxContract.allowance(myacc, addressPool);
+    } else if (+isModalOpen1Val === 2) {
+      allowance = await xcfxNutContract.allowance(myacc, addressPool);
     }
     clearTimeout(timer);
     (document.getElementById("spinner") as any).style.display = "block";
@@ -566,6 +573,8 @@ export default function Page() {
         allowance = await nutCfxContract.allowance(myacc, addressPool);
       } else if (+isModalOpen1Val === 1) {
         allowance = await xcfxCfxContract.allowance(myacc, addressPool);
+      } else if (+isModalOpen1Val === 2) {
+        allowance = await xcfxNutContract.allowance(myacc, addressPool);
       }
       if (+Drip(allowance).toCFX() < +isModalOpen1Val3) {
         for (
@@ -592,6 +601,8 @@ export default function Page() {
           tempaccuratevalues = await nutCfxContract.balanceOf(myacc);
         } else if (+isModalOpen1Val === 1) {
           tempaccuratevalues = await xcfxCfxContract.balanceOf(myacc);
+        } else if (+isModalOpen1Val === 1) {
+          tempaccuratevalues = await xcfxNutContract.balanceOf(myacc);
         }
       }else{
         tempaccuratevalues = Unit.fromStandardUnit(isModalOpen1Val3).toHexMinUnit();
@@ -726,6 +737,8 @@ export default function Page() {
         allowance = await nutCfxContract.allowance(myacc, addressPool);
       } else if (+isModalOpen1Val === 1) {
         allowance = await xcfxCfxContract.allowance(myacc, addressPool);
+      } else if (+isModalOpen1Val === 2) {
+        allowance = await xcfxNutContract.allowance(myacc, addressPool);
       }
     };
   };
@@ -841,6 +854,8 @@ export default function Page() {
       allowance = await nutCfxContract.allowance(myacc, addressPool);
     } else if (+isModalOpen3Val === 1) {
       allowance = await xcfxCfxContract.allowance(myacc, addressPool);
+    } else if (+isModalOpen3Val === 2) {
+      allowance = await xcfxNutContract.allowance(myacc, addressPool);
     }
     clearTimeout(timer);
     (document.getElementById("spinner") as any).style.display = "block";
@@ -888,6 +903,8 @@ export default function Page() {
         allowance = await nutCfxContract.allowance(myacc, addressPool);
       } else if (+isModalOpen1Val === 1) {
         allowance = await xcfxCfxContract.allowance(myacc, addressPool);
+      } else if (+isModalOpen1Val === 2) {
+        allowance = await xcfxNutContract.allowance(myacc, addressPool);
       }
       if (+Drip(allowance).toCFX() < +isModalOpen3Val3) {
         for (
@@ -910,6 +927,8 @@ export default function Page() {
         tempaccuratevalues = await nutCfxContract.balanceOf(myacc);
       } else if (+isModalOpen3Val === 1) {
         tempaccuratevalues = await xcfxCfxContract.balanceOf(myacc);
+      } else if (+isModalOpen3Val === 2) {
+        tempaccuratevalues = await xcfxNutContract.balanceOf(myacc);
       }
     }else{
       tempaccuratevalues = Unit.fromStandardUnit(isModalOpen3Val3).toHexMinUnit();
@@ -1031,9 +1050,7 @@ export default function Page() {
             [nutCfxContract.address, nutCfxContract.interface.encodeFunctionData('getReserves')],
             [poolsContract.address, poolsContract.interface.encodeFunctionData('PoolLPSum',[index])]
           ]
-          // val = await nutCfxContract.totalSupply();
-          // myLiquidity = await nutCfxContract.balanceOf(myacc);
-          // lpinfo = await nutCfxContract.getReserves();
+
         } else if (index === 1) {
           promises2 = [
             [xcfxCfxContract.address, xcfxCfxContract.interface.encodeFunctionData('totalSupply')],
@@ -1045,9 +1062,19 @@ export default function Page() {
             [nutCfxContract.address, nutCfxContract.interface.encodeFunctionData('getReserves')],
             [poolsContract.address, poolsContract.interface.encodeFunctionData('PoolLPSum',[index])]
           ]
-          // val = await xcfxCfxContract.totalSupply();
-          // myLiquidity = await xcfxCfxContract.balanceOf(myacc);
-          // lpinfo = await xcfxCfxContract.getReserves();
+
+        } else if (index === 2) {
+          promises2 = [
+            [xcfxNutContract.address, xcfxNutContract.interface.encodeFunctionData('totalSupply')],
+            [xcfxNutContract.address, xcfxNutContract.interface.encodeFunctionData('balanceOf',[myacc])],
+            [xcfxNutContract.address, xcfxNutContract.interface.encodeFunctionData('getReserves')],
+            [poolsContract.address, poolsContract.interface.encodeFunctionData('userInfo',[index, myacc])],
+            [poolsContract.address, poolsContract.interface.encodeFunctionData('pendingSushi',[index, myacc])],
+            [poolsContract.address, poolsContract.interface.encodeFunctionData('poolInfo',[index])],
+            [nutCfxContract.address, nutCfxContract.interface.encodeFunctionData('getReserves')],
+            [poolsContract.address, poolsContract.interface.encodeFunctionData('PoolLPSum',[index])]
+          ]
+
         }
         const multival2 = await multicallContract.callStatic.aggregate(promises2);
         // console.log(multival2);
@@ -1185,9 +1212,7 @@ export default function Page() {
             [nutCfxContract.address, nutCfxContract.interface.encodeFunctionData('getReserves')],
             [poolsContract.address, poolsContract.interface.encodeFunctionData('PoolLPSum',[index])]
           ]
-          // val = await nutCfxContract.totalSupply();
-          // myLiquidity = await nutCfxContract.balanceOf(myacc);
-          // lpinfo = await nutCfxContract.getReserves();
+
         } else if (index === 1) {
           promises2 = [
             [xcfxCfxContract.address, xcfxCfxContract.interface.encodeFunctionData('totalSupply')],
@@ -1199,9 +1224,19 @@ export default function Page() {
             [nutCfxContract.address, nutCfxContract.interface.encodeFunctionData('getReserves')],
             [poolsContract.address, poolsContract.interface.encodeFunctionData('PoolLPSum',[index])]
           ]
-          // val = await xcfxCfxContract.totalSupply();
-          // myLiquidity = await xcfxCfxContract.balanceOf(myacc);
-          // lpinfo = await xcfxCfxContract.getReserves();
+
+        } else if (index === 2) {
+          promises2 = [
+            [xcfxNutContract.address, xcfxNutContract.interface.encodeFunctionData('totalSupply')],
+            [xcfxNutContract.address, xcfxNutContract.interface.encodeFunctionData('balanceOf',[defaultaddress])],
+            [xcfxNutContract.address, xcfxNutContract.interface.encodeFunctionData('getReserves')],
+            [poolsContract.address, poolsContract.interface.encodeFunctionData('userInfo',[index, defaultaddress])],
+            [poolsContract.address, poolsContract.interface.encodeFunctionData('pendingSushi',[index, defaultaddress])],
+            [poolsContract.address, poolsContract.interface.encodeFunctionData('poolInfo',[index])],
+            [nutCfxContract.address, nutCfxContract.interface.encodeFunctionData('getReserves')],
+            [poolsContract.address, poolsContract.interface.encodeFunctionData('PoolLPSum',[index])]
+          ]
+
         }
         const multival2 = await multicallContract.callStatic.aggregate(promises2);
         // console.log(multival2);
@@ -1294,7 +1329,7 @@ export default function Page() {
               float: "right",
             }}
           >
-            Your NUTs：{parseFloat(mynut).toFixed(3)}
+            {t("stake.Your_NUTs")}：{parseFloat(mynut).toFixed(3)}
           </span>
         </div>
         <div className={style.box2 + ' ' + styles.bigshow}>
@@ -1302,10 +1337,10 @@ export default function Page() {
             <Col span={2}>{t("pools.PoolName")}</Col>
             <Col span={3}>{t("pools.APR")}</Col>
             <Col span={3}>{t("pools.TotalLiquidity")}</Col>
-            <Col span={3}>LPs in Pool</Col>
+            <Col span={3}>{t("pools.LPs_in_Pool")}</Col>
             <Col span={3}>{t("pools.StakedLquidity")}</Col>
             <Col span={3}>{t("pools.AvailableLquidity")}</Col>
-            <Col span={2}>Pending Rewards</Col>
+            <Col span={2}>{t("pools.Pending_Rewards")}</Col>
           </Row>
           {userOutQueue1.map((item: any) => {
             return (
@@ -1416,7 +1451,7 @@ export default function Page() {
                   <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.TotalLiquidity")}:</span> {parseFloat(item.totalLiquidity.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={12}>
-                  <span style={{fontWeight:"normal",color:"#ddd"}}>LPs in Pool:</span> {parseFloat(item.totalLPs.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.LPs_in_Pool")}:</span> {parseFloat(item.totalLPs.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={12}>
                   <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.StakedLquidity")}:</span> {parseFloat(item.val.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
@@ -1425,7 +1460,7 @@ export default function Page() {
                   <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.AvailableLquidity")}:</span> {parseFloat(item.myLiquidity.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={12}>
-                  <span style={{fontWeight:"normal",color:"#ddd"}}>Pending Rewards:</span> {parseFloat(item.pendingrewards.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.Pending_Rewards")}:</span> {parseFloat(item.pendingrewards.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={24}>
                     <Button
@@ -1478,7 +1513,7 @@ export default function Page() {
         </div>
         <div className={style.sub_nav2}>
           <Link to="/data/pools" style={{ color: "#FFF" }}>
-            Other Pools
+          {t("pools.otherpools")}
           </Link>
         </div>
         <div className={style.box2 + ' ' + styles.bigshow}>
@@ -1486,7 +1521,7 @@ export default function Page() {
             <Col span={2}>{t("pools.PoolName")}</Col>
             <Col span={3}>{t("pools.APR")}</Col>
             <Col span={3}>{t("pools.TotalLiquidity")}</Col>
-            <Col span={3}>LPs in Pool</Col>
+            <Col span={3}>{t("pools.LPs_in_Pool")}</Col>
             <Col span={3}>{t("pools.Myliquidity")}</Col>
           </Row>
           {userOutQueue2.map((item: any) => {
@@ -1592,7 +1627,7 @@ export default function Page() {
                   <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.TotalLiquidity")}:</span> {parseFloat(item.totalLiquidity.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={12}>
-                  <span style={{fontWeight:"normal",color:"#ddd"}}>LPs in Pool:</span> {parseFloat(item.totalLPs.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.LPs_in_Pool")}:</span> {parseFloat(item.totalLPs.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={12}>
                   <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.Myliquidity")}:</span> {parseFloat(item.myLiquidity.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
@@ -1646,10 +1681,10 @@ export default function Page() {
             <Spin indicator={antIcon} /></div>
           <div style={{ height: "35px" }}></div>
         </div>
-        <h4>About Nucleon Pools</h4>
+        <h4>{t("pools.About_Nucleon_Pools")}</h4>
           <div className={style.box5}>
             <p style={{ textAlign: "center" }}>
-              Lock your LPs on Nucleon to earn fees and NUT!
+            {t("pools.About_Nucleon_Pools_text")}
             </p>
             {/*<p>
               Earn LPs by adding liquidity to the pools listed above.
@@ -1706,7 +1741,7 @@ export default function Page() {
                           />
                         </Col>
                         <Col span={12} style={{ padding: "10px 0" }}>
-                          Pending Rewards
+                          {t("pools.Pending_Rewards")}
                         </Col>
                         <Col
                           span={12}
@@ -1824,13 +1859,13 @@ export default function Page() {
                         }}
                         onClick={handleStake}
                       >
-                        Stake
+                        {t("pools.Stake")}
                       </span>{" "}
                       <span
                         onClick={handleWithdraw}
                         style={{ cursor: "pointer" }}
                       >
-                        Withdraw
+                        {t("pools.Withdraw")}
                       </span>
                       <div
                         className={style.innerbox}
@@ -1998,7 +2033,7 @@ export default function Page() {
                         style={{ cursor: "pointer", margin: "0 40px" }}
                         onClick={handleStake}
                       >
-                        Stake
+                        {t("pools.Stake")}
                       </span>{" "}
                       <span
                         onClick={handleWithdraw}
@@ -2008,7 +2043,7 @@ export default function Page() {
                           textShadow: "1px 2px 13px #EAB966",
                         }}
                       >
-                        Withdraw
+                        {t("pools.Withdraw")}
                       </span>
                       <div
                         className={style.innerbox}
@@ -2251,7 +2286,7 @@ export default function Page() {
                           color: "#EAB966",
                         }}
                       >
-                        Stake
+                        {t("pools.Stake")}
                       </span>
                       <div
                         className={style.innerbox}

@@ -1537,7 +1537,7 @@ export default function Page() {
               float: "right",
             }}
           >
-            Your NUTs：{ parseFloat(mynut).toFixed(2) }
+            {t("stake.Your_NUTs")}：{ parseFloat(mynut).toFixed(2) }
           </span>
         </div>
         <div className={style.box0}>

@@ -513,7 +513,7 @@ export default function Page() {
         ghost
         className={style.stake_btn}
       >
-        Stake Now
+        {t("stake.Stake_now")}
       </Button>
     );
   });
@@ -1292,7 +1292,7 @@ export default function Page() {
                 float: "right",
               }}
             >
-              Your NUTs：{parseFloat(mynut).toFixed(2)}
+              {t("stake.Your_NUTs")}：{parseFloat(mynut).toFixed(2)}
             </span>
           </div>
           <div style={{ clear: "both" }}></div>
@@ -1301,7 +1301,7 @@ export default function Page() {
               <div className={style.box1}>
                 <Row>
                   <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    Available to stake <div className={style.board}></div>
+                    {t("stake.Available_to_stake")} <div className={style.board}></div>
                     <b>{formatNumber(parseFloat(staketotal).toFixed(2))} CFX</b>
                   </Col>
                   <Col
@@ -1333,7 +1333,7 @@ export default function Page() {
                 <div className={style.line}></div>
                 <Row>
                   <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                    xCFX Balance
+                  {t("stake.xCFX_Balance")} 
                     <br />
                     <b>{formatNumber(xcfxAmount)} xCFX</b>
                     <span style={{ display: "none" }} className={style.plus}>
@@ -1341,7 +1341,7 @@ export default function Page() {
                     </span>
                   </Col>
                   <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    Nucleon APY{" "}
+                  {t("stake.Nucleon_APY")}{" "}
                     <b style={{ fontWeight: "normal" }}>
                       {parseFloat((+rate).toString()).toFixed(2)}%
                     </b>
@@ -1533,19 +1533,19 @@ export default function Page() {
             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
               <div className={style.box3 + " " + style.mdp}>
                 <Row gutter={32}>
-                  <Col span={12}>You will Receive</Col>
+                  <Col span={12}>{t("stake.You_will_Receive")}</Col>
                   <Col span={12} style={{ textAlign: "right" }}>
                     {xcfxVal} xCFX
                   </Col>
-                  <Col span={12}>Exchange Rate</Col>
+                  <Col span={12}>{t("stake.Exchange_Rate")}</Col>
                   <Col span={12} style={{ textAlign: "right" }}>
                     1xCFX= {parseFloat(exchangeRate).toFixed(4)}CFX
                   </Col>
-                  <Col span={12}>Nucleon Service Fee</Col>
+                  <Col span={12}>{t("stake.Nucleon_Service_Fee")}</Col>
                   <Col span={12} style={{ textAlign: "right" }}>
                     10%
                   </Col>
-                  <Col span={12}>Current Block Number</Col>
+                  <Col span={12}>{t("stake.Current_Block_Number")}</Col>
                   <Col span={12} style={{ textAlign: "right" }}>
                     <div
                       id="spinner2"
@@ -1571,10 +1571,10 @@ export default function Page() {
             </Col>
             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
               <div className={style.box3}>
-                Account Balance
+              {t("stake.Account_Balance")}
                 <Row gutter={32} style={{ marginTop: "30px" }}>
                   <Col span={6}>
-                    <span className={style.mintxt}>xCFX Value</span>
+                    <span className={style.mintxt}>{t("stake.xCFX_Value")}</span>
                     <div>${balancevalue}</div>
                   </Col>
                   <Col span={10}>
@@ -1589,7 +1589,7 @@ export default function Page() {
                     </div>
                   </Col>
                   <Col span={8} style={{ textAlign: "right" }}>
-                    <span className={style.mintxt}>Share of the Pool</span>
+                    <span className={style.mintxt}>{t("stake.Share_of_the_Pool")}</span>
                     <div>
                       {+parseFloat(xcfxAmountTotal).toFixed(0) /
                         +parseFloat(shareofthePool).toFixed(0) <
@@ -1609,22 +1609,22 @@ export default function Page() {
             </Col>
           </Row>
           <div style={{ top: "100px", position: "relative" }}>
-            <h4>CFX Statistics</h4>
+            <h4>{t("stake.CFX_Statistics")}</h4>
             <div className={style.box5}>
               <Row gutter={32}>
-                <Col span={12}>Nucleon APY</Col>
+                <Col span={12}>{t("stake.Nucleon_APY")}</Col>
                 <Col span={12} style={{ textAlign: "right" }}>
                   {rate}%
                 </Col>
-                <Col span={12}>Total Staked CFX</Col>
+                <Col span={12}>{t("stake.Total_Staked_CFX")}</Col>
                 <Col span={12} style={{ textAlign: "right" }}>
                   {formatNumber(parseFloat(totalStaked).toFixed(3))}
                 </Col>
-                <Col span={12}>Stakers</Col>
+                <Col span={12}>{t("stake.Stakers")}</Col>
                 <Col span={12} style={{ textAlign: "right" }}>
                   {formatNumber(holderCount + holderCount)}
                 </Col>
-                <Col span={12}>xCFX Market Cap</Col>
+                <Col span={12}>{t("stake.xCFX_Market_Cap")}</Col>
                 <Col span={12} style={{ textAlign: "right" }}>
                   $
                   {formatNumber(
@@ -1633,23 +1633,16 @@ export default function Page() {
                 </Col>
               </Row>
             </div>
-            <h4>About Nucleon Stake</h4>
+            <h4> {t("stake.About_Nucleon_Stake")}</h4>
             <div className={style.box5}>
               <p>
-                Nucleon is a liquid staking solution for Conflux PoS backed by
-                industry-leading staking providers. Nucleon lets users stake
-                their CFX by exchanging CFX to xCFX - without locking assets or
-                maintaining infrastructure.
+                {t("stake.About_Nucleon_Stake1")}
               </p>
               <p>
-                The value in xCFX will be automatically compounded and the xCFX
-                value expands automatically.
+                {t("stake.About_Nucleon_Stake2")}
               </p>
               <p>
-                Our goal is to solve the problems associated with Conflux PoS
-                staking - illiquidity, immovability and accessibility - making
-                staked CFX liquid and allowing for participation with any amount
-                of CFX to improve security of the Conflux network.
+                {t("stake.About_Nucleon_Stake3")}
               </p>
             </div>
           </div>

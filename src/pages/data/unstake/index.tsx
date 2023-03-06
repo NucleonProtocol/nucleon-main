@@ -132,6 +132,7 @@ function getStatistics(cond: string, limit = 24): Promise<any> {
 }
 
 let myacc: any;
+
 export default function Page() {
   myacc = useAccount();
   const [mynut, setMynut] = useState("--");
@@ -156,6 +157,7 @@ export default function Page() {
   const [finialUnlockTime, setFinialUnlockTime] = useState(0);
 
   const [userOutQueue, setUserOutQueue] = useState([]);
+  const [popUpMode, setpopUpMode] = useState(true);
   let xCFXToken = {
     address: "0x889138644274a7Dc602f25A7e7D53fF40E6d0091", // The address of the token contract
     symbol: "xCFX", // A ticker symbol or shorthand, up to 5 characters
@@ -274,11 +276,11 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
                 <div style={{ color: "#fff", position: "absolute", right: "20px", top: "10px", cursor: "pointer", fontSize: "20px" }} onClick={closeCurr}>X</div>
               </div>
               <img src={mb} width="60%" style={{ margin: "20px 0 20px 20%" }} />
-              <Row style={{ color: "#fff", lineHeight: "36px" }}>
+              <Row style={{ color: "#fff", lineHeight: "36px",display: popUpMode?"block":"none" }}>
                 <Col span={6}>Burned</Col>
                 <Col span={18} style={{ textAlign: "right",fontFamily: 'Univa Nova Bold' }}>{popup1} xCFX</Col>
               </Row>
-              <Row style={{ color: "#fff", lineHeight: "36px" }}>
+              <Row style={{ color: "#fff", lineHeight: "36px",display: popUpMode?"block":"none" }}>
                 <Col span={6}>Will Receive</Col>
                 <Col span={18} style={{ textAlign: "right",fontFamily: 'Univa Nova Bold' }}>{popup2} CFX</Col>
               </Row>
@@ -474,6 +476,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
           //value: Unit.fromStandardUnit(1).toHexMinUnit(),
         });
       const txReceipt = await waitTransactionReceipt(TxnHash);//cfx_back, speedMode
+      setpopUpMode(true);
       console.log("BBB",TxnHash);
       console.log(txReceipt);
       // if(period ===0){
@@ -522,7 +525,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
         ghost
         className={style.stake_btn}
       >
-        Unstake
+        {t("stake.unStakeb")}
       </Button>
     );
   });
@@ -530,7 +533,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
   const ClaimButton: React.FC = memo(() => {
     const account = useAccount();
     const chainId = useChainId()!;
-    const balance = useBalance()!;
+    // const balance = useBalance()!;
 
     const handleClickSendTransaction = useCallback(async () => {
       if (!account) return;
@@ -552,8 +555,11 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
       });
       
       // const txReceipt = await waitTransactionReceipt(txnHash);//cfx_back, speedMode
+      setpopUpMode(false);
       console.log("CCC",TxnHash);
       setOperation("Details: "+unlocked+" CFX will be Transferred to your address.")
+      // setPopup1(Drip(Unit.fromStandardUnit(txReceipt.logs[0].data).toDecimalStandardUnit()).toCFX());
+      // setPopup2(Drip(Unit.fromStandardUnit(txReceipt.logs[1].data).toDecimalStandardUnit()).toCFX());
       setTimeout(setTranHash(TxnHash),3690);
       setTimeout(() => {
         init();
@@ -787,7 +793,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
               float: "right",
             }}
           >
-            Your NUTs：{ parseFloat(mynut).toFixed(2) }
+            {t("stake.Your_NUTs")}：{ parseFloat(mynut).toFixed(2) }
           </span>
         </div>
         <div style={{clear:"both"}}></div>
@@ -796,7 +802,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
             <div className={style.box1}>
               <Row>
                 <Col span={24}>
-                  Available to unstake <div className={style.board}></div>
+                {t("stake.Available_to_unstake")} <div className={style.board}></div>
                   <br />
                   <b>{formatNumber(parseFloat(xcfxAmount).toFixed(3))} xCFX</b>
                 </Col>
@@ -804,12 +810,12 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
               <div className={style.line}></div>
               <Row>
                 <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                  CFX Balance
+                {t("stake.CFX_Balance")}
                   <br />
                   <b>{formatNumber(parseFloat(staketotal).toFixed(2))} CFX</b>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                   Nucleon APY{" "}
+                  {t("stake.Nucleon_APY")}{" "}
                   <b style={{ fontWeight: "normal" }}>
                     {parseFloat((+cfxapy).toString()).toFixed(2)}%
                   </b>
@@ -906,7 +912,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
                 <Row>
                   <Col span={14} style={{ textAlign: "right" }}>
                     {" "}
-                    Total CFX in Unlocking Period :
+                    {t("stake.Total_CFX_in_Unlocking_Period")}
                   </Col>
                   <Col span={10}>
                     {parseFloat(unlocking.toString()).toFixed(3)}
@@ -918,7 +924,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
                 <Row>
                   <Col span={14} style={{ textAlign: "right" }}>
                     {" "}
-                    Unlocked & Available to Claim :
+                    {t("stake.Unlocked_Available_to_Claim")}
                   </Col>
                   <Col span={10}>
                     {parseFloat(unlocked.toString()).toFixed(3)}
@@ -930,7 +936,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
                 <Row>
                   <Col span={14} style={{ textAlign: "center" }}>
                     {" "}
-                    The Final Unlock Time :
+                    {t("stake.Estimated_Time_of_Unlock")} 
                   </Col>
                   <Col span={10}>{finialUnlockTime}</Col>
                 </Row>
@@ -950,19 +956,19 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <div className={style.box3 + " " + style.mdp}>
               <Row gutter={32}>
-                <Col span={12}>You will Receive</Col>
+                <Col span={12}>{t("stake.You_will_Receive")}</Col>
                 <Col span={12} style={{ textAlign: "right" }}>
                   {xcfxVal} CFX
                 </Col>
-                <Col span={12}>Exchange Rate</Col>
+                <Col span={12}>{t("stake.Exchange_Rate")}</Col>
                 <Col span={12} style={{ textAlign: "right" }}>
                   1xCFX= {parseFloat(exchangeRate).toFixed(4)}CFX
                 </Col>
-                <Col span={16}>Estimated Cool Down Period</Col>
+                <Col span={16}>{t("stake.Estimated_Cool_Down_Period")}</Col>
                 <Col span={8} style={{ textAlign: "right" }}>
                   {period === 1 ? "48 hours" : "16 days"}
                 </Col>
-                <Col span={12}>Current Block Number</Col>
+                <Col span={12}>{t("stake.Current_Block_Number")}</Col>
                 <Col span={12} style={{ textAlign: "right" }}>
                   <div
                     id="spinner2"
@@ -988,10 +994,10 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <div className={style.box3}>
-              Current Balance
+              {t("stake.Account_Balance")}
               <Row gutter={32} style={{ marginTop: "30px" }}>
                 <Col span={6}>
-                  <span className={style.mintxt}>Value</span>
+                  <span className={style.mintxt}>{t("stake.xCFX_Value")}</span>
                   <div>${balancevalue}</div>
                 </Col>
                 <Col span={10}>
@@ -1003,7 +1009,7 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
                   </div>
                 </Col>
                 <Col span={8} style={{ textAlign: "right" }}>
-                  <span className={style.mintxt}>Share of the Pool</span>
+                  <span className={style.mintxt}>{t("stake.Share_of_the_Pool")}</span>
                   <div>
                     {+parseFloat(xcfxAmountTotal).toFixed(0) /
                       +parseFloat(shareofthePool).toFixed(0) <
@@ -1024,14 +1030,14 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
         </Row>
         <div style={{ top: "100px", position: "relative" }}>
           <h4 style={{ color: "#EAB966", textAlign: "left" }}>
-            Unstaking Details
+          {t("stake.Unstaking_Details")}
           </h4>
           <div className={style.box4 + ' ' + styles.bigshow}>
             <Row style={{ padding: "10px 20px 5px" }}>
               <Col span={3}>{t("stake.QueueHistory")}</Col>
               <Col span={4}>{t("stake.UnstakedxCFX")}</Col>
               <Col span={4}>{t("stake.LockingCFX")}</Col>
-              <Col span={5}>Unlock Block Number</Col>
+              <Col span={5}>{t("stake.Unlock_Block_Number")}</Col>
               <Col span={5}>{t("stake.EstimatedUnlockDate")}</Col>
               <Col span={3}>{t("stake.Status")}</Col>
             </Row>
@@ -1118,23 +1124,16 @@ const [tokenSetting, setTokenSetting] = useState(xCFXToken);
           })}
           <div style={{ height: "7px" }}></div>
           </div>
-          <h4 style={{ marginTop: "80px" }}>About Nucleon Stake</h4>
+          <h4 style={{ marginTop: "80px" }}>{t("stake.About_Nucleon_Stake")}</h4>
           <div className={style.box5}>
             <p>
-              Nucleon is a liquid staking solution for Conflux PoS backed by
-              industry-leading staking providers. Nucleon lets users stake their
-              CFX by exchange CFX to xCFX - without locking assets or
-              maintaining infrastructure.
+            {t("stake.About_Nucleon_Stake1")}
             </p>
             <p>
-              The value in xCFX will be automatically compounded and the xCFX
-              value expands automatically
+            {t("stake.About_Nucleon_Stake2")}
             </p>
             <p>
-              Our goal is to solve the problems associated with Conflux PoS
-              staking - illiquidity, immovability and accessibility - making
-              staked CFX liquid and allowing for participation with any amount
-              of CFX to improve security of the Conflux network.
+            {t("stake.About_Nucleon_Stake3")}
             </p>
           </div>
         </div>

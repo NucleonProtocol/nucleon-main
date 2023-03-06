@@ -11,6 +11,9 @@ import { useRequest } from "ahooks";
 const axios = require("axios").default;
 var moment = require("moment");
 
+import "./../locales/config"; // 引用配置文件
+import { useTranslation } from "react-i18next";
+
 import styles from "../layouts/index.less";
 import { Button, Col, Row, Carousel, Modal } from "antd";
 import { Helmet } from "react-helmet";
@@ -123,8 +126,13 @@ export default function HomePage() {
   let xDate2 = [""];
 
   const status = useStatus();
+  const { t, i18n } = useTranslation();
 
   const [showMenu, setShowMenu] = useState("none");
+
+  const [isModalLanguageOpen, setIsModalLanguageOpen] = useState(false);
+  const [language, setLanguage] = useState("en");
+  const [languageList, setLanguageList] = useState([{ key: "en", name: 'English' }, { key: "zh", name: ' 中 文 ' }]);
 
   async function hideMeun() {
     window.scrollTo(0, 0);
@@ -547,7 +555,26 @@ export default function HomePage() {
   //   });
   // };
 
+  const handleLanguageOk = () => {
+    setIsModalLanguageOpen(true);
+  };
+  const handleLanguageCancel = () => {
+    setIsModalLanguageOpen(false);
+  };
+
+  const onSwitchLanguage = async (key: any) => {
+    i18n.changeLanguage(key);
+    setLanguage(key);
+    localStorage.setItem("ln", key);
+    handleLanguageCancel();
+  };
+
   useEffect(() => {
+    // 初始化上次语言
+    let ln = localStorage.getItem("ln") ? localStorage.getItem("ln")?.toString() : 'en';
+    i18n.changeLanguage(ln);
+    setLanguage(ln+'');
+
     // 监听
     window.addEventListener("resize", resizeChange);
     (async () => {
@@ -1692,11 +1719,11 @@ export default function HomePage() {
         </span>
         <div>
           <a style={{ color: "##C4C4C4" }} target={"_blank"} href="https://doc.nucleon.network/">
-            Documentation
+          {t("header.Documentation")}
           </a>
         </div>
-        <div onClick={onToP11}>Community</div>
-        <div onClick={onToP22}>Analytics</div>
+        <div onClick={onToP11}>{t("header.Community")}</div>
+        <div onClick={onToP22}>{t("header.Analytics")}</div>
 
         <div
           style={{
@@ -1736,6 +1763,8 @@ export default function HomePage() {
             <img className={styles.logotxt} src={logotxt} height="16px" />
           </Col>
           <Col xs={18} sm={18} md={16} lg={16} xl={16}>
+          <div className={styles.s2} onClick={handleLanguageOk} style={{ verticalAlign: "baseline", position: "absolute", top:"10px", right:"50px", color: "#fff", borderRadius: "3px", cursor: "pointer", fontSize: "16px", padding: "2px 5px", backgroundColor: "#e5a455", textTransform: "Capitalize" }}>{language}</div>
+        
             <img
               className={styles.s2 + " " + styles.menu}
               src={menu}
@@ -1747,17 +1776,19 @@ export default function HomePage() {
             <ul className={styles.hide}>
               <li>
                 <a target={"_blank"} href="https://doc.nucleon.network/">
-                  Documentation
+                  {t("header.Documentation")}
                 </a>
               </li>
 
               <li>
-                <a href="/#/" onClick={onToP1}>Community</a>
+                <a href="/#/" onClick={onToP1}>{t("header.Community")}</a>
               </li>
               <li>
-                <a href="/#/" onClick={onToP2}>Analytics</a>
+                <a href="/#/" onClick={onToP2}>{t("header.Analytics")}</a>
               </li>
-              
+              <li>
+              <div onClick={handleLanguageOk} style={{ fontFamily: 'Univa Nova Bold', color: "#e5a455", cursor: "pointer", fontSize: "18px", padding: "2px 5px", textTransform: "Capitalize" }}>{language}</div>
+              </li>
             </ul>
           </Col>
         </Row>
@@ -1765,15 +1796,15 @@ export default function HomePage() {
       <div className={styles.homebg}></div>
       <div id="homebox" className={styles.homebox} style={{ padding: "0 20px" }}>
         <h2>
-          Unlocking Liquidity
+        {t("header.banner1")}
           <br />
-          for Staked Assets
+          {t("header.banner2")}
         </h2>
         <div className={styles.btnbox}>
           <div className={styles.btn}>
             <Link to="/data/stake">
               <Button shape="round" className={styles.custom}>
-                Launch App
+              {t("header.Launch_App")}
               </Button>
             </Link>
           </div>
@@ -2399,8 +2430,8 @@ export default function HomePage() {
                   <Row style={{ padding: "0 30px 0 0" }}>
                     <Col span={12}>
                       <div className={styles.tit}>
-                        Stake CFX <br />
-                        <span className={styles.auxiliary}>to Unlock xCFX</span>
+                      {t("header.dialog_box_left1")} <br />
+                        <span className={styles.auxiliary}>{t("header.dialog_box_left2")}</span>
                       </div>
                     </Col>
                     <Col span={12} style={{ textAlign: "right" }}>
@@ -2408,15 +2439,15 @@ export default function HomePage() {
                     </Col>
                   </Row>
                   <Row className={styles.box4}>
-                    <Col span={12}>Exchange Rate </Col>
+                    <Col span={12}>{t("header.Exchange_Rate")} </Col>
                     <Col span={12} style={{ textAlign: "right" }}>
                       1 xCFX = ~{parseFloat(xcfxvalues).toFixed(10)} CFX
                     </Col>
-                    <Col span={12}>Estimated Transaction Fee</Col>
+                    <Col span={12}>{t("header.Estimated_Transaction_Fee")}</Col>
                     <Col span={12} style={{ textAlign: "right" }}>
-                      ~0.001 CFX
+                      ~0.002 CFX
                     </Col>
-                    <Col span={12}>Nucleon Service Fee</Col>
+                    <Col span={12}>{t("header.Nucleon_Service_Fee")}</Col>
                     <Col span={12} style={{ textAlign: "right" }}>
                       10%
                     </Col>
@@ -2424,7 +2455,7 @@ export default function HomePage() {
                   <Row style={{ padding: "0 50px 0 37px" }} gutter={22}>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                       <Link to="/data/stake">
-                        <Button className={styles.btn}>Stake</Button>
+                        <Button className={styles.btn}>{t("header.stake")}</Button>
                       </Link>
                     </Col>
                     <Col
@@ -2440,7 +2471,7 @@ export default function HomePage() {
                         href="https://doc.nucleon.network"
                         className={styles.btn + " " + styles.linkbtn}
                       >
-                        Learn More
+                        {t("header.learn_more")}
                       </Button>
                     </Col>
                   </Row>
@@ -2453,8 +2484,8 @@ export default function HomePage() {
                   <Row style={{ padding: "0 30px 0 0" }}>
                     <Col span={12}>
                       <div className={styles.tit}>
-                        Stake LPs <br />
-                        <span className={styles.auxiliary}>to Unlock NUT</span>
+                        {t("header.dialog_box_right1")} <br />
+                        <span className={styles.auxiliary}>{t("header.dialog_box_right2")}</span>
                       </div>
                     </Col>
                     <Col span={12} style={{ textAlign: "right" }}>
@@ -2462,15 +2493,15 @@ export default function HomePage() {
                     </Col>
                   </Row>
                   <Row className={styles.box4}>
-                    <Col span={8}>Available To Stake:</Col>
+                    <Col span={8}>{t("header.Available_To_Stake")}</Col>
                     <Col span={16} style={{ textAlign: "right" }}>
                       LPs of NUT & xCFX
                     </Col>
-                    <Col span={12}>Total Amount Of NUT Staked:</Col>
+                    <Col span={12}>{t("header.Total_Amount_Of_NUT_Staked")}</Col>
                     <Col span={12} style={{ textAlign: "right" }}>
                       0
                     </Col>
-                    <Col span={12}>NUT Circulating Supply:</Col>
+                    <Col span={12}>{t("header.NUT_Circulating_Supply")}</Col>
                     <Col span={12} style={{ textAlign: "right" }}>
                       {parseFloat(nutSupply).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                     </Col>
@@ -2478,7 +2509,7 @@ export default function HomePage() {
                   <Row style={{ padding: "0 50px 0 37px" }} gutter={22}>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                       <Link to="/data/pools">
-                        <Button className={styles.btn}>Stake</Button>
+                        <Button className={styles.btn}>{t("header.stake")}</Button>
                       </Link>
                     </Col>
                     <Col
@@ -2494,7 +2525,7 @@ export default function HomePage() {
                         href="https://doc.nucleon.network/about-nucleon/tokenomics"
                         className={styles.btn + " " + styles.linkbtn}
                       >
-                        Learn More
+                        {t("header.learn_more")}
                       </Button>
                     </Col>
                   </Row>
@@ -2535,39 +2566,39 @@ export default function HomePage() {
               xl={12}
               style={{ textAlign: "left" }}
             >
-              <h3>Welcome To Nucleon</h3>
+              <h3>{t("header.Welcome_To_Nucleon")}</h3>
               <div className={styles.p}>
-                Nucleon is a liquid staking solution for Conflux PoS. Nucleon enables users to stake CFX without the overhead of illiquid assets. Users can enjoy liquidity while remaining secure, earning interest, and accessing the broader DeFi ecosystem.
+              {t("header.Welcome_Text1")}
               </div>
               <div className={styles.p}>
-                Nucleon's goal is to solve the problems associated with Conflux PoS staking - liquidity, immovability, and accessibility - by making staked CFX liquid. Nucleon aims to open PoS participation with flexible amounts of CFX to improve the security of the Conflux Network.
+              {t("header.Welcome_Text2")}
               </div>
               <div className={styles.learn}>
                 <a
                   href="https://doc.nucleon.network/about-nucleon/overview"
                   target={"_blank"}
                 >
-                  Learn More <img src={learn} />
+                  {t("header.learn_more")} <img src={learn} />
                 </a>
               </div>
             </Col>
           </Row>
           <Row className={styles.brief + " " + styles.hide}>
             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-              <div className={styles.tit3}>Reliable Network</div>
+              <div className={styles.tit3}>{t("header.Reliable_Network")}</div>
               <div className={styles.txt}>
                 Powered by Conflux Network <br />
                 hybrid POW and POS consensus
               </div>
             </Col>
             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-              <div className={styles.tit3}>High Liquidity</div>
+              <div className={styles.tit3}>{t("header.High_Liquidity")}</div>
               <div className={styles.txt}>
                 xCFX can be swapped and Collateralized
               </div>
             </Col>
             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-              <div className={styles.tit3}>Assets Compound</div>
+              <div className={styles.tit3}>{t("header.Assets_Compound")}</div>
               <div className={styles.txt}>
                 CFX in Nucleon’s POS pool will compound automatically
               </div>
@@ -2577,7 +2608,7 @@ export default function HomePage() {
             <Carousel autoplay className={styles.carousebox}>
               <div>
                 <div className={styles.carouse}>
-                  <div className={styles.tit3}>Reliable Network</div>
+                  <div className={styles.tit3}>{t("header.Reliable_Network")}</div>
                   <div className={styles.txt}>
                     Powered by Conflux Network’s POW/POS hybrid consensus
                     mechanism
@@ -2586,7 +2617,7 @@ export default function HomePage() {
               </div>
               <div>
                 <div className={styles.carouse}>
-                  <div className={styles.tit3}>High Liquidity</div>
+                  <div className={styles.tit3}>{t("header.High_Liquidity")}</div>
                   <div className={styles.txt}>
                     xCFX can be swapped and Collateralized
                   </div>
@@ -2594,7 +2625,7 @@ export default function HomePage() {
               </div>
               <div>
                 <div className={styles.carouse}>
-                  <div className={styles.tit3}>Assets Compound</div>
+                  <div className={styles.tit3}>{t("header.Assets_Compound")}</div>
                   <div className={styles.txt}>
                     CFX in Nucleon’s POS pool will compound automatically
                   </div>
@@ -2603,7 +2634,7 @@ export default function HomePage() {
             </Carousel>
           </div>
           <a id="analytics"></a>
-          <h4>Nucleon Analytics</h4>
+          <h4>{t("header.nucleon_analytics")}</h4>
           <div className={styles.analytics}>
             <Row gutter={16}>
               <Col xs={12} sm={12} md={14} lg={14} xl={14}>
@@ -2711,10 +2742,9 @@ export default function HomePage() {
             <a id="Joinourcommunity"></a>
           </div>
 
-          <h4>Join Our Community</h4>
+          <h4>{t("header.Join_Our_Community")}</h4>
           <p className={styles.h4des}>
-            Stay connected with us and never miss any interaction with our
-            people.
+          {t("header.Join_text")}
           </p>
           <Row style={{ textAlign: "center", color: "#fff", width: "70%", margin: "0 auto" }}>
             <Col xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -2848,6 +2878,17 @@ export default function HomePage() {
           </Row>
         </div>
       </div>
+      <Modal className={styles.sw} style={{ maxWidth: "90%" }} title="Select Language" open={isModalLanguageOpen} onCancel={handleLanguageCancel}>
+        <div style={{ margin: "5px" }}>
+          {languageList.map((item: any) => {
+            return (
+              <Button style={{textAlign:"center"}} block onClick={() => {
+                onSwitchLanguage(item.key);
+              }}> {item.name} </Button>
+            );
+          })}
+        </div>
+      </Modal>
     </div>
   );
 }
