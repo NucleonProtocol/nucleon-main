@@ -45,6 +45,7 @@ import logometamask from "./../../../../assets/metamask.png";
 import logofluent from "./../../../../assets/fluent.png";
 import logodefault from "./../../../../assets/default.png";
 import logotp from "./../../../../assets/tp.png";
+import logoonekey from "./../../../../assets/onekey.jpg";
 import "./../../../../locales/config"; // 引用配置文件
 import { useTranslation } from "react-i18next";
 import { Button, Col, Row, Carousel, Modal } from "antd";
@@ -566,6 +567,11 @@ function Header() {
           <Button icon={<img src={logotp} height="24px" style={{ float: "right" }} />} block onClick={() => {
             onSwitchWallet(0);
           }}> TokenPocket </Button>
+        </div>
+        <div style={{ margin: "5px" }}>
+          <Button icon={<img src={logoonekey} height="24px" style={{ float: "right" }} />} block onClick={() => {
+            onSwitchWallet(0);
+          }}> OneKey </Button>
         </div>
       </Modal>
       <Modal className={style.sw} style={{ maxWidth: "90%" }} title="Select Language" open={isModalLanguageOpen} onCancel={handleLanguageCancel}>

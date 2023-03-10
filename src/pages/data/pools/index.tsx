@@ -1362,16 +1362,16 @@ export default function Page() {
                     {parseFloat(item.arp.toString()).toFixed(1)}%
                   </Col>
                   <Col span={3}>
-                    {parseFloat(item.totalLiquidity.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    {parseFloat(item.totalLiquidity.toString()).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={3}>
-                    {parseFloat(item.totalLPs.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    {parseFloat(item.totalLPs.toString()).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={3}>
-                    {parseFloat(item.val.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    {parseFloat(item.val.toString()).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={3}>
-                    {parseFloat(item.myLiquidity.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    {parseFloat(item.myLiquidity.toString()).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={2}>
                     {parseFloat(item.pendingrewards.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
@@ -1448,16 +1448,16 @@ export default function Page() {
                   <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.APR")}:</span> {parseFloat(item.arp.toString()).toFixed(1)}%
                   </Col>
                   <Col span={12}>
-                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.TotalLiquidity")}:</span> {parseFloat(item.totalLiquidity.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.TotalLiquidity")}:</span> {parseFloat(item.totalLiquidity.toString()).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={12}>
-                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.LPs_in_Pool")}:</span> {parseFloat(item.totalLPs.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.LPs_in_Pool")}:</span> {parseFloat(item.totalLPs.toString()).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={12}>
-                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.StakedLquidity")}:</span> {parseFloat(item.val.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.StakedLquidity")}:</span> {parseFloat(item.val.toString()).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={12}>
-                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.AvailableLquidity")}:</span> {parseFloat(item.myLiquidity.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.AvailableLquidity")}:</span> {parseFloat(item.myLiquidity.toString()).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={12}>
                   <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.Pending_Rewards")}:</span> {parseFloat(item.pendingrewards.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
@@ -1544,13 +1544,13 @@ export default function Page() {
                     {parseFloat(item.arp.toString()).toFixed(1)}%
                   </Col>
                   <Col span={3}>
-                    {parseFloat(item.totalLiquidity.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    {parseFloat(item.totalLiquidity.toString()).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={3}>
-                    {parseFloat(item.totalLPs.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    {parseFloat(item.totalLPs.toString()).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={3}>
-                    {parseFloat(item.myLiquidity.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    {parseFloat(item.myLiquidity.toString()).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={10} style={{ textAlign: "right" }}>
                     <Button
@@ -1624,13 +1624,13 @@ export default function Page() {
                   <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.APR")}:</span> {parseFloat(item.arp.toString()).toFixed(1)}%
                   </Col>
                   <Col span={12}>
-                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.TotalLiquidity")}:</span> {parseFloat(item.totalLiquidity.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.TotalLiquidity")}:</span> {parseFloat(item.totalLiquidity.toString()).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={12}>
-                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.LPs_in_Pool")}:</span> {parseFloat(item.totalLPs.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.LPs_in_Pool")}:</span> {parseFloat(item.totalLPs.toString()).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={12}>
-                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.Myliquidity")}:</span> {parseFloat(item.myLiquidity.toString()).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  <span style={{fontWeight:"normal",color:"#ddd"}}>{t("pools.Myliquidity")}:</span> {parseFloat(item.myLiquidity.toString()).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Col>
                   <Col span={24}>
                     <Button

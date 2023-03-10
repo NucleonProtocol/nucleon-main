@@ -181,9 +181,9 @@ export default function Page() {
   const [totalStaked, setTotalStaked] = useState("--");
   const [holder, setHolder] = useState("--");
   const [holderCount, setHolderCount] = useState("--");
-  let holderCount1: any;
-  let holderCount2: any;
-  let holderCount3: any;
+  // let holderCount1: any;
+  // let holderCount2: any;
+  // let holderCount3: any;
   // const [holderCount2, setHolderCount2] = useState("--");
   const [price, setPrice] = useState(0);
   const [closingPrice, setClosingPrice] = useState("0.0000");
@@ -770,29 +770,29 @@ export default function Page() {
           setBlockNumber(response.data.result.blockNumber);
         });
 
-      axios
-        .get(
-          " https://evm.confluxscan.io/stat/tokens/by-address?address=0x889138644274a7Dc602f25A7e7D53fF40E6d0091&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
-        )
-        .then(async (response) => {
-          holderCount1 = response.data.result.holderCount;
-        });
+      // axios
+      //   .get(
+      //     " https://evm.confluxscan.io/stat/tokens/by-address?address=0x889138644274a7Dc602f25A7e7D53fF40E6d0091&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+      //   )
+      //   .then(async (response) => {
+      //     holderCount1 = response.data.result.holderCount;
+      //   });
       // console.log(holderCount);
-      axios
-        .get(
-          " https://evm.confluxscan.io/stat/tokens/by-address?address=0x949b78ef2c8d6979098e195b08f27ff99cb20448&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
-        )
-        .then(async (response) => {
-          holderCount2 = response.data.result.holderCount;
-        });
+      // axios
+      //   .get(
+      //     " https://evm.confluxscan.io/stat/tokens/by-address?address=0x949b78ef2c8d6979098e195b08f27ff99cb20448&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+      //   )
+      //   .then(async (response) => {
+      //     holderCount2 = response.data.result.holderCount;
+      //   });
       // console.log(holderCount, holderCount2);
-      axios
-        .get(
-          " https://evm.confluxscan.io/stat/tokens/by-address?address=0x949b78ef2c8d6979098e195b08f27ff99cb20448&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
-        )
-        .then(async (response) => {
-          holderCount3 = response.data.result.holderCount;
-        });
+      // axios
+      //   .get(
+      //     " https://evm.confluxscan.io/stat/tokens/by-address?address=0x949b78ef2c8d6979098e195b08f27ff99cb20448&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+      //   )
+      //   .then(async (response) => {
+      //     holderCount3 = response.data.result.holderCount;
+      //   });
       }catch{
         axios
         .get("https://evm.confluxscan.net/v1/homeDashboard")
@@ -800,29 +800,29 @@ export default function Page() {
           setBlockNumber(response.data.result.blockNumber);
         });
 
-      axios
-        .get(
-          " https://evm.confluxscan.net/stat/tokens/by-address?address=0x889138644274a7Dc602f25A7e7D53fF40E6d0091&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
-        )
-        .then(async (response) => {
-          holderCount1 = response.data.result.holderCount;
-        });
+      // axios
+      //   .get(
+      //     " https://evm.confluxscan.net/stat/tokens/by-address?address=0x889138644274a7Dc602f25A7e7D53fF40E6d0091&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+      //   )
+      //   .then(async (response) => {
+      //     holderCount1 = response.data.result.holderCount;
+      //   });
       // console.log(holderCount);
-      axios
-        .get(
-          " https://evm.confluxscan.net/stat/tokens/by-address?address=0x949b78ef2c8d6979098e195b08f27ff99cb20448&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
-        )
-        .then(async (response) => {
-          holderCount2 = response.data.result.holderCount;
-        });
+      // axios
+      //   .get(
+      //     " https://evm.confluxscan.net/stat/tokens/by-address?address=0x949b78ef2c8d6979098e195b08f27ff99cb20448&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+      //   )
+      //   .then(async (response) => {
+      //     holderCount2 = response.data.result.holderCount;
+      //   });
       // console.log(holderCount, holderCount2);
-      axios
-        .get(
-          " https://evm.confluxscan.net/stat/tokens/by-address?address=0x949b78ef2c8d6979098e195b08f27ff99cb20448&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
-        )
-        .then(async (response) => {
-          holderCount3 = response.data.result.holderCount;
-        });
+      // axios
+      //   .get(
+      //     " https://evm.confluxscan.net/stat/tokens/by-address?address=0x949b78ef2c8d6979098e195b08f27ff99cb20448&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+      //   )
+      //   .then(async (response) => {
+      //     holderCount3 = response.data.result.holderCount;
+      //   });
 
       }
       const resY: { data: { count: any; rows: [] } } = await getStatistics("");
@@ -1102,10 +1102,6 @@ export default function Page() {
         parseFloat((xcfxvalues * totalxcfxs).toString()).toFixed(4)
       );
 
-      // const confluxscanData = await axios.get(
-      //   "https://www.confluxscan.io/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
-      // );
-
       const data = confluxscanData.data.data;
       const totalxcfxs0 = new BigNumber(totalxcfxs);
       const xcfxvalues0 = new BigNumber(xcfxvalues);
@@ -1114,9 +1110,9 @@ export default function Page() {
       console.log(val);
       setShareofthePool(val);
 
-      const holderCount = data.holderCount;
-      setHolder(holderCount);
-      setHolderCount(holderCount1 + holderCount2 + holderCount3);
+      const holderCount = await axios.get("https://mainapi.nucleon.network/api/v1/totalstakers");
+      setHolder(holderCount.data);
+      setHolderCount(holderCount.data);
       // console.log(holderCount,holderCount2);
       setPrice(data.price);
       const balancevalueT = parseFloat(
@@ -1622,7 +1618,7 @@ export default function Page() {
                 </Col>
                 <Col span={12}>{t("stake.Stakers")}</Col>
                 <Col span={12} style={{ textAlign: "right" }}>
-                  {formatNumber(holderCount + holderCount)}
+                  {formatNumber(holderCount)}
                 </Col>
                 <Col span={12}>{t("stake.xCFX_Market_Cap")}</Col>
                 <Col span={12} style={{ textAlign: "right" }}>

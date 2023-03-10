@@ -1732,7 +1732,7 @@ export default function Page() {
             <Col sm={12} xs={24}>
               <div className={style.box2}>
                 <div className={style.board2}></div>
-                Staked NUT
+                NUT Staked
                 <div
                   className={styles.main5}
                   style={{ height: "340px", width: "100%", marginTop: "70px" }}

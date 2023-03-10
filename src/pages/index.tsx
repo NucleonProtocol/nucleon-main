@@ -25,9 +25,17 @@ const {
 } = require("./../ABI/Nut.json");
 const { addressPool } = require("./../ABI/Pools.json");
 const { addressVaults } = require("./../ABI/vaults.json");
+const { addressXCFX_NUT } = require("./../ABI/Lp.json");
+const { addressNUT_CFX } = require("./../ABI/Lp.json");
+const { addressMulticall, abiMulticall } = require("./../ABI/Multicall.json");
 const provider = new ethers.providers.JsonRpcProvider(
   "https://evm.confluxrpc.com"
 );
+//Multicall
+const multicallContract = new ethers.Contract(addressMulticall, abiMulticall, provider);
+const multicallInterface = new utils.Interface(abiMulticall);
+
+
 import { ethers, utils } from "ethers";
 const nutContract = new ethers.Contract(addressNut, abiNut, provider);
 
@@ -150,6 +158,7 @@ export default function HomePage() {
   const [closingPrice4, setClosingPrice4] = useState("");
   const [nutPrice, setNutPrice] = useState("");
   const [circulatingNUT, setCirculatingNUT] = useState("--");
+  const [stakedNUT, setStakedNUT] = useState("0");
   const [nutSupply, setNutSupply] = useState("--");
 
   const [xcfxvalues, setXcfxvalues] = useState("");
@@ -163,6 +172,8 @@ export default function HomePage() {
   async function showMeun() {
     setShowMenu("block");
   }
+
+  
 
   const WalletInfo: React.FC = memo(() => {
     const account = useAccount();
@@ -1635,21 +1646,47 @@ export default function HomePage() {
         } catch (error) { }
       }, 500);
 
-      const nutbalance = await nutContract.balanceOf(addressPool);
-      const nutbalance2 = await nutContract.balanceOf(addressVaults);
       
+
+      const promises = [
+        [nutContract.address ,nutContract.interface.encodeFunctionData('balanceOf',[addressPool])],
+        [nutContract.address ,nutContract.interface.encodeFunctionData('balanceOf',[addressVaults])],
+        [nutContract.address ,nutContract.interface.encodeFunctionData('balanceOf',[addressXCFX_NUT])],
+        [nutContract.address ,nutContract.interface.encodeFunctionData('balanceOf',[addressNUT_CFX])],
+        [nutContract.address ,nutContract.interface.encodeFunctionData('totalSupply')]
+      ]
+      const multival = await multicallContract.callStatic.aggregate(promises);
+
+      const nutbalance = multival.returnData[0]; //await nutContract.balanceOf(myacc);        //  1
+      const nutbalance2 = multival.returnData[1]; //await poolsContract.totalAllocPoint();//  2
+      const nutbalance3 = multival.returnData[2]; 
+      const nutbalance4 = multival.returnData[3]; 
+      const nuttotal = multival.returnData[4];
+      // const nutbalance = await nutContract.balanceOf(addressPool);
+      // const nutbalance2 = await nutContract.balanceOf(addressVaults);
+        
       let nutbalanceCFX: any;
       let nutbalanceCFX2: any;
+      let nutbalanceCFX3: any;
+      let nutbalanceCFX4: any;
+      let nuttotalCFX: any;
       nutbalanceCFX = new Drip(nutbalance).toCFX();
       nutbalanceCFX2 = new Drip(nutbalance2).toCFX();
+      nuttotalCFX = new Drip(nuttotal).toCFX();
+      nutbalanceCFX3 = new Drip(nutbalance3).toCFX();
+      nutbalanceCFX4 = new Drip(nutbalance4).toCFX();
+      console.log(nutbalanceCFX3);
+      console.log(nutbalanceCFX4);
       // console.log(new Drip(nutbalance).toCFX());
       // console.log(new Drip(nutbalance2).toCFX());
       // console.log(nutbalanceCFX);
       // console.log(300000 - nutbalanceCFX- nutbalanceCFX2);
-      setNutSupply((300000 - nutbalanceCFX- nutbalanceCFX2).toString());
+      setNutSupply((nuttotalCFX - nutbalanceCFX- nutbalanceCFX2).toString());
+      setStakedNUT((parseFloat(nutbalanceCFX3) + parseFloat(nutbalanceCFX4)).toString());
+      console.log(stakedNUT);
       // setNutSupply((300000 - nutbalanceCFX).toString());
       // setCirculatingNUT((0).toString());  
-      setCirculatingNUT(((300000 - nutbalanceCFX- nutbalanceCFX2) / 3000).toString()); 
+      setCirculatingNUT(((nuttotalCFX - nutbalanceCFX- nutbalanceCFX2) / 3000).toString()); 
     })();
     setTimeout(() => {
               try {
@@ -2499,7 +2536,7 @@ export default function HomePage() {
                     </Col>
                     <Col span={12}>{t("header.Total_Amount_Of_NUT_Staked")}</Col>
                     <Col span={12} style={{ textAlign: "right" }}>
-                      0
+                    {parseFloat(stakedNUT).toFixed(2)}
                     </Col>
                     <Col span={12}>{t("header.NUT_Circulating_Supply")}</Col>
                     <Col span={12} style={{ textAlign: "right" }}>
