@@ -28,7 +28,7 @@ const { addressPool } = require("./../../../ABI/Pools.json");
 const { addressVaults } = require("./../../../ABI/vaults.json");
 const { addressExc, abiExc } = require("./../../../ABI/ExchangeRoom.json");
 const { addressNut, abiNut } = require("./../../../ABI/Nut.json");
-const { formatNumber} = require("../../../utils/tools.js");
+const { formatNumber } = require("../../../utils/tools.js");
 
 
 // AJAX获取数据
@@ -39,10 +39,10 @@ function getStatistics(cond: string, limit = 24): Promise<any> {
       resolve(
         axios.get(
           domain +
-            "/api/v1/statistics?condition=" +
-            cond +
-            "&offset=0&limit=" +
-            limit
+          "/api/v1/statistics?condition=" +
+          cond +
+          "&offset=0&limit=" +
+          limit
         )
       );
     }, 1000);
@@ -59,7 +59,7 @@ let myacc: any;
 export default function Page() {
   myacc = useAccount();
   const [mynut, setMynut] = useState("--");
-  
+
   const [total1, setTotal1] = useState("");
   const [total2, setTotal2] = useState("");
   const [total3, setTotal3] = useState("");
@@ -72,6 +72,8 @@ export default function Page() {
   const [chart4Tab, setChart4Tab] = useState(0);
   const [chart5Tab, setChart5Tab] = useState(0);
   const [chart6Tab, setChart6Tab] = useState(0);
+  const [chart7Tab, setChart7Tab] = useState(0);
+  const [chart8Tab, setChart8Tab] = useState(0);
 
   const provider = new ethers.providers.JsonRpcProvider(
     "https://evm.confluxrpc.com"
@@ -86,7 +88,9 @@ export default function Page() {
     myChart3: echarts.ECharts,
     myChart4: echarts.ECharts,
     myChart5: echarts.ECharts,
-    myChart6: echarts.ECharts;
+    myChart6: echarts.ECharts,
+    myChart8: echarts.ECharts,
+    myChart7: echarts.ECharts;
 
   let xLabel1 = [""];
   let goToSchool1: { date: any; value: any }[] = [];
@@ -106,12 +110,18 @@ export default function Page() {
   let xLabel6 = [""];
   let goToSchool6: { date: any; value: any }[] = [];
 
+  let xLabel7 = [""];
+  let goToSchool7: { date: any; value: any }[] = [];
+
+  let xLabel8 = [""];
+  let goToSchool8: { date: any; value: any }[] = [];
+
   useEffect(() => {
     window.scrollTo(0, 0);
     // 监听
     //window.addEventListener("resize", resizeChange);
     (async () => {
-    
+
 
       // 图1变量
       goToSchool1 = [];
@@ -126,6 +136,10 @@ export default function Page() {
       xLabel5 = [];
       goToSchool6 = [];
       xLabel6 = [];
+      goToSchool7 = [];
+      xLabel7 = [];
+      goToSchool8 = [];
+      xLabel8 = [];
 
       const res = await getStatistics("");
       res.data.rows.reverse().forEach(
@@ -134,6 +148,8 @@ export default function Page() {
             nut2: any;
             xcfx1: number;
             nut1: any;
+            xcfxnut1: any;
+            xcfxnut2: any;
             created_at: any;
             apy: any;
             price: any;
@@ -169,6 +185,12 @@ export default function Page() {
           goToSchool3.push(obj3);
           xLabel3.push("");
 
+          const val8 = Drip(element.xcfxnut1 * 2 * p * y).toCFX();
+          const day8 = element.created_at.toString();
+          let obj8 = { date: day8, value: val8 };
+          goToSchool8.push(obj8);
+          xLabel8.push("");
+
           const val4 = val;
           const day4 = element.created_at.toString();
           let obj4 = { date: day4, value: val4 };
@@ -186,6 +208,13 @@ export default function Page() {
           let obj5 = { date: day5, value: val5 };
           xLabel5.push("");
           goToSchool5.push(obj5);
+
+
+          const val7 = x.toString();
+          const day7 = element.created_at.toString();
+          let obj7 = { date: day7, value: val7 };
+          xLabel7.push("");
+          goToSchool7.push(obj7);
         }
       );
 
@@ -687,6 +716,172 @@ export default function Page() {
           },
         ],
       };
+      let option8 = {
+        backgroundColor: "rgba(255,255,255,0)",
+        tooltip: {
+          trigger: "axis",
+          show: true,
+          backgroundColor: "#000",
+          axisPointer: {
+            lineStyle: {
+              color: {
+                type: "linear",
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: "rgba(126,199,255,1)", // 0% 处的颜色
+                  },
+                  {
+                    offset: 0.5,
+                    color: "rgba(126,199,255,1)", // 100% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(126,199,255,1)", // 100% 处的颜色
+                  },
+                ],
+                global: false, // 缺省为 false
+              },
+            },
+          },
+          formatter(res: any[]) {
+            var result = "";
+            res.forEach(function (item) {
+              result +=
+                '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">TVL-LP xCFX/NUT</div>' +
+                '<span style="font-size:12px;color:#ccc">' +
+                moment(item.data.date).format("YYYY-MM-DD HH:mm:ss") +
+                "</span><br>" +
+                item.value +
+                "</span>";
+            });
+            return result;
+          },
+        },
+        legend: {
+          align: "left",
+          right: "10%",
+          top: "10%",
+          type: "plain",
+          textStyle: {
+            color: "#7ec7ff",
+            fontSize: 14,
+          },
+          // icon:'rect',
+          itemGap: 50,
+          itemWidth: 100,
+          itemHeight: 10,
+        },
+        grid: {
+          top: "3%",
+          left: "5%",
+          right: "80px",
+          bottom: "15%",
+          // containLabel: true
+        },
+        xAxis: [
+          {
+            type: "category",
+            boundaryGap: false,
+            axisLine: {
+              //坐标轴轴线相关设置。数学上的x轴
+              show: false,
+            },
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: "rgba(25,163,223,0)",
+              },
+            },
+            axisTick: {
+              show: false,
+            },
+            data: xLabel8,
+          },
+        ],
+        yAxis: [
+          {
+            type: "value",
+            min: function (value: { min: any }) {
+              return value.min;
+            },
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: "rgba(255,255,255,0.4)",
+              },
+            },
+            axisLine: {
+              show: false,
+              lineStyle: {
+                color: "#233653",
+              },
+            },
+            position: "right",
+            axisLabel: {
+              show: true,
+              color: "#ffffff",
+              padding: 0,
+              formatter: function (value: number) {
+                return "$" + formatNumber(value.toFixed(0));
+              },
+            },
+            axisTick: {
+              show: true,
+            },
+          },
+        ],
+        series: [
+          {
+            type: "line",
+            symbol: "circle", // 默认是空心圆（中间是白色的），改成实心圆
+            showAllSymbol: true,
+            symbolSize: [4, 4],
+            smooth: false,
+            lineStyle: {
+              width: 3,
+              color: "#EAB966", // 线条颜色
+
+              borderColor: "rgba(0,0,0,.0)",
+            },
+            itemStyle: {
+              color: "rgba(234, 185, 102, .6)",
+              borderColor: "#646ace",
+              borderWidth: 0,
+            },
+
+            areaStyle: {
+              //区域填充样式 gradient(180deg, #DD7C32 0%, rgba(234, 181, 98, 0.1) 116.13%);
+
+              //线性渐变，前4个参数分别是x0,y0,x2,y2(范围0~1);相当于图形包围盒中的百分比。如果最后一个参数是‘true’，则该四个值是绝对像素位置。
+              color: new echarts.graphic.LinearGradient(
+                0,
+                0,
+                0,
+                1,
+                [
+                  {
+                    offset: 0,
+                    color: "#DD7C32",
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(234, 181, 98, 0.1)",
+                  },
+                ],
+                false
+              ),
+              shadowColor: "rgba(255, 255, 255, 0.5)", //阴影颜色
+              shadowBlur: 0, //shadowBlur设图形阴影的模糊大小。配合shadowColor,shadowOffsetX/Y, 设置图形的阴影效果。
+            },
+            data: goToSchool8,
+          },
+        ],
+      };
       let option4 = {
         backgroundColor: "rgba(255,255,255,0)",
         tooltip: {
@@ -964,7 +1159,7 @@ export default function Page() {
               color: "#ffffff",
               padding: 0,
               formatter: function (value: number) {
-                return formatNumber(value.toFixed(6)); 
+                return formatNumber(value.toFixed(6));
               },
             },
             axisTick: {
@@ -1185,6 +1380,172 @@ export default function Page() {
           },
         ],
       };
+      let option7 = {
+        backgroundColor: "rgba(255,255,255,0)",
+        tooltip: {
+          trigger: "axis",
+          show: true,
+          backgroundColor: "#000",
+          axisPointer: {
+            lineStyle: {
+              color: {
+                type: "linear",
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: "rgba(126,199,255,1)", // 0% 处的颜色
+                  },
+                  {
+                    offset: 0.5,
+                    color: "rgba(126,199,255,1)", // 100% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(126,199,255,1)", // 100% 处的颜色
+                  },
+                ],
+                global: false, // 缺省为 false
+              },
+            },
+          },
+          formatter(res: any[]) {
+            var result = "";
+            res.forEach(function (item) {
+              result +=
+                '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">xCFX minted</div>' +
+                '<span style="font-size:12px;color:#ccc">' +
+                moment(item.data.date).format("YYYY-MM-DD HH:mm:ss") +
+                "</span><br>" +
+                item.value +
+                "</span>";
+            });
+            return result;
+          },
+        },
+        legend: {
+          align: "left",
+          right: "10%",
+          top: "10%",
+          type: "plain",
+          textStyle: {
+            color: "#7ec7ff",
+            fontSize: 14,
+          },
+          // icon:'rect',
+          itemGap: 50,
+          itemWidth: 100,
+          itemHeight: 10,
+        },
+        grid: {
+          top: "3%",
+          left: "5%",
+          right: "80px",
+          bottom: "15%",
+          // containLabel: true
+        },
+        xAxis: [
+          {
+            type: "category",
+            boundaryGap: false,
+            axisLine: {
+              //坐标轴轴线相关设置。数学上的x轴
+              show: false,
+            },
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: "rgba(25,163,223,0)",
+              },
+            },
+            axisTick: {
+              show: false,
+            },
+            data: xLabel7,
+          },
+        ],
+        yAxis: [
+          {
+            type: "value",
+            min: function (value: { min: any }) {
+              return value.min;
+            },
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: "rgba(255,255,255,0.4)",
+              },
+            },
+            axisLine: {
+              show: false,
+              lineStyle: {
+                color: "#233653",
+              },
+            },
+            position: "right",
+            axisLabel: {
+              show: true,
+              color: "#ffffff",
+              padding: 0,
+              formatter: function (value: number) {
+                return formatNumber(value.toFixed(0));
+              },
+            },
+            axisTick: {
+              show: true,
+            },
+          },
+        ],
+        series: [
+          {
+            type: "line",
+            symbol: "circle", // 默认是空心圆（中间是白色的），改成实心圆
+            showAllSymbol: true,
+            symbolSize: [4, 4],
+            smooth: false,
+            lineStyle: {
+              width: 3,
+              color: "#EAB966", // 线条颜色
+
+              borderColor: "rgba(0,0,0,.0)",
+            },
+            itemStyle: {
+              color: "rgba(234, 185, 102, .6)",
+              borderColor: "#646ace",
+              borderWidth: 0,
+            },
+
+            areaStyle: {
+              //区域填充样式 gradient(180deg, #DD7C32 0%, rgba(234, 181, 98, 0.1) 116.13%);
+
+              //线性渐变，前4个参数分别是x0,y0,x2,y2(范围0~1);相当于图形包围盒中的百分比。如果最后一个参数是‘true’，则该四个值是绝对像素位置。
+              color: new echarts.graphic.LinearGradient(
+                0,
+                0,
+                0,
+                1,
+                [
+                  {
+                    offset: 0,
+                    color: "#DD7C32",
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(234, 181, 98, 0.1)",
+                  },
+                ],
+                false
+              ),
+              shadowColor: "rgba(255, 255, 255, 0.5)", //阴影颜色
+              shadowBlur: 0, //shadowBlur设图形阴影的模糊大小。配合shadowColor,shadowOffsetX/Y, 设置图形的阴影效果。
+            },
+            data: goToSchool7,
+          },
+        ],
+      };
 
       setTimeout(async () => {
         try {
@@ -1223,7 +1584,17 @@ export default function Page() {
           );
           // 绘制图表1
           myChart6.setOption(option6);
-        } catch (error) {}
+
+          myChart7 = echarts.init(
+            document.getElementById("main7") as HTMLElement
+          );
+          myChart7.setOption(option7);
+
+          myChart8 = echarts.init(
+            document.getElementById("main8") as HTMLElement
+          );
+          myChart8.setOption(option8);
+        } catch (error) { }
       }, 100);
 
       const nutbalance = await nutContract.balanceOf(addressPool);
@@ -1232,14 +1603,15 @@ export default function Page() {
       let nutbalanceCFX2: any;
       nutbalanceCFX = new Drip(nutbalance).toCFX();
       nutbalanceCFX2 = new Drip(nutbalance2).toCFX();
-      setTotalEmissionNUT((300000 - nutbalanceCFX- nutbalanceCFX2).toString());
+      setTotalEmissionNUT((300000 - nutbalanceCFX - nutbalanceCFX2).toString());
 
-      let confluxscanData:any;
-      try{
+      let confluxscanData: any;
+      try {
         confluxscanData = await axios.get(
-        "https://www.confluxscan.io/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
-      );}catch{
-          confluxscanData = await axios.get(
+          "https://www.confluxscan.io/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
+        );
+      } catch {
+        confluxscanData = await axios.get(
           "https://www.confluxscan.net/stat/tokens/by-address?address=cfx%3Aacg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx&fields=iconUrl&fields=transferCount&fields=price&fields=totalPrice&fields=quoteUrl"
         );
       }
@@ -1253,25 +1625,26 @@ export default function Page() {
       const p = price;
       const totalvalues = x * y;
       const val = BigNumber(totalvalues * p).toFixed(2);
-      setTotal1((BigNumber(val).plus(parseFloat(goToSchool2[goToSchool2.length -1].value)).plus(parseFloat(goToSchool3[goToSchool3.length -1].value))).toFixed(0));
+      setTotal1((BigNumber(val).plus(parseFloat(goToSchool2[goToSchool2.length - 1].value)).plus(parseFloat(goToSchool3[goToSchool3.length - 1].value))).toFixed(0));
       setTotal2(x);
       const poolval = y * x;
       setTotal3(poolval.toString());
-      let accountsData:any;
-      try{
+      let accountsData: any;
+      try {
         accountsData = await axios.get(
-        "https://www.confluxscan.io/stat/pos-account-detail?identifier=0x92ba044ffdf81232b5ac4ae8f2bfefe45c1607d896d81ac4a354d66c32c773a4"
-      );}catch{
+          "https://www.confluxscan.io/stat/pos-account-detail?identifier=0x92ba044ffdf81232b5ac4ae8f2bfefe45c1607d896d81ac4a354d66c32c773a4"
+        );
+      } catch {
         confluxscanData = await axios.get(
-        "https://www.confluxscan.net/stat/pos-account-detail?identifier=0x92ba044ffdf81232b5ac4ae8f2bfefe45c1607d896d81ac4a354d66c32c773a4"
-      );
+          "https://www.confluxscan.net/stat/pos-account-detail?identifier=0x92ba044ffdf81232b5ac4ae8f2bfefe45c1607d896d81ac4a354d66c32c773a4"
+        );
       }
       const totalReward = Drip(accountsData.data.data.totalReward).toCFX();
       setTotal4(totalReward);
 
       const mynut = await nutoContract.balanceOf(myacc);
       setMynut(Drip(mynut.toString()).toCFX().toString());
-      
+
     })();
   }, []);
 
@@ -1434,6 +1807,45 @@ export default function Page() {
         optionT3.xAxis.data = xLabel3;
         (myChartT3 as any).setOption(optionT3);
         break;
+      case 8:
+        // 图表2
+        setChart8Tab(index);
+
+        goToSchool8 = [];
+        xLabel8 = [];
+        T.reverse().forEach(
+          (
+            element: {
+              nut2: any;
+              xcfx1: number;
+              nut1: any;
+              xcfxnut1: any;
+              xcfxnut2: any;
+              created_at: any;
+              apy: any;
+              price: any;
+              xcfxvalues: any;
+              totalxcfxs: string;
+            },
+            i: any
+          ) => {
+            const price = element.price;
+            const p = new BigNumber(price);
+            const val8 = Drip(element.xcfxnut1 * 2 * p * y).toCFX();
+            const day8 = element.created_at.toString();
+            let obj8 = { date: day8, value: val8 };
+            goToSchool8.push(obj8);
+            xLabel8.push("");
+          }
+        );
+        const myChartT8 = echarts.getInstanceByDom(
+          document.getElementById("main8") as HTMLElement
+        );
+        var optionT8 = (myChartT8 as any).getOption();
+        optionT8.series[0].data = goToSchool8;
+        optionT8.xAxis.data = xLabel8;
+        (myChartT8 as any).setOption(optionT8);
+        break;
       case 5:
         // 图表2
         setChart5Tab(index);
@@ -1510,6 +1922,41 @@ export default function Page() {
         optionT6.xAxis.data = xLabel6;
         (myChartT6 as any).setOption(optionT6);
         break;
+      case 7:
+        setChart7Tab(index);
+        goToSchool7 = [];
+        xLabel7 = [];
+        T.reverse().forEach(
+          (
+            element: {
+              nut2: any;
+              xcfx1: number;
+              nut1: any;
+              created_at: any;
+              apy: any;
+              price: any;
+              xcfxvalues: any;
+              totalxcfxs: string;
+            },
+            i: any
+          ) => {
+            const totalxcfxs = element.totalxcfxs;
+            const x = new BigNumber(totalxcfxs);
+            const val7 = x.toString();
+            const day7 = element.created_at.toString();
+            let obj7 = { date: day7, value: val7 };
+            goToSchool7.push(obj7);
+            xLabel7.push("");
+          }
+        );
+        const myChartT7 = echarts.getInstanceByDom(
+          document.getElementById("main7") as HTMLElement
+        );
+        var optionT7 = (myChartT7 as any).getOption();
+        optionT7.series[0].data = goToSchool7;
+        optionT7.xAxis.data = xLabel7;
+        (myChartT7 as any).setOption(optionT7);
+        break;
       default:
         console.log("default");
         break;
@@ -1526,7 +1973,7 @@ export default function Page() {
           <Link to="/data/analytics" style={{ color: "#EAB764" }}>
             {t("stake.nucleon_analytics")}
           </Link>
-          <Link to="/data/useranalytics" style={{ color: "#FFF",display:"none" }}>
+          <Link to="/data/useranalytics" style={{ color: "#FFF", display: "none" }}>
             {t("stake.user_analytics")}
           </Link>
           <span
@@ -1537,7 +1984,7 @@ export default function Page() {
               float: "right",
             }}
           >
-            {t("stake.Your_NUTs")}：{ parseFloat(mynut).toFixed(2) }
+            {t("stake.Your_NUTs")}：{parseFloat(mynut).toFixed(2)}
           </span>
         </div>
         <div className={style.box0}>
@@ -1567,7 +2014,7 @@ export default function Page() {
               <div className={style.tit}>
                 {t("analytics.Total_Emission_of_NUT")}
               </div>
-              <b>{ formatNumber(parseFloat(totalEmissionNUT).toFixed(2)) }</b>
+              <b>{formatNumber(parseFloat(totalEmissionNUT).toFixed(2))}</b>
             </Col>
             <Col className="gutter-row" span={2}></Col>
           </Row>
@@ -1732,17 +2179,52 @@ export default function Page() {
             <Col sm={12} xs={24}>
               <div className={style.box2}>
                 <div className={style.board2}></div>
-                NUT Staked
+                TVL-LP xCFX/NUT
                 <div
                   className={styles.main5}
                   style={{ height: "340px", width: "100%", marginTop: "70px" }}
-                  id="main4"
-                ><div style={{textAlign:"center",padding: "90px 0 0",fontSize: "40px"}}>Coming Soon</div></div>
-                <div className={style.tabbtn}>24h</div>
-                <div className={style.tabbtn}>7d</div>
-                <div className={style.tabbtn}>1m</div>
-                <div className={style.tabbtn}>1y</div>
-                <div className={style.tabbtn}>5y</div>
+                  id="main8"
+                ></div>
+                <div
+                  className={chart8Tab === 0 ? style.tabbtncurr : style.tabbtn}
+                  onClick={() => {
+                    getCharts(8, "", 0);
+                  }}
+                >
+                  24h
+                </div>
+                <div
+                  className={chart8Tab === 1 ? style.tabbtncurr : style.tabbtn}
+                  onClick={() => {
+                    getCharts(8, "weeks", 1);
+                  }}
+                >
+                  7d
+                </div>
+                <div
+                  className={chart8Tab === 2 ? style.tabbtncurr : style.tabbtn}
+                  onClick={() => {
+                    getCharts(8, "months", 2);
+                  }}
+                >
+                  1m
+                </div>
+                <div
+                  className={chart8Tab === 3 ? style.tabbtncurr : style.tabbtn}
+                  onClick={() => {
+                    getCharts(8, "years", 3);
+                  }}
+                >
+                  1y
+                </div>
+                <div
+                  className={chart8Tab === 4 ? style.tabbtncurr : style.tabbtn}
+                  onClick={() => {
+                    getCharts(8, "years", 4);
+                  }}
+                >
+                  5y
+                </div>
               </div>
             </Col>
           </Row>
@@ -1801,6 +2283,59 @@ export default function Page() {
             <Col sm={12} xs={24}>
               <div className={style.box2}>
                 <div className={style.board2}></div>
+                xCFX minted
+                <div
+                  className={styles.main5}
+                  style={{ height: "340px", width: "100%", marginTop: "70px" }}
+                  id="main7"
+                ></div>
+                <div
+                  className={chart7Tab === 0 ? style.tabbtncurr : style.tabbtn}
+                  onClick={() => {
+                    getCharts(7, "", 0);
+                  }}
+                >
+                  24h
+                </div>
+                <div
+                  className={chart7Tab === 1 ? style.tabbtncurr : style.tabbtn}
+                  onClick={() => {
+                    getCharts(7, "weeks", 1);
+                  }}
+                >
+                  7d
+                </div>
+                <div
+                  className={chart7Tab === 2 ? style.tabbtncurr : style.tabbtn}
+                  onClick={() => {
+                    getCharts(7, "months", 2);
+                  }}
+                >
+                  1m
+                </div>
+                <div
+                  className={chart7Tab === 3 ? style.tabbtncurr : style.tabbtn}
+                  onClick={() => {
+                    getCharts(7, "years", 3);
+                  }}
+                >
+                  1y
+                </div>
+                <div
+                  className={chart7Tab === 4 ? style.tabbtncurr : style.tabbtn}
+                  onClick={() => {
+                    getCharts(7, "years", 4);
+                  }}
+                >
+                  5y
+                </div>
+              </div>
+            </Col>
+          </Row>
+          <Row gutter={32}>
+          <Col sm={12} xs={24}>
+              <div className={style.box2}>
+                <div className={style.board2}></div>
                 NUT Values
                 <div
                   className={styles.main5}
@@ -1847,6 +2382,22 @@ export default function Page() {
                 >
                   5y
                 </div>
+              </div>
+            </Col>
+            <Col sm={12} xs={24}>
+              <div className={style.box2}>
+                <div className={style.board2}></div>
+                NUT Staked
+                <div
+                  className={styles.main5}
+                  style={{ height: "340px", width: "100%", marginTop: "70px" }}
+                  id="main4"
+                ><div style={{ textAlign: "center", padding: "90px 0 0", fontSize: "40px" }}>Coming Soon</div></div>
+                <div className={style.tabbtn}>24h</div>
+                <div className={style.tabbtn}>7d</div>
+                <div className={style.tabbtn}>1m</div>
+                <div className={style.tabbtn}>1y</div>
+                <div className={style.tabbtn}>5y</div>
               </div>
             </Col>
           </Row>
