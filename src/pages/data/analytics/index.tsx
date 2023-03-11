@@ -752,7 +752,7 @@ export default function Page() {
             var result = "";
             res.forEach(function (item) {
               result +=
-                '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">TVL-LP xCFX/NUT</div>' +
+                '<div style="display:inline-block;padding:0 5px;border-radius:10px;height:30px;width:100%;background-color:#000;color:#fff"><div style="font-size:12px;color:#999">TVL-LP NUT/xCFX</div>' +
                 '<span style="font-size:12px;color:#ccc">' +
                 moment(item.data.date).format("YYYY-MM-DD HH:mm:ss") +
                 "</span><br>" +
@@ -2179,7 +2179,7 @@ export default function Page() {
             <Col sm={12} xs={24}>
               <div className={style.box2}>
                 <div className={style.board2}></div>
-                TVL-LP xCFX/NUT
+                TVL-LP NUT/xCFX
                 <div
                   className={styles.main5}
                   style={{ height: "340px", width: "100%", marginTop: "70px" }}
